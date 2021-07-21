@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Phase Two Blog</title>
+        <link>https://p2-inc.github.io/blog</link>
+        <description>Phase Two Blog</description>
+        <lastBuildDate>Thu, 21 May 2020 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[Welcome to Phase Two]]></title>
+            <link>https://p2-inc.github.io/blog/2020/05/21/welcome</link>
+            <guid>Welcome to Phase Two</guid>
+            <pubDate>Thu, 21 May 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[After building and working for startups and technology companies for almost 25 years, I found myself having a sense of déjà-vu.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcome]]></title>
+            <link>https://p2-inc.github.io/blog/2019/05/30/welcome</link>
+            <guid>Welcome</guid>
+            <pubDate>Thu, 30 May 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[Blog features are powered by the blog plugin. Simply add files to the blog directory. It supports tags as well!]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hello]]></title>
+            <link>https://p2-inc.github.io/blog/2019/05/29/hello-world</link>
+            <guid>Hello</guid>
+            <pubDate>Wed, 29 May 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[Welcome to this blog. This blog is created with Docusaurus 2 alpha.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hola]]></title>
+            <link>https://p2-inc.github.io/blog/2019/05/28/hola</link>
+            <guid>Hola</guid>
+            <pubDate>Tue, 28 May 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet]]></description>
+        </item>
+    </channel>
+</rss>
