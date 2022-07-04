@@ -8,68 +8,118 @@
     <subtitle>Phase Two Blog</subtitle>
     <icon>https://p2-inc.github.io/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Keycloak]]></title>
-        <id>/2022/04/27/magic-link</id>
-        <link href="https://p2-inc.github.io/blog/2022/04/27/magic-link"/>
+        <title type="html"><![CDATA[Magic Links]]></title>
+        <id>magic-link</id>
+        <link href="https://p2-inc.github.io/blog/magic-link"/>
         <updated>2022-04-27T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Today we're making two announcements: A new, highly-requested feature, and the open sourcing of the extension at the same time. We've received a lot of requests from customers to implement "magic link" login functionality that would allow users to login to an application using a link sent to their email or over some other secure channel.]]></summary>
+        <content type="html"><![CDATA[<p>Today we're making two announcements: A new, highly-requested feature, and the open sourcing of the extension at the same time. We've received a lot of requests from customers to implement "magic link" login functionality that would allow users to login to an application using a link sent to their email or over some other secure channel. </p><p>To that end, we've implemented two pathways for creating a magic link. One can be configured in the Authentication section of the admin UI by duplicating the Browser flow, and replacing the normal Username/Password/OTP forms with the Magic Link execution type
+<img loading="lazy" src="https://github.com/p2-inc/keycloak-magic-link/raw/main/docs/assets/magic-authenticator.png" alt="Install Magic Link Authenticator in Browser Flow" class="img_ev3q">
+This mechanism inserts a authenticator in the login flow that intercepts the email address and sends the magic link in an email to to the user.</p><p>We've also implemented a web service that allows you to create a magic link without necessarily sending an email. This will allow you to send the link through another channel. Specification for the new endpoint can be found in the <a href="/api/create-a-magic-link-to-log-in-a-user">Magic Link API Documentation</a>.</p><p>Both methods have the option of forcing the creation of a new user when an unknown email address is used. This allows a combination login/registration flow that combines an email verification. We think this really nails reducing friction in a new user flow.</p><p>We're open sourcing the Keycloak extensionsso that the broad Keycloak community can benefit right away. We are doing this in line with our committment to keeping our core extensions <a href="/docs/introduction/open-source">open source</a>. We hope you find these extensions valuable, and we look forward to feedback and participation from both our customers and the wider Keycloak community. </p><p>The extension is available on GitHub <a href="https://github.com/p2-inc/keycloak-magic-link" target="_blank" rel="noopener noreferrer">https://github.com/p2-inc/keycloak-magic-link</a></p>]]></content>
         <author>
             <name>Phase Two</name>
         </author>
+        <category label="open_source" term="open_source"/>
+        <category label="release" term="release"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="phase_two" term="phase_two"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Keycloak]]></title>
-        <id>/2022/03/21/orgs</id>
-        <link href="https://p2-inc.github.io/blog/2022/03/21/orgs"/>
+        <title type="html"><![CDATA[Multi-tenant Extensions]]></title>
+        <id>orgs</id>
+        <link href="https://p2-inc.github.io/blog/orgs"/>
         <updated>2022-03-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Today we're open sourcing set of Keycloak extensions that are focused on solving several of the common use cases of multi-tenant, SaaS applications that Keycloak does not solve out of the box. We are doing this in line with our committment to keeping our core extensions open source. These extensions are the basis of our Organizations features, which allow Phase Two customers to model their own customers in their systems and create enterprise "team" functionality that suits their business case.]]></summary>
+        <content type="html"><![CDATA[<p>Today we're open sourcing set of Keycloak extensions that are focused on solving several of the common use cases of multi-tenant, SaaS applications that Keycloak does not solve out of the box. We are doing this in line with our committment to keeping our core extensions <a href="/docs/introduction/open-source">open source</a>. These extensions are the basis of our Organizations features, which allow Phase Two customers to model their own customers in their systems and create enterprise "team" functionality that suits their business case.</p><p>A variation of this code has been built, enhanced and used in production by several customers for almost two years. It is now available as open source for members of the broader Keycloak community. We hope you find these extensions valuable, and we look forward to feedback and participation from both our customers and the wider Keycloak community. </p><p>The extension is available on GitHub <a href="https://github.com/p2-inc/keycloak-orgs" target="_blank" rel="noopener noreferrer">https://github.com/p2-inc/keycloak-orgs</a></p>]]></content>
         <author>
             <name>Phase Two</name>
         </author>
+        <category label="open_source" term="open_source"/>
+        <category label="release" term="release"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="phase_two" term="phase_two"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Keycloak]]></title>
-        <id>/2022/01/24/wizard</id>
-        <link href="https://p2-inc.github.io/blog/2022/01/24/wizard"/>
+        <title type="html"><![CDATA[Introducing Phase Two Connect]]></title>
+        <id>connect</id>
+        <link href="https://p2-inc.github.io/blog/connect"/>
+        <updated>2022-02-25T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Following our post about our wizard product, we received an overwhelming amount of interest in it. Many customers of our cloud offering asked for it as a portal for their organization administrators to set up their identity providers. On-prem customers said that one consistent onboarding hurdle was SSO complexity, and asked for it to be included in the bundled distribution.]]></summary>
+        <content type="html"><![CDATA[<p>Following our <a href="/blog/wizard">post about our wizard product</a>, we received an overwhelming amount of interest in it. Many customers of our cloud offering asked for it as a portal for their organization administrators to set up their identity providers. On-prem customers said that one consistent onboarding hurdle was SSO complexity, and asked for it to be included in the bundled distribution.</p><p>Today we're pleased to report that we've listened to both use cases and completed embedding the "wizard" product into Phase Two. We're calling it "Connect", as it's the best way we could come up with characterizing its simplicity. It massively reduces the complexit of configuring SSO connections, and distills the process into something any member of the team can understand.</p><p>Phase Two Connect is currently available by invitation only while we work out the final kinks. <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer">Contact sales</a> for more information.</p>]]></content>
+        <author>
+            <name>Phase Two</name>
+        </author>
+        <category label="release" term="release"/>
+        <category label="phase_two" term="phase_two"/>
+        <category label="connect" term="connect"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[SSO? Wave Your Magic Wand]]></title>
+        <id>wizard</id>
+        <link href="https://p2-inc.github.io/blog/wizard"/>
         <updated>2022-01-24T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Working with one of our customers, we discovered that even the most technically literate developer or ops professional could look at the configuration for an SSO connection like it was a foreign language. While our configuration interface attempts to cover all possible options, and document clearly what each option means, it can still be entirely unclear what is required during a setup.]]></summary>
+        <content type="html"><![CDATA[<p>Working with one of our customers, we discovered that even the most technically literate developer or ops professional could look at the configuration for an SSO connection like it was a foreign language. While our configuration interface attempts to cover all possible options, and document clearly what each option means, it can still be entirely unclear what is required during a setup.</p><p>Furthermore, the identity provider that is being integrated can present a similarly extensive interface that may not use the same terms and language. However, after investigation into the most common identity providers, we found that most of the configuration options can simply be set by convention if the vendor is known.</p><p>Based on that observation, we've built what we call a "wizard" UI on top of our identity provider configuration to make it easy to integration the top commercial identity provider vendors. Take a look at a quick video of a setup using our most recent prototype. </p><iframe width="560" height="315" src="https://www.youtube.com/embed/I5fxxxxxxxx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe><p>If you're interested in early access to our "wizards", please <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer">contact us</a> today.</p>]]></content>
         <author>
             <name>Phase Two</name>
         </author>
+        <category label="sso" term="sso"/>
+        <category label="wizard" term="wizard"/>
+        <category label="release" term="release"/>
+        <category label="phase_two" term="phase_two"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Keycloak]]></title>
-        <id>/2021/10/18/events</id>
-        <link href="https://p2-inc.github.io/blog/2021/10/18/events"/>
+        <title type="html"><![CDATA[Events and Audit Logging Extensions]]></title>
+        <id>events</id>
+        <link href="https://p2-inc.github.io/blog/events"/>
         <updated>2021-10-18T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Per our committment to keeping our core extensions open source, today we're releasing our Keycloak extensions to the event system. These extensions form the basis of how our Audit Log features are built.]]></summary>
+        <content type="html"><![CDATA[<p>Per our committment to keeping our core extensions <a href="/docs/introduction/open-source">open source</a>, today we're releasing our Keycloak extensions to the event system. These extensions form the basis of how our <a href="/docs/audit-logs">Audit Log</a> features are built.</p><p>Additionally, we're providing several goodies that will be valuable to others building extensions on top of Keycloak, including a generic scriptable event listener, an event emitter to send events to any HTTP endpoint, a mechanism for retrieving event listener configurations from realm attributes, a mechanism for running multiple event listeners of the same type with different configurations, and a unified event model with facility for subscribing to webhooks. </p><p>We hope you find these extensions valuable, and we look forward to feedback and participation from both our customers and the wider Keycloak community. </p><p>The extension is available on GitHub <a href="https://github.com/p2-inc/keycloak-events" target="_blank" rel="noopener noreferrer">https://github.com/p2-inc/keycloak-events</a></p>]]></content>
         <author>
             <name>Phase Two</name>
         </author>
+        <category label="open_source" term="open_source"/>
+        <category label="release" term="release"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="phase_two" term="phase_two"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Keycloak]]></title>
-        <id>/2021/05/31/free-realm</id>
-        <link href="https://p2-inc.github.io/blog/2021/05/31/free-realm"/>
+        <title type="html"><![CDATA[Free as in Beer]]></title>
+        <id>free-realm</id>
+        <link href="https://p2-inc.github.io/blog/free-realm"/>
         <updated>2021-05-31T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Since our release about basing Phase Two on the Keycloak Open Source Identity and Access Management system, an our committment to keeping our core extensions open source, we've received positive feedback from customers and interest from the the Keycloak community.]]></summary>
+        <content type="html"><![CDATA[<p>Since our release about basing Phase Two on the <a href="https://www.keycloak.org/" target="_blank" rel="noopener noreferrer">Keycloak</a> Open Source Identity and Access Management system, an our committment to keeping our core extensions <a href="/docs/introduction/open-source">open source</a>, we've received positive feedback from customers and interest from the the Keycloak community.</p><p>We've noticed that support forums for Keycloak have many questions and requests around just getting started. Even though the software is mature, open source, and has a helpfu user community, just spinning up an environment and trying it out can be puzzling for first-time users. It's pretty clear that a lot of people just give up, because they can't get a server running, let alone configure their first realm<sup id="fnref-1-9ce753"><a href="#fn-1-9ce753" class="footnote-ref">1</a></sup>.</p><p>Because of that, we've decided to offer developers a <em>FREE</em> realm in Phase Two, so those that are interested in trying it out can get successful quickly. Free realms are limited to fewer than 1000 users and 5 SSO connections. Otherwise, there are no restrictions beyond abiding by our <a href="/docs/terms">terms of use</a>. Sound good? Please fill out the <a href="https://docs.google.com/forms/d/e/1FAIpQLScIwakLlJpd9OS3r1fCsPDX01Y9BTSvxf5Ceru_FrpAQE5hIA/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">contact form</a> with your company information, and we'll respond with access information for your realm. </p><div class="footnotes"><hr><ol><li id="fn-1-9ce753">In Keycloak, a "realm" manages a set of users, credentials, roles, and groups. A user belongs to and logs into a realm. Realms are isolated from one another and can only manage and authenticate the users that they control.<a href="#fnref-1-9ce753" class="footnote-backref">↩</a></li></ol></div>]]></content>
         <author>
             <name>Phase Two</name>
         </author>
+        <category label="phase_two" term="phase_two"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Keycloak]]></title>
-        <id>/2020/12/21/keycloak</id>
-        <link href="https://p2-inc.github.io/blog/2020/12/21/keycloak"/>
+        <title type="html"><![CDATA[Keycloak, and Our Commitment to Open Source]]></title>
+        <id>keycloak</id>
+        <link href="https://p2-inc.github.io/blog/keycloak"/>
         <updated>2020-12-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Following the initial release of Phase Two's authentication and SSO tools 3 months ago, we had a warm reception by several early- to mid- stage SaaS companies. The message was consistent. SSO was a key barrier to unlocking enterprise customers, and we had made it much easier to quickly integrate the alphabet-soup of enterprise identity providers.]]></summary>
+        <content type="html"><![CDATA[<p>Following the initial release of Phase Two's authentication and SSO tools 3 months ago, we had a warm reception by several early- to mid- stage SaaS companies. The message was consistent. SSO was a key barrier to unlocking enterprise customers, and we had made it much easier to quickly integrate the alphabet-soup of enterprise identity providers.</p><p>Furthermore, many of our customers have responded well to our "one price per project" idea, citing that competitors and other enterprise authentication companies had pricing models that ramped on a per-user and per-SSO connection basis, making them economically unattractive to companies with business and pricing models that couldn't support that. </p><p>One of the other points that we heard loud and clear from our first customers, was the fear of vendor lock-in. Integrating tools like this can be a large effort, and can be difficult to unwind if the terms or service fall short. While our adoption of standards such as OpenID and SAML allayed some of those fears, we wanted to go a step further.</p><p>We built the initial verison of Phase Two as a set of extensions to the <a href="https://www.keycloak.org/" target="_blank" rel="noopener noreferrer">Keycloak</a> Open Source Identity and Access Management system, built and maintained by Red Hat. After several months of developing for it, and operating it for our customers, we've decided to continue using it. Keycloak has been battle-tested and hardened for over 6 years. It's security and reliability is depended on by organizations from small startups to Fortune 500 companies and governments.</p><p>To put to rest any future concerns about vendor lock-in, we're committing to making our core extensions to Keycloak open source. While we will endeavor to make Phase Two simple to use, operate and scale, we will maintain compatibility so that customers can migrate to their own Keycloak deployment. Updates and links to our open source extensions will be published in the <a href="/docs/introduction/open-source">Open Source</a> section of the documentation, and will be available in our <a href="https://github.com/p2-inc" target="_blank" rel="noopener noreferrer">p2-inc GitHub organization page</a>.</p><p>We have benefitted immensely from the open source communitiy, and we are excited to give back!</p>]]></content>
         <author>
             <name>Phase Two</name>
         </author>
+        <category label="keycloak" term="keycloak"/>
+        <category label="phase_two" term="phase_two"/>
+        <category label="open_source" term="open_source"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Welcome to Phase Two]]></title>
-        <id>/2020/09/28/welcome</id>
-        <link href="https://p2-inc.github.io/blog/2020/09/28/welcome"/>
+        <id>welcome</id>
+        <link href="https://p2-inc.github.io/blog/welcome"/>
         <updated>2020-09-28T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[After building and working for startups and technology companies for almost 25 years, I found myself having a sense of déjà-vu.]]></summary>
-        <content type="html"><![CDATA[<p>After building and working for startups and technology companies for almost 25 years, I found myself having a sense of déjà-vu. </p><p>Had I really built the same features and functionality over and over?</p><p>Everyone of us who has been in the industry for any length of time probably has the same feeling. Whether or not we are fully conscious of it, we probably built a (bad) version of login, registration, user management, authorization, organizations and invitations, audit logging, etc. at least one time for every company we&#x27;ve worked for. </p><p>In early 2018, I joined an enterprise SaaS startup, where I built the initial team and product over 18 months. Analyzing tickets and epics in the project tracking system we used, I found that over 60% of our first 18 months was spent building features and functionality like this -- essential building blocks, but not the core competency we sought to test in the marketplace. And the result of that effort was only adequate versions of those common features, which resulted in less time spent on what we were trying to prove. I began to refer to this heavy tax a SaaS CRUD.</p><p>Was this really what everyone else was doing? I was lucky to have a large network of engineering leaders at companies that ranged from the earliest stages to the largest public companies, so I asked them. The responses were remarkably consisitent. Early stage companies wished there was something comprehensive they could adopt, and later stage and large companies lamented not adopting external tools earlier that gave them guarantees around uptime and compliance. All were aware of or had tried to knit together a mish-mash of &quot;feature company&quot; products, and all expressed dissatisfaction with &quot;model mismatch&quot; of most of the tools in the marketplace, which demanded more integration overhead than the perceived benefit allowed. </p><p>So, I spent the next 6 months interviewing companies of a range of sizes, developing a playbook for companies building new products.</p>]]></content>
+        <content type="html"><![CDATA[<p>After building and working for startups and technology companies for almost 25 years, I found myself having a sense of déjà-vu. </p><p>Had I really built the same features and functionality over and over?</p><p>Everyone of us who has been in the industry for any length of time probably has the same feeling. Whether or not we are fully conscious of it, we probably built a (bad) version of login, registration, user management, authorization, organizations and invitations, audit logging, etc. at least one time for every company we've worked for. </p><p>In early 2018, I joined an enterprise SaaS startup, where I built the initial team and product over 18 months. Analyzing tickets and epics in the project tracking system we used, I found that over 60% of our first 18 months was spent building features and functionality like this -- essential building blocks, but not the core competency we sought to test in the marketplace. And the result of that effort was only adequate versions of those common features, which resulted in less time spent on what we were trying to prove. I began to refer to this heavy tax a "SaaS CRUD".</p><p>Was this really what everyone else was doing? I was lucky to have a large network of engineering leaders at companies that ranged from the earliest stages to the largest public companies, so I asked them. The responses were remarkably consisitent. Early stage companies wished there was something comprehensive they could adopt, and later stage and large companies lamented not adopting external tools earlier that gave them guarantees around uptime and compliance. All were aware of or had tried to knit together a mish-mash of "feature company" products, and all expressed dissatisfaction with "model mismatch" of most of the tools in the marketplace, which demanded more integration overhead than the perceived benefit allowed. </p><p>I was lucky to find others that had observed the same thing. We joined forces and spent the next 6 months interviewing companies of a range of sizes, developing a playbook for companies building new products. Based on that playbook, today we are releasing our first version of tooling designed to help application developers avoid rebuilding "SaaS CRUD".</p><p>Phase Two is designed to help SaaS companies accelerate time-to-market. Authentication and SSO are our first targets, but we plan to expand to many other areas of pain for the growing company seeking enterprise adoption. We'd love for you to join us on this journey. For product demos and to become a beta customer, please <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer">contact us</a>!</p>]]></content>
         <author>
             <name>Phase Two</name>
         </author>
+        <category label="release" term="release"/>
+        <category label="phase_two" term="phase_two"/>
     </entry>
 </feed>
