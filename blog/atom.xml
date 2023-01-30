@@ -2,11 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://p2-inc.github.io/blog</id>
     <title>Phase Two Blog</title>
-    <updated>2022-11-23T00:00:00.000Z</updated>
+    <updated>2023-01-28T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://p2-inc.github.io/blog"/>
     <subtitle>Phase Two Blog</subtitle>
     <icon>https://p2-inc.github.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[We're Changing Our License]]></title>
+        <id>licensing-change</id>
+        <link href="https://p2-inc.github.io/blog/licensing-change"/>
+        <updated>2023-01-28T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[tl;dr]]></summary>
+        <content type="html"><![CDATA[<h3 class="anchor anchorWithStickyNavbar_LWe7" id="tldr">tl;dr<a class="hash-link" href="#tldr" title="Direct link to heading">​</a></h3><p>We’ve changed the license of our <a href="/docs/introduction/open-source#components-and-repos">core extensions</a> from the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html" target="_blank" rel="noopener noreferrer">AGPL v3</a> to the <a href="https://github.com/elastic/elasticsearch/blob/main/licenses/ELASTIC-LICENSE-2.0.txt" target="_blank" rel="noopener noreferrer">Elastic License v2</a>. We wanted to share why we made this change and what it means for our customers and community.</p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="why">Why?<a class="hash-link" href="#why" title="Direct link to heading">​</a></h3><p>From our earliest stages, Phase Two has been built as a set of extensions to <a href="https://keycloak.org" target="_blank" rel="noopener noreferrer">Keycloak</a>. We have made a commitment that source code for our core exetensions will always be available so that our customers can migrate to their own deployment, while maintaining the extension functionality provided by Phase Two.</p><p>As our product matured and found a market fit, it became clear to us that our current license was failing to give our customers that guarantee, and failing to give our company the protection to ensure we could build a business and continue to invest in our extensions.</p><p>We've had some very deep conversations with customers and contributors about the future of licensing, and learned a lot about what other companies in our shoes have done. We truly appreciate all of the engagement and feedback, and have done our best to make a decision that is in the best interest of our company, customers and community.</p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="whats-allowed">What's allowed?<a class="hash-link" href="#whats-allowed" title="Direct link to heading">​</a></h3><ol><li>Hosting and using the extensions by companies as part of their own product.</li><li>Derivative works that maintain the same license.</li></ol><h3 class="anchor anchorWithStickyNavbar_LWe7" id="whats-prohibited">What's prohibited?<a class="hash-link" href="#whats-prohibited" title="Direct link to heading">​</a></h3><ol><li>Providing the extensions as a hosted or managed service. This includes bundling and distribution by companies who sell their products for on-prem and private cloud use.</li></ol><p>We believe that the Elastic License strikes a great balance, and we're excited for our next phase of growth!</p>]]></content>
+        <author>
+            <name>Phase Two</name>
+        </author>
+        <category label="oss" term="oss"/>
+        <category label="license" term="license"/>
+        <category label="phase_two" term="phase_two"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Setting up SSO with Phase Two]]></title>
         <id>sso-setup</id>
