@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[7869],{170184:function(s){s.exports=JSON.parse('{"label":"magic_links","permalink":"/blog/tags/magic-links","allTagsPath":"/blog/tags","count":1}')}}]);
