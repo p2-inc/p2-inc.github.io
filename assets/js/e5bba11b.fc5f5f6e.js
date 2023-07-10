@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[2370],{72766:function(a){a.exports=JSON.parse('{"label":"cockroach","permalink":"/blog/tags/cockroach","allTagsPath":"/blog/tags","count":1}')}}]);
