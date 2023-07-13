@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
-        <title>Phase Two Blog</title>
-        <link>https://p2-inc.github.io/blog</link>
-        <description>Phase Two Blog</description>
+        <title>Phase Two enhanced Keycloak as a Service Blog</title>
+        <link>https://phasetwo.io/blog</link>
+        <description>Phase Two enhanced Keycloak as a Service Blog</description>
         <lastBuildDate>Mon, 10 Jul 2023 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
             <title><![CDATA[Launching Dedicated Clusters]]></title>
-            <link>https://p2-inc.github.io/blog/dedicated-launch</link>
+            <link>https://phasetwo.io/blog/dedicated-launch</link>
             <guid>dedicated-launch</guid>
             <pubDate>Mon, 10 Jul 2023 00:00:00 GMT</pubDate>
             <description><![CDATA[We're excited today to announce the launch of our dedicated clusters offering. Our Phase Two enhanced Keycloak distribution is now available as a hosted, dedicated cluster in the region of your choice.]]></description>
@@ -22,7 +22,7 @@
         </item>
         <item>
             <title><![CDATA[How To Customize Login Pages]]></title>
-            <link>https://p2-inc.github.io/blog/customizing-login-pages</link>
+            <link>https://phasetwo.io/blog/customizing-login-pages</link>
             <guid>customizing-login-pages</guid>
             <pubDate>Fri, 21 Apr 2023 00:00:00 GMT</pubDate>
             <description><![CDATA[Brand is important to modern SaaS companies, and nowhere is that more apparent than at the front door: the login experience. Unfortunately, the default design of the Keycloak login experience has a "face only a mother could love".]]></description>
@@ -37,7 +37,7 @@
         </item>
         <item>
             <title><![CDATA[We're Changing Our License]]></title>
-            <link>https://p2-inc.github.io/blog/licensing-change</link>
+            <link>https://phasetwo.io/blog/licensing-change</link>
             <guid>licensing-change</guid>
             <pubDate>Sat, 28 Jan 2023 00:00:00 GMT</pubDate>
             <description><![CDATA[tl;dr]]></description>
@@ -48,7 +48,7 @@
         </item>
         <item>
             <title><![CDATA[Setting up SSO with Phase Two]]></title>
-            <link>https://p2-inc.github.io/blog/sso-setup</link>
+            <link>https://phasetwo.io/blog/sso-setup</link>
             <guid>sso-setup</guid>
             <pubDate>Wed, 23 Nov 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[We've received a lot of support requests about the right way to set up SSO connections. We've published a 5 minute video showing you how to do it easily. Also, the script is included below in case you miss anything!]]></description>
@@ -60,7 +60,7 @@
         </item>
         <item>
             <title><![CDATA[Protecting Your Application With Keycloak]]></title>
-            <link>https://p2-inc.github.io/blog/securing-apps-with-keycloak</link>
+            <link>https://phasetwo.io/blog/securing-apps-with-keycloak</link>
             <guid>securing-apps-with-keycloak</guid>
             <pubDate>Mon, 17 Oct 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[There are a lot of guides out there, official and unofficial, for how to secure applications with Keycloak. The subject is rather broad, so it's difficult to know where to start. To begin, we'll be focusing on Keycloak's use of OpenID Connect (OIDC), and how to use that standard, along with some helpful libraries, to secure a simple but instructive application.]]></description>
@@ -71,7 +71,7 @@
         </item>
         <item>
             <title><![CDATA[Magic Links Guide, and 5 Minute Setup]]></title>
-            <link>https://p2-inc.github.io/blog/set-up-magic-links</link>
+            <link>https://phasetwo.io/blog/set-up-magic-links</link>
             <guid>set-up-magic-links</guid>
             <pubDate>Wed, 12 Oct 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Someone who is reading this article is probably very different that the average internet user when it comes to passwords. Developers and IT admins, either because of security savvy or compliance, use password managers, multi-factor authentication (MFA) mechanisms, or prefer sites that offer password-less authentication. Furthermore, they are keenly aware of the weaknesses in their personal "attack surface", and search for ways to balance convenience with risk.]]></description>
@@ -84,7 +84,7 @@
         </item>
         <item>
             <title><![CDATA[Set Up Email in Phase Two]]></title>
-            <link>https://p2-inc.github.io/blog/set-up-email</link>
+            <link>https://phasetwo.io/blog/set-up-email</link>
             <guid>set-up-email</guid>
             <pubDate>Wed, 05 Oct 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[One of the first things you will need to do when getting a Keycloak Realm ready for use is to set up your email server configuration. There are many system emails that are sent to users in the course of verifying and updating user accounts: Email address verification, magic links, password reset, account update, login failure notifications, identity provider linking, etc.]]></description>
@@ -96,7 +96,7 @@
         </item>
         <item>
             <title><![CDATA[Self-service (beta) Launch]]></title>
-            <link>https://p2-inc.github.io/blog/self-service</link>
+            <link>https://phasetwo.io/blog/self-service</link>
             <guid>self-service</guid>
             <pubDate>Fri, 16 Sep 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[We've been pretty quiet over the summer. Since we released the Organizations and Magic Link extensions and open sourced them, there has been a lot of interest in using Phase Two.]]></description>
@@ -108,7 +108,7 @@
         </item>
         <item>
             <title><![CDATA[Magic Links]]></title>
-            <link>https://p2-inc.github.io/blog/magic-link</link>
+            <link>https://phasetwo.io/blog/magic-link</link>
             <guid>magic-link</guid>
             <pubDate>Wed, 27 Apr 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Today we're making two announcements: A new, highly-requested feature, and the open sourcing of the extension at the same time. We've received a lot of requests from customers to implement "magic link" login functionality that would allow users to login to an application using a link sent to their email or over some other secure channel.]]></description>
@@ -122,7 +122,7 @@ This mechanism inserts a authenticator in the login flow that intercepts the ema
         </item>
         <item>
             <title><![CDATA[Multi-tenant Extensions]]></title>
-            <link>https://p2-inc.github.io/blog/orgs</link>
+            <link>https://phasetwo.io/blog/orgs</link>
             <guid>orgs</guid>
             <pubDate>Mon, 21 Mar 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Today we're open sourcing set of Keycloak extensions that are focused on solving several of the common use cases of multi-tenant, SaaS applications that Keycloak does not solve out of the box. We are doing this in line with our committment to keeping our core extensions open source. These extensions are the basis of our Organizations features, which allow Phase Two customers to model their own customers in their systems and create enterprise "team" functionality that suits their business case.]]></description>
@@ -134,7 +134,7 @@ This mechanism inserts a authenticator in the login flow that intercepts the ema
         </item>
         <item>
             <title><![CDATA[Introducing Phase Two Connect]]></title>
-            <link>https://p2-inc.github.io/blog/connect</link>
+            <link>https://phasetwo.io/blog/connect</link>
             <guid>connect</guid>
             <pubDate>Fri, 25 Feb 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Following our post about our wizard product, we received an overwhelming amount of interest in it. Many customers of our cloud offering asked for it as a portal for their organization administrators to set up their identity providers. On-prem customers said that one consistent onboarding hurdle was SSO complexity, and asked for it to be included in the bundled distribution.]]></description>
@@ -145,7 +145,7 @@ This mechanism inserts a authenticator in the login flow that intercepts the ema
         </item>
         <item>
             <title><![CDATA[SSO? Wave Your Magic Wand]]></title>
-            <link>https://p2-inc.github.io/blog/wizard</link>
+            <link>https://phasetwo.io/blog/wizard</link>
             <guid>wizard</guid>
             <pubDate>Mon, 24 Jan 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Working with one of our customers, we discovered that even the most technically literate developer or ops professional could look at the configuration for an SSO connection like it was a foreign language. While our configuration interface attempts to cover all possible options, and document clearly what each option means, it can still be entirely unclear what is required during a setup.]]></description>
@@ -157,7 +157,7 @@ This mechanism inserts a authenticator in the login flow that intercepts the ema
         </item>
         <item>
             <title><![CDATA[Events and Audit Logging Extensions]]></title>
-            <link>https://p2-inc.github.io/blog/events</link>
+            <link>https://phasetwo.io/blog/events</link>
             <guid>events</guid>
             <pubDate>Mon, 18 Oct 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Per our committment to keeping our core extensions open source, today we're releasing our Keycloak extensions to the event system. These extensions form the basis of how our Audit Log features are built.]]></description>
@@ -169,7 +169,7 @@ This mechanism inserts a authenticator in the login flow that intercepts the ema
         </item>
         <item>
             <title><![CDATA[Free as in Beer]]></title>
-            <link>https://p2-inc.github.io/blog/free-realm</link>
+            <link>https://phasetwo.io/blog/free-realm</link>
             <guid>free-realm</guid>
             <pubDate>Mon, 31 May 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Since our release about basing Phase Two on the Keycloak Open Source Identity and Access Management system, an our committment to keeping our core extensions open source, we've received positive feedback from customers and interest from the the Keycloak community.]]></description>
@@ -178,7 +178,7 @@ This mechanism inserts a authenticator in the login flow that intercepts the ema
         </item>
         <item>
             <title><![CDATA[Keycloak, and Our Commitment to Open Source]]></title>
-            <link>https://p2-inc.github.io/blog/keycloak</link>
+            <link>https://phasetwo.io/blog/keycloak</link>
             <guid>keycloak</guid>
             <pubDate>Mon, 21 Dec 2020 00:00:00 GMT</pubDate>
             <description><![CDATA[Following the initial release of Phase Two's authentication and SSO tools 3 months ago, we had a warm reception by several early- to mid- stage SaaS companies. The message was consistent. SSO was a key barrier to unlocking enterprise customers, and we had made it much easier to quickly integrate the alphabet-soup of enterprise identity providers.]]></description>
@@ -189,7 +189,7 @@ This mechanism inserts a authenticator in the login flow that intercepts the ema
         </item>
         <item>
             <title><![CDATA[Welcome to Phase Two]]></title>
-            <link>https://p2-inc.github.io/blog/welcome</link>
+            <link>https://phasetwo.io/blog/welcome</link>
             <guid>welcome</guid>
             <pubDate>Mon, 28 Sep 2020 00:00:00 GMT</pubDate>
             <description><![CDATA[After building and working for startups and technology companies for almost 25 years, I found myself having a sense of déjà-vu.]]></description>
