@@ -8,7 +8,7 @@
     <subtitle>Phase Two enhanced Keycloak as a Service Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Next.js with Keycloak]]></title>
+        <title type="html"><![CDATA[Securing Next.js Apps With Keycloak]]></title>
         <id>instant-user-managemenet-and-sso-for-nextjs</id>
         <link href="https://phasetwo.io/blog/instant-user-managemenet-and-sso-for-nextjs"/>
         <updated>2023-08-14T00:00:00.000Z</updated>
