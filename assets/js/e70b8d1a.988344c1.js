@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[757],{32012:function(s){s.exports=JSON.parse('{"label":"vuejs","permalink":"/blog/tags/vuejs","allTagsPath":"/blog/tags","count":2}')}}]);

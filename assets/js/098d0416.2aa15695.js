@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[4496],{5643:function(s){s.exports=JSON.parse('{"label":"nuxt","permalink":"/blog/tags/nuxt","allTagsPath":"/blog/tags","count":2}')}}]);
