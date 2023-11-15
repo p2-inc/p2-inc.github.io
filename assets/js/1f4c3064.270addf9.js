@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[9078],{50969:function(a){a.exports=JSON.parse('{"label":"wizard","permalink":"/blog/tags/wizard","allTagsPath":"/blog/tags","count":1}')}}]);
