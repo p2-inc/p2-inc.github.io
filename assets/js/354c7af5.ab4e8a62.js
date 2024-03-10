@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[775],{47698:function(s){s.exports=JSON.parse('{"label":"cognito","permalink":"/blog/tags/cognito","allTagsPath":"/blog/tags","count":1}')}}]);
