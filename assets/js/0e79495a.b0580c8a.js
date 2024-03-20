@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[7285],{16529:function(a){a.exports=JSON.parse('{"label":"private_cloud","permalink":"/blog/tags/private-cloud","allTagsPath":"/blog/tags","count":1}')}}]);
