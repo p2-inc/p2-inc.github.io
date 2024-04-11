@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[6132],{69822:function(a){a.exports=JSON.parse('{"label":"idp_wizard","permalink":"/blog/tags/idp-wizard","allTagsPath":"/blog/tags","count":1}')}}]);

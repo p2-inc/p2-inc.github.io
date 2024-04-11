@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[6230],{85340:function(s){s.exports=JSON.parse('{"label":"customization","permalink":"/blog/tags/customization","allTagsPath":"/blog/tags","count":1}')}}]);

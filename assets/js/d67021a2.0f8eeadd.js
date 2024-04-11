@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[9460],{66525:function(s){s.exports=JSON.parse('{"label":"on_prem","permalink":"/blog/tags/on-prem","allTagsPath":"/blog/tags","count":2}')}}]);

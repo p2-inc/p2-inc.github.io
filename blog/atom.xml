@@ -24,6 +24,25 @@
         <category label="multi_tenancy" term="multi_tenancy"/>
     </entry>
     <entry>
+        <title type="html"><![CDATA[How to Customize Email Templates in Keycloak]]></title>
+        <id>customizing-email-templates</id>
+        <link href="https://phasetwo.io/blog/customizing-email-templates"/>
+        <updated>2024-04-08T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Keeping your brand consistent across user touch-points is important to modern Saas companies. Just like customizing Login Pages, customizing your email templates is just as important. Keycloak has a number of templates which can be customized.]]></summary>
+        <content type="html"><![CDATA[<p>Keeping your brand consistent across user touch-points is important to modern Saas companies. Just like customizing <a href="https://phasetwo.io/blog/customizing-login-pages" target="_blank" rel="noopener noreferrer">Login Pages</a>, customizing your email templates is just as important. Keycloak has a number of <a href="https://phasetwo.io/docs/getting-started/email#content-templates" target="_blank" rel="noopener noreferrer">templates</a> which can be customized.</p><p>Keycloak starts out with simple text templates, but unless you like spending your days looking at Unix terminals, you probably prefer some color and images in your emails.</p><h2 class="anchor anchorWithStickyNavbar_LWe7" id="template-customization">Template Customization<a class="hash-link" href="#template-customization" title="Direct link to heading">​</a></h2><p>Phase Two exposes an interface in the Admin UI to adjust the HTML and Text template. In the Styles &gt; <em>Emails</em> tab, select a template to edit.</p><p><img loading="lazy" alt="Customizing Email Template Example" src="/assets/images/2024-04-08-email-templates-c50c9cb2331197e3d5aa918692ca2861.png" width="2064" height="1674" class="img_ev3q"></p><p>Enter the new HTML for the HTML template along with a matching Text template.</p><p>Using a test user, visit the flow of the templates you changed to have those emails sent to you and confirm you're happy with your changes.</p><h2 class="anchor anchorWithStickyNavbar_LWe7" id="example-template">Example Template<a class="hash-link" href="#example-template" title="Direct link to heading">​</a></h2><p>The Attributes theme in our Phase Two deployment automatically make use of these themes. The <a href="https://github.com/p2-inc/keycloak-theme/examples" target="_blank" rel="noopener noreferrer">sample template</a> can be customized to fit your need. All you have to do is adjust the CSS colors and inject a link to your hosted logo file somewhere. There is a content section which you can copy/paste the default content from Keycloak into and customize. A simple HTML preview of the template lets you get an idea of how it will look.</p><p><img loading="lazy" alt="Email example template" src="/assets/images/2024-04-08-email-example-phaseII-b6cde8898bbf96df764fe118abdb046d.png" width="1682" height="1162" class="img_ev3q"></p><h1>Success</h1><p>Kaboom! Done. We challenge you to tell us the last time a change in Keycloak was that easy 💪</p><p>As always, our success is based on the success of our customers. We hope this extension and guide has helped you update the default Keycloak email branding to match that of your needs. If you have suggestions for further improvement of this feature, please reach out on <a href="https://github.com/p2-inc" target="_blank" rel="noopener noreferrer">GitHub</a>!</p>]]></content>
+        <author>
+            <name>Phase Two</name>
+        </author>
+        <category label="keycloak" term="keycloak"/>
+        <category label="phase_two" term="phase_two"/>
+        <category label="open_source" term="open_source"/>
+        <category label="idp_wizard" term="idp_wizard"/>
+        <category label="on_prem" term="on_prem"/>
+        <category label="private_cloud" term="private_cloud"/>
+        <category label="email" term="email"/>
+        <category label="customization" term="customization"/>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[User Management and Identity Brokering for On-Prem Apps]]></title>
         <id>identity-brokering-on-prem</id>
         <link href="https://phasetwo.io/blog/identity-brokering-on-prem"/>
