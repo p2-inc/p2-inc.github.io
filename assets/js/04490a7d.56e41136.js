@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[7311],{33619:function(a){a.exports=JSON.parse('{"label":"organizations","permalink":"/blog/tags/organizations","allTagsPath":"/blog/tags","count":1}')}}]);

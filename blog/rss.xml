@@ -4,10 +4,23 @@
         <title>Phase Two enhanced Keycloak as a Service Blog</title>
         <link>https://phasetwo.io/blog</link>
         <description>Phase Two enhanced Keycloak as a Service Blog</description>
-        <lastBuildDate>Tue, 19 Mar 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 10 Apr 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Presentation on Multi-Tenancy in Keycloak]]></title>
+            <link>https://phasetwo.io/blog/keycloak-orgs-presentation</link>
+            <guid>keycloak-orgs-presentation</guid>
+            <pubDate>Wed, 10 Apr 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[We recently gave a talk at the Keycloak DevDay 2024 conference in Frankfurt on our Organizations extension which provides single Realm multi-tenancy to Keycloak for modern SaaS applications. The hosts of the conference have posted the video of the talk on Youtube.]]></description>
+            <content:encoded><![CDATA[<p>We recently gave a talk at the <a href="https://www.keycloak-day.dev/" target="_blank" rel="noopener noreferrer">Keycloak DevDay 2024</a> conference in Frankfurt on our <a href="https://github.com/p2-inc/keycloak-orgs" target="_blank" rel="noopener noreferrer">Organizations</a> extension which provides single Realm multi-tenancy to Keycloak for modern SaaS applications. The hosts of the conference have posted the <a href="https://www.youtube.com/watch?v=DNq51wWw3F4" target="_blank" rel="noopener noreferrer">video of the talk</a> on Youtube.</p><iframe width="560" height="315" src="https://www.youtube.com/embed/DNq51wWw3F4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe><p>Take a look, and try it out today with our <a href="https://phasetwo.io/dashboard/" target="_blank" rel="noopener noreferrer">free hosted Keycloak</a> instances that run all of our <a href="https://github.com/p2-inc" target="_blank" rel="noopener noreferrer">open source Keycloak extensions</a>.</p>]]></content:encoded>
+            <category>release</category>
+            <category>keycloak</category>
+            <category>phase_two</category>
+            <category>organizations</category>
+            <category>multi_tenancy</category>
+        </item>
         <item>
             <title><![CDATA[User Management and Identity Brokering for On-Prem Apps]]></title>
             <link>https://phasetwo.io/blog/identity-brokering-on-prem</link>
