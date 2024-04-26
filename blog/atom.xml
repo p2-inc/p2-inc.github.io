@@ -147,6 +147,7 @@
         <category label="nuxt" term="nuxt"/>
         <category label="vue" term="vue"/>
         <category label="vuejs" term="vuejs"/>
+        <category label="nuxtjs" term="nuxtjs"/>
         <category label="authentication" term="authentication"/>
         <category label="authorization" term="authorization"/>
         <category label="sso" term="sso"/>
