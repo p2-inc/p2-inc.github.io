@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[2089],{42266:function(s){s.exports=JSON.parse('{"label":"sso","permalink":"/blog/tags/sso","allTagsPath":"/blog/tags","count":9}')}}]);
