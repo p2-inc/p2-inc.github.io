@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[1790],{217:function(e){e.exports=JSON.parse('{"permalink":"/blog/tags/phase-two/page/3","page":3,"postsPerPage":10,"totalPages":3,"totalCount":28,"previousPage":"/blog/tags/phase-two/page/2","blogDescription":"Blog","blogTitle":"Blog"}')}}]);
