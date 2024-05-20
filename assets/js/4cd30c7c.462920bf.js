@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[3868],{32978:function(s){s.exports=JSON.parse('{"permalink":"/blog/tags/sso/page/2","page":2,"postsPerPage":10,"totalPages":2,"totalCount":11,"previousPage":"/blog/tags/sso","blogDescription":"Blog","blogTitle":"Blog"}')}}]);
