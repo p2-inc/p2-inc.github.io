@@ -8,7 +8,7 @@
     <subtitle>Phase Two - Make Keycloak Easy Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Securing an Angular Application with Spring Boot and Keycloak]]></title>
+        <title type="html"><![CDATA[Securing an Angular and Spring Boot Application with Keycloak]]></title>
         <id>secure-spring-boot</id>
         <link href="https://phasetwo.io/blog/secure-spring-boot"/>
         <updated>2024-05-09T00:00:00.000Z</updated>
