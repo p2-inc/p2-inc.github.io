@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[1201],{642:function(a){a.exports=JSON.parse('{"label":"cockroachdb","permalink":"/blog/tags/cockroachdb","allTagsPath":"/blog/tags","count":1}')}}]);
