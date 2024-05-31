@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[8161],{67904:function(a){a.exports=JSON.parse('{"label":"keycloak","permalink":"/blog/tags/keycloak","allTagsPath":"/blog/tags","count":17}')}}]);

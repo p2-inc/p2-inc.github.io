@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[6281],{7587:function(a){a.exports=JSON.parse('{"label":"multi_tenancy","permalink":"/blog/tags/multi-tenancy","allTagsPath":"/blog/tags","count":1}')}}]);
