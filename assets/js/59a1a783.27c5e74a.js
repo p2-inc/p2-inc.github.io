@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[4913],{18183:function(a){a.exports=JSON.parse('{"label":"okta","permalink":"/blog/tags/okta","allTagsPath":"/blog/tags","count":1}')}}]);
