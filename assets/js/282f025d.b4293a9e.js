@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[1266],{86738:function(s){s.exports=JSON.parse('{"label":"keycloak_support","permalink":"/blog/tags/keycloak-support","allTagsPath":"/blog/tags","count":1}')}}]);
