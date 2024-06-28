@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[5109],{14703:function(o){o.exports=JSON.parse('{"permalink":"/blog/tags/authorization/page/2","page":2,"postsPerPage":10,"totalPages":2,"totalCount":11,"previousPage":"/blog/tags/authorization","blogDescription":"Blog","blogTitle":"Blog"}')}}]);

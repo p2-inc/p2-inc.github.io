@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[2140],{60844:function(e){e.exports=JSON.parse('{"permalink":"/blog/tags/cockroach","page":1,"postsPerPage":10,"totalPages":1,"totalCount":3,"blogDescription":"Learn more about how we make Keycloak Hosting and Authentication easy.","blogTitle":"Blog"}')}}]);

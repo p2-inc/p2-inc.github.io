@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[9046],{49362:function(e){e.exports=JSON.parse('{"permalink":"/blog/tags/cockroachdb","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Learn more about how we make Keycloak Hosting and Authentication easy.","blogTitle":"Blog"}')}}]);

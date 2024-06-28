@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[3047],{81295:function(e){e.exports=JSON.parse('{"permalink":"/blog/tags/customization","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Learn more about how we make Keycloak Hosting and Authentication easy.","blogTitle":"Blog"}')}}]);
