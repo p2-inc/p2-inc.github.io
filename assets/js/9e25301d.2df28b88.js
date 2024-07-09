@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[6140],{34705:function(e){e.exports=JSON.parse('{"permalink":"/blog/tags/organizations","page":1,"postsPerPage":10,"totalPages":1,"totalCount":2,"blogDescription":"Learn more about how we make Keycloak Hosting and Authentication easy.","blogTitle":"Blog"}')}}]);

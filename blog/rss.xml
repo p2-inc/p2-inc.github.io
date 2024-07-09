@@ -4,10 +4,26 @@
         <title>Phase Two - Keycloak Hosting | Support | Migration | Customization Blog</title>
         <link>https://phasetwo.io/blog</link>
         <description>Phase Two - Keycloak Hosting | Support | Migration | Customization Blog</description>
-        <lastBuildDate>Mon, 03 Jun 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 09 Jul 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Phase Two Organizations now support shared Identity Providers (IdPs)]]></title>
+            <link>https://phasetwo.io/blog/phase-two-organizations-shared-idps</link>
+            <guid>phase-two-organizations-shared-idps</guid>
+            <pubDate>Tue, 09 Jul 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Phase Two Organizations now support shared Identity Providers (IdPs) for mapping multiple organizations to a single IDP.]]></description>
+            <content:encoded><![CDATA[<p>An exciting new feature has been added to <a href="https://github.com/p2-inc/keycloak-orgs" target="_blank" rel="noopener noreferrer">Phase Two Organizations Extension</a>! Organizations now support <a href="https://github.com/p2-inc/keycloak-orgs/issues/249" target="_blank" rel="noopener noreferrer">shared Identity Providers</a> (IdPs) for mapping multiple organizations to a single IDP. This feature is especially useful for organizations that have multiple organizations that need to share the same IDP.</p><p>Often asked for by customers, this feature will now allow organizations to share the same IDP across multiple organizations. This will allow for a more streamlined user experience and easier management of users across multiple organizations. Meaning that admins can still keep organizations logically separated, but support the same IdP for authentication and authorization. The primary use case for this is applications that support both Google social login <strong>and</strong> Google Workspace enterprise SSO login. Some of our customers had 100's of organizations that used Google Workspace SSO. This change allows you to use a single OIDC integration with Google, rather than configuring 100's of SAML integrations. </p><p>Configuration is fully supported in the Keycloak Admin UI, is up-to-date with the latest Keycloak version, and is fully tested. This feature is available now to any Phase Two hosted customers and can be adopted by anyone leveraging the Phase Two Keycloak Organization Extension.</p>]]></content:encoded>
+            <author>support@phasetwo.io (Phase Two)</author>
+            <category>phase_two</category>
+            <category>open_source</category>
+            <category>authentication</category>
+            <category>authorization</category>
+            <category>organizations</category>
+            <category>idp</category>
+            <category>keycloak</category>
+        </item>
         <item>
             <title><![CDATA[Keycloak vs. Okta, a Open-Source Alternative]]></title>
             <link>https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative</link>
