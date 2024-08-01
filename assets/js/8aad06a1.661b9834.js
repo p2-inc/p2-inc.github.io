@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[1124],{12714:function(a){a.exports=JSON.parse('{"label":"authorization","permalink":"/blog/tags/authorization","allTagsPath":"/blog/tags","count":15}')}}]);

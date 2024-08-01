@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[6246],{32278:function(e){e.exports=JSON.parse('{"permalink":"/blog/tags/frameworks","page":1,"postsPerPage":10,"totalPages":1,"totalCount":9,"blogDescription":"Learn more about how we make Keycloak Hosting and Authentication easy.","blogTitle":"Blog"}')}}]);
