@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[9361],{70579:function(a){a.exports=JSON.parse('{"label":"angular","permalink":"/blog/tags/angular","allTagsPath":"/blog/tags","count":1}')}}]);

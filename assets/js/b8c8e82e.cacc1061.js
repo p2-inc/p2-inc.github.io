@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[6998],{78937:function(s){s.exports=JSON.parse('{"label":"remix","permalink":"/blog/tags/remix","allTagsPath":"/blog/tags","count":1}')}}]);

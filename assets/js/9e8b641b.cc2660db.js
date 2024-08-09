@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[4427],{28631:function(s){s.exports=JSON.parse('{"label":"onelogin","permalink":"/blog/tags/onelogin","allTagsPath":"/blog/tags","count":1}')}}]);

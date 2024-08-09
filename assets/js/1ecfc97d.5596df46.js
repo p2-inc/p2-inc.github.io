@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[9028],{34156:function(s){s.exports=JSON.parse('{"label":"workos","permalink":"/blog/tags/workos","allTagsPath":"/blog/tags","count":2}')}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[7322],{1600:function(s){s.exports=JSON.parse('{"label":"nextjs","permalink":"/blog/tags/nextjs","allTagsPath":"/blog/tags","count":1}')}}]);

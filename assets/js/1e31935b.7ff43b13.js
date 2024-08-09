@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[2486],{91825:function(s){s.exports=JSON.parse('{"label":"frameworks","permalink":"/blog/tags/frameworks","allTagsPath":"/blog/tags","count":9}')}}]);

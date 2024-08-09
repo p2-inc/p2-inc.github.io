@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[634],{72262:function(s){s.exports=JSON.parse('{"label":"idp","permalink":"/blog/tags/idp","allTagsPath":"/blog/tags","count":1}')}}]);
