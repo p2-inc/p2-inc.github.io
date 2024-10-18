@@ -4,10 +4,32 @@
         <title>Phase Two - Keycloak Hosting | Support | Migration | Customization Blog</title>
         <link>https://phasetwo.io/blog/</link>
         <description>Phase Two - Keycloak Hosting | Support | Migration | Customization Blog</description>
-        <lastBuildDate>Thu, 10 Oct 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 18 Oct 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Why your startup should use Keycloak for SSO and User Management]]></title>
+            <link>https://phasetwo.io/blog/keycloak-for-startups-overview/</link>
+            <guid>https://phasetwo.io/blog/keycloak-for-startups-overview/</guid>
+            <pubDate>Fri, 18 Oct 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Startups are striving for excellence in user experience and security, while simultaneously focusing on their core competencies. That means picking the best tools that expedite their time to market, with as few compromises as possible. Learn why Keycloak excels where commercial solutions fail.]]></description>
+            <content:encoded><![CDATA[<p>In the ever-evolving landscape of Enterprise SaaS, navigating the complexities of identity and access management (IAM) can be a daunting task. As a startup striving for excellence in user experience and security, choosing the right IAM solution is paramount. Enter Keycloak, a powerful open-source IAM tool that not only meets but exceeds the demands of modern startups.</p>
+<p>There are a glut of commercial startups that solve some of the core challenges of authentication and authorization. But most of them rely on obscuring their true nature as a <em>commodity</em> as a way of <em>marketing</em> their products as <em>somehow differentiated</em>.</p>
+<p>The purpose of this series is to dive into the key issues that separate an open source solution like Keycloak from commercial entities like <a href="https://phasetwo.io/blog/keycloak-vs-auth0-open-source-alternative/">Auth0</a>, <a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/">Okta</a>, or <a href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/">WorkOs</a>. This should give a startup engineer or manager ample background to understand the decision, and to cut through the marketing gibberish.</p>
+<p>This series will address the following key issues in 4 parts:</p>
+<ol>
+<li>Every commercial offering is an implementation of the same standards</li>
+<li>The ability to control your data is essential, now and in the future</li>
+<li>Extensibility and customization will always be necessary</li>
+<li>There is no justification for variable cost for individual features</li>
+</ol>
+<p>Please stay tuned as we release a new section each week! If you would like to try out Keycloak, <a href="https://phasetwo.io/dashboard/" target="_blank" rel="noopener noreferrer">sign-up</a> for Phase Two's free tier and test it out now.</p>]]></content:encoded>
+            <author>support@phasetwo.io (Phase Two)</author>
+            <category>keycloak</category>
+            <category>phase_two</category>
+            <category>startup</category>
+        </item>
         <item>
             <title><![CDATA[Securing Keycloak with OIDC SPA and Phase Two]]></title>
             <link>https://phasetwo.io/blog/keycloak-oidc-spa-phasetwo/</link>
@@ -1517,56 +1539,6 @@ Keycloak matches Auth0 in terms of functionality, supporting similar authenticat
             <category>okta</category>
             <category>cognito</category>
             <category>keycloak_support</category>
-        </item>
-        <item>
-            <title><![CDATA[Keycloak on CockroachDB: Scalable, Resilient, Open Source, Identity and Access Management]]></title>
-            <link>https://phasetwo.io/blog/keycloak-on-cockroachdb/</link>
-            <guid>https://phasetwo.io/blog/keycloak-on-cockroachdb/</guid>
-            <pubDate>Wed, 06 Dec 2023 00:00:00 GMT</pubDate>
-            <description><![CDATA[Phase Two's CockroachDB multi-region Database support for Keycloak provides a scalable, resilient, open-source identity and access management solution.]]></description>
-            <content:encoded><![CDATA[<p><img decoding="async" loading="lazy" alt="Keycloak Phase Two CockroachDb Logos" src="https://phasetwo.io/assets/images/2023-12-06-keycloak-on-cockroachdb-kcpluscrdb-7f7d695702b7bfdf50100646b7133da8.png" width="500" height="256" class="img_ev3q"></p>
-<p><a href="https://www.keycloak.org/" target="_blank" rel="noopener noreferrer">Keycloak</a> has been a leader in the Identity and Access Management (IAM) world since its launch almost 9 years ago. The market for IAM tools had several commercial offerings that failed to meet many business model and price needs, and Keycloak filled the hole with an open-source offering.</p>
-<p>Fast-forward to today, Keycloak still leads with mature protocol implementations, hardened security, and a reliable architecture that has been battle-tested for years, under the stewardship of the maintainers at <a href="https://www.redhat.com/" target="_blank" rel="noopener noreferrer">Red Hat</a>. Whether deploying an in-house identity provider, or a user management system for a SaaS offering, Keycloak is an obvious choice.</p>
-<p>With time, customer needs have evolved to include greater resiliency, expanded database selection, deploying in multiple regions, and operating across clouds. Because of operational complexity and architectural barriers, the Keycloak team decided to embark on a project to build a new underlying storage architecture. While promising, the project has taken longer than expected, and has yet to produce a production-ready result.</p>
-<p>One of the great aspects of open source, is that it allows anyone to participate. About 18 months ago, <a href="https://phasetwo.io/" target="_blank" rel="noopener noreferrer">Phase Two</a> decided to implement support for CockroachDB for the existing storage architecture in order to meet this growing customer demand.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="remind-me-what-is-phase-two">Remind me, what is Phase Two?<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#remind-me-what-is-phase-two" class="hash-link" aria-label="Direct link to Remind me, what is Phase Two?" title="Direct link to Remind me, what is Phase Two?">​</a></h2>
-<p>Phase Two helps SaaS builders accelerate time-to-market and enterprise adoption with powerful SSO, identity and user management features. To that end, Phase Two has created an enhanced distribution of Keycloak that bundles several essential <a href="https://github.com/p2-inc" target="_blank" rel="noopener noreferrer">open source extensions</a> for modern SaaS use cases. Phase Two supports hosted and on-premise customers for a variety of use cases.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-we-built-support-for-cockroachdb">How we built support for CockroachDB<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#how-we-built-support-for-cockroachdb" class="hash-link" aria-label="Direct link to How we built support for CockroachDB" title="Direct link to How we built support for CockroachDB">​</a></h2>
-<p>We eagerly dove into the challenge of adding CockroachDB support, but we quickly encountered a few key issues:</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-sql">1. SQL<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#1-sql" class="hash-link" aria-label="Direct link to 1. SQL" title="Direct link to 1. SQL">​</a></h4>
-<p>Keycloak internally uses the <a href="https://hibernate.org/" target="_blank" rel="noopener noreferrer">Hibernate ORM framework</a>, which generates the SQL for the database type selected (called a "dialect" by them). Fortunately for us, the <a href="https://www.cockroachlabs.com/" target="_blank" rel="noopener noreferrer">Cockroach Labs</a> team had already built a custom <a href="https://www.cockroachlabs.com/blog/building-support-for-java-orm-hibernate-in-cockroachdb/" target="_blank" rel="noopener noreferrer">CockroachDB Hibernate dialect</a> that we were able to use without modification.</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-migrations">2. Migrations<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#2-migrations" class="hash-link" aria-label="Direct link to 2. Migrations" title="Direct link to 2. Migrations">​</a></h4>
-<p>The <a href="https://www.liquibase.org/" target="_blank" rel="noopener noreferrer">Liquibase</a> library is used by Keycloak for tracking, managing, and applying database schema changes. However, the authors had not anticipated adding support for entirely new database types without making code changes. We had to add CRDB, the Hibernate dialect, and the correct JDBC driver classes to the code to enable first-class support.</p>
-<p>We ported the migrations that were incompatible with CRDB. This was required because of a few SQL semantics that are not supported in CRDB the same way they are in PostgreSQL.</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-transactions">3. Transactions<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#3-transactions" class="hash-link" aria-label="Direct link to 3. Transactions" title="Direct link to 3. Transactions">​</a></h4>
-<p>Because CRDB uses <a href="https://www.cockroachlabs.com/docs/stable/transactions#serializable-isolation" target="_blank" rel="noopener noreferrer">serializable isolation</a> by default, it was incompatible with Keycloak's use of distributed ("XA") or two-phase commit ("JTA") transaction managers. However, because the use of these is not necessary outside of an environment where other applications are using the same resources, it was possible to disable them. The Keycloak team was helpful in adding some environment variables to disable these, as they had also seen other database use cases that required it.</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="4-an-incredible-team">4. An <strong>Incredible</strong> Team<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#4-an-incredible-team" class="hash-link" aria-label="Direct link to 4-an-incredible-team" title="Direct link to 4-an-incredible-team">​</a></h4>
-<p>It also wouldn't have been possible to complete the changes without tireless support from the Cockroach Labs engineering team. They patiently helped us understand how CRDB is different, wrote code examples and tests, and were never shy about giving us access to everyone in the organization, regardless of level and how busy they were.</p>
-<p>A <strong>HUGE</strong> thank you to the whole Cockroach team!</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-does-it-work">How does it work?<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#how-does-it-work" class="hash-link" aria-label="Direct link to How does it work?" title="Direct link to How does it work?">​</a></h2>
-<p>About 12 months ago, we launched our self-service, free product, built on our CRDB port and running on Cockroach Labs' managed serverless product. Over that period, we've provided over 900 free deployments, without a single production incident for both CockroachDB serverless and Phase Two enhanced Keycloak.</p>
-<p>Furthermore, we've built out a test system that we run prior to releasing new versions in order to ensure that there are no regressions compared to the main Keycloak distributions. We run that test system and several benchmarks prior to releasing each new version of our fork.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-is-this-important-now">Why is this important now?<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#why-is-this-important-now" class="hash-link" aria-label="Direct link to Why is this important now?" title="Direct link to Why is this important now?">​</a></h2>
-<p>The Keycloak team had embarked on an ambitious project over 2 years ago to completely overhaul the storage architecture. The so-called "map store" was designed, among other things, to provide a basis for high-availability by replicating data with multiple data centers. However, after that time period, there was still a lot of uncertainty and risk involved in getting to the point where the store was production ready. Thus the team decided to drop the project. <a href="https://www.keycloak.org/2023/10/map-store-removal" target="_blank" rel="noopener noreferrer">See the announcement</a>.</p>
-<p>That leaves Phase Two's CRDB support in a unique position, as it is the only version of Keycloak that will support Cockroach's multi-region database.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="take-me-to-it">Take me to it!<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#take-me-to-it" class="hash-link" aria-label="Direct link to Take me to it!" title="Direct link to Take me to it!">​</a></h2>
-<p>We get it! Here are a few links to help you jump-start your work:</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-keycloak-managed-hosting">1. Keycloak Managed Hosting<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#1-keycloak-managed-hosting" class="hash-link" aria-label="Direct link to 1. Keycloak Managed Hosting" title="Direct link to 1. Keycloak Managed Hosting">​</a></h4>
-<p>Phase Two provides self-service deployments of Keycloak hosted on multiple clouds. <a href="https://phasetwo.io/#pricing" target="_blank" rel="noopener noreferrer">Plans</a> start with a free version for testing and small production use cases. Dedicated clusters are available for customers requiring an SLA, isolated resources, and the ability to grow into larger use cases.</p>
-<p>The database tier for our shared and dedicated clusters uses the <a href="https://www.cockroachlabs.com/lp/serverless-database-p" target="_blank" rel="noopener noreferrer">CockroachDB serverless</a> service. Working with Cockroach Labs gives us the expertise and reliability of hosting thousands of customer clusters at a massive scale.</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-community-distribution">2. Community Distribution<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#2-community-distribution" class="hash-link" aria-label="Direct link to 2. Community Distribution" title="Direct link to 2. Community Distribution">​</a></h4>
-<p>If you're more DIY, and you're planning to run everything yourself, the base distribution image that contains our changes to Keycloak to enable CockroachDB support is available in the Phase Two <a href="https://quay.io/repository/phasetwo/keycloak-crdb?tab=info" target="_blank" rel="noopener noreferrer">Keycloak CockroachDB docker repository</a>. It's a drop-in replacement for Keycloak that doesn't require much configuration beyond the <a href="https://www.keycloak.org/guides" target="_blank" rel="noopener noreferrer">official guides</a>. We generally release a version within 1-2 days of the official Keycloak release.</p>
-<p>For the impatient, we've also put together a complete <a href="https://github.com/p2-inc/phasetwo-containers/blob/main/examples/cockroach/docker-compose.yml" target="_blank" rel="noopener noreferrer">docker compose</a> example that includes a single node CockroachDB instance. You can also modify the configuration to use your own CockroachDB dedicated or serverless database.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="the-future">The Future<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#the-future" class="hash-link" aria-label="Direct link to The Future" title="Direct link to The Future">​</a></h2>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="keycloak-on-crdb">Keycloak on CRDB<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#keycloak-on-crdb" class="hash-link" aria-label="Direct link to Keycloak on CRDB" title="Direct link to Keycloak on CRDB">​</a></h4>
-<p>Because of the uncertainty around the direction of the Keycloak storage architecture, Phase Two is committed to maintaining support for the "legacy store" and our port to CRDB for the long term.</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="phase-two-and-cockroach-labs">Phase Two and Cockroach Labs<a href="https://phasetwo.io/blog/keycloak-on-cockroachdb/#phase-two-and-cockroach-labs" class="hash-link" aria-label="Direct link to Phase Two and Cockroach Labs" title="Direct link to Phase Two and Cockroach Labs">​</a></h4>
-<p>Many of our on-premise, support customers with large use cases asked us to build out a solution for massive-scale, fault-tolerant, multi-region use cases. One of the great parts of building support for Keycloak's existing storage architecture for CRDB is that we've been able to explore use cases that were previously impossible using the standard Keycloak distribution. For use cases with these requirements, plus global proximity to users and regional failover, we built global clusters, backed by CRDB multi-region database, for which we are now in Beta.</p>
-<p>We're excited to see what you build with Keycloak and CRDB!</p>]]></content:encoded>
-            <author>support@phasetwo.io (Phase Two)</author>
-            <category>keycloak</category>
-            <category>phase_two</category>
-            <category>cockroach</category>
         </item>
     </channel>
 </rss>
