@@ -2,11 +2,54 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Phase Two - Keycloak Hosting | Support | Migration | Customization Blog</title>
-    <updated>2024-10-18T00:00:00.000Z</updated>
+    <updated>2024-10-21T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Phase Two - Keycloak Hosting | Support | Migration | Customization Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Why your startup should use Keycloak for SSO and User Management - Standards]]></title>
+        <id>https://phasetwo.io/blog/keycloak-for-startups-standards/</id>
+        <link href="https://phasetwo.io/blog/keycloak-for-startups-standards/"/>
+        <updated>2024-10-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Every commercial and open source IAM offering is an implementation of the same standards.]]></summary>
+        <content type="html"><![CDATA[<p><em>In this <a href="https://phasetwo.io/blog/keycloak-for-startups-overview/">series</a> we are proposing Keycloak as a superior alternative to commercial identity offerings.</em></p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="part-1-standardized-protocols-and-minimal-feature-set-differentiation">Part 1: Standardized Protocols and Minimal Feature Set Differentiation<a href="https://phasetwo.io/blog/keycloak-for-startups-standards/#part-1-standardized-protocols-and-minimal-feature-set-differentiation" class="hash-link" aria-label="Direct link to Part 1: Standardized Protocols and Minimal Feature Set Differentiation" title="Direct link to Part 1: Standardized Protocols and Minimal Feature Set Differentiation">​</a></h3>
+<p>In the realm of Identity and Access Management (IAM) solutions, it's essential to recognize that many offerings, both commercial and open source, operate on standardized protocols such as OpenID Connect (OIDC), Security Assertion Markup Language (SAML), System for Cross-domain Identity Management (SCIM), Lightweight Directory Access Protocol (LDAP), and more. This adherence to standardized protocols often results in minimal differentiation at the feature set level across various options. Let's delve into this further:</p>
+<ol>
+<li>
+<p><strong>Protocol Compliance</strong>: Whether it's OIDC for modern authentication, SAML for Single Sign-On (<a href="https://phasetwo.io/product/sso/">SSO</a>), SCIM for user provisioning, or LDAP for directory services, IAM solutions are built upon established industry standards. This adherence ensures interoperability and compatibility with a wide range of applications and systems, irrespective of the chosen solution.</p>
+</li>
+<li>
+<p><strong>Core Functionality</strong>: At their core, <a href="https://phasetwo.io/blog/open-source-iam/">IAM solutions</a> primarily focus on fundamental functionalities such as authentication, authorization, user provisioning, and identity federation. These functionalities form the backbone of IAM systems and are present across all offerings, regardless of whether they are commercial or open source.</p>
+</li>
+<li>
+<p><strong>Feature Parity</strong>: While commercial IAM solutions may tout additional features or value-added services, the underlying feature set remains largely consistent across the board. Basic <a href="https://phasetwo.io/product/identity/">functionalities</a> such as user authentication, role-based access control (RBAC), multi-factor authentication (MFA), and audit logging are standard offerings in both commercial and open-source IAM solutions.</p>
+</li>
+<li>
+<p><strong>Customization and Extensibility</strong>: Differentiation often occurs at the level of <a href="https://phasetwo.io/blog/keycloak-extensions-presentation/">customization and extensibility</a> rather than core features. Both commercial and open-source IAM solutions provide APIs, SDKs, and extension points that enable organizations to tailor the platform to their specific requirements, integrate with existing systems, and extend functionality as needed.</p>
+</li>
+<li>
+<p><strong>Vendor-Specific Enhancements</strong>: While the core feature set may be similar across IAM solutions, vendors may differentiate themselves through vendor-specific enhancements, integrations, or ecosystem partnerships. However, these enhancements typically cater to niche use cases or specific industries and may not significantly impact the overall feature parity among IAM solutions.</p>
+</li>
+<li>
+<p><strong>Closed Development</strong>: One of the key issues is that many commercial solutions are developed in isolation of public audits and community scrutiny. Companies build and operate these core secuirty protocols and standards behind a veil of secrecy, not sharing their implementations to allow review by security professionals and standards bodies. In contrast, open source solutions are built to allow full review and participation by both. Keycloak has been through many independent reviews and audits, and has a mature process for handling security issues in a timely fashion. Do you want these critical security implementations to be built with a rigor for review, or something one developer slapped together from a few examples and ChatGPT sessions?</p>
+</li>
+</ol>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="conclusion-1-making-informed-decisions-beyond-feature-sets">Conclusion 1: Making Informed Decisions Beyond Feature Sets<a href="https://phasetwo.io/blog/keycloak-for-startups-standards/#conclusion-1-making-informed-decisions-beyond-feature-sets" class="hash-link" aria-label="Direct link to Conclusion 1: Making Informed Decisions Beyond Feature Sets" title="Direct link to Conclusion 1: Making Informed Decisions Beyond Feature Sets">​</a></h4>
+<p>In conclusion, while it's true that there is minimal differentiation on the feature set level among IAM solutions due to standardized protocols, organizations should focus on other factors when evaluating and selecting a solution. Considerations such as cost-effectiveness, customization capabilities, vendor support, community engagement, and alignment with organizational goals should weigh heavily in the decision-making process.</p>
+<p>Ultimately, the choice between commercial and open-source IAM solutions should be driven by factors beyond the core feature set, with organizations prioritizing flexibility, scalability, security, and long-term sustainability in their IAM strategy.</p>
+<p><em>Stay tuned for "Part 2: The ability to control your data is essential, now and in the future", coming out next week!</em></p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="keycloak" term="keycloak"/>
+        <category label="phase_two" term="phase_two"/>
+        <category label="startup" term="startup"/>
+        <category label="standards" term="standards"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Why your startup should use Keycloak for SSO and User Management]]></title>
         <id>https://phasetwo.io/blog/keycloak-for-startups-overview/</id>
@@ -18,7 +61,7 @@
 <p>The purpose of this series is to dive into the key issues that separate an open source solution like Keycloak from commercial entities like <a href="https://phasetwo.io/blog/keycloak-vs-auth0-open-source-alternative/">Auth0</a>, <a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/">Okta</a>, or <a href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/">WorkOs</a>. This should give a startup engineer or manager ample background to understand the decision, and to cut through the marketing gibberish.</p>
 <p>This series will address the following key issues in 4 parts:</p>
 <ol>
-<li>Every commercial offering is an implementation of the same standards</li>
+<li><a href="https://phasetwo.io/blog/keycloak-for-startups-standards/">Part 1</a>: Every commercial offering is an implementation of the same standards</li>
 <li>The ability to control your data is essential, now and in the future</li>
 <li>Extensibility and customization will always be necessary</li>
 <li>There is no justification for variable cost for individual features</li>
@@ -1568,55 +1611,5 @@ Keycloak matches Auth0 in terms of functionality, supporting similar authenticat
         <category label="idp_wizard" term="idp_wizard"/>
         <category label="on_prem" term="on_prem"/>
         <category label="private_cloud" term="private_cloud"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Keycloak: An open source alternative to Auth0, WorkOS, Okta, Cognito, ...]]></title>
-        <id>https://phasetwo.io/blog/open-source-iam/</id>
-        <link href="https://phasetwo.io/blog/open-source-iam/"/>
-        <updated>2024-03-11T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Keycloak is a financially sustainable, open source alternative to many paid identity and access management providers.]]></summary>
-        <content type="html"><![CDATA[<p>In today's digital landscape, managing user identities and securing access to applications and services is paramount for businesses of all sizes. As the demand for robust identity and access management (IAM) solutions grows, so does the market, with various commercial options vying for attention. When we first started using <a href="https://keycloak.org/" target="_blank" rel="noopener noreferrer">Keycloak</a> over 7 years ago, we were surprised that there was a relatively unknown, but completely open-source alternative to commercial offerings in the Identity and Access Management market.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="commercial-offerings">Commercial offerings<a href="https://phasetwo.io/blog/open-source-iam/#commercial-offerings" class="hash-link" aria-label="Direct link to Commercial offerings" title="Direct link to Commercial offerings">​</a></h3>
-<p>Companies such as <a href="https://www.auth0.com/" target="_blank" rel="noopener noreferrer">Auth0</a>, <a href="https://www.okta.com/" target="_blank" rel="noopener noreferrer">Okta</a>, Microsoft (through <a href="https://www.microsoft.com/en-us/security/business/microsoft-entra" target="_blank" rel="noopener noreferrer">AzureAD</a>) had created cloud authentication services, and helped bring standardization to the market through implementation of standards, such as OIDC, SAML, SCIM, LDAP, etc. However, there was little differentiation among them, and despite their pricing models, were essentially commodities that were the same.</p>
-<p>Amazon released <a href="https://aws.amazon.com/cognito" target="_blank" rel="noopener noreferrer">AWS Cognito</a>, which did price it as a commodity, but failed so miserably in UI and developer ergonomics, that it failed to reach a dominant market position despite its de minimis cost.</p>
-<p>More recently, nascent companies such as <a href="https://workos.com/" target="_blank" rel="noopener noreferrer">WorkOS</a> and <a href="https://www.frontegg.com/" target="_blank" rel="noopener noreferrer">Frontegg</a>, while casting themselves as CIAM and “SSO made easy” to enterprise SaaS customers, are really just repackaging the same IAM features and protocol implementations that have been available in Keycloak for years. Furthermore, the pricing models have tilted back towards predatory on your company’s business model.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="keycloak-advantages">Keycloak advantages<a href="https://phasetwo.io/blog/open-source-iam/#keycloak-advantages" class="hash-link" aria-label="Direct link to Keycloak advantages" title="Direct link to Keycloak advantages">​</a></h3>
-<p>Amidst this landscape, open-source alternatives like Keycloak are emerging as powerful contenders, offering unique advantages over their commercial counterparts. Because the market has settled on standard protocols, it opened the door for superior open-source implementations to emerge with feature parity and standards compliance. Keycloak stands out as an alternative to commercial IAM solutions, enabling your business to unlock both flexibility and control.</p>
-<ol>
-<li><strong>Open Source Foundation:</strong> At the heart of Keycloak lies its open-source nature. Developed by Red Hat, Keycloak provides a fully-fledged IAM solution that is freely available for anyone to use, modify, and extend according to their requirements. This open ethos empowers organizations with unparalleled flexibility and control over their identity infrastructure, without being tied to proprietary vendors or licensing agreements. Furthermore, given the core security requirements of the protocol implementations, developing in the open gives customers the reassurance that the code has been audited by others, unlike closed source, buggy, commercial implementations that come with zero transparency or guarantees.</li>
-<li><strong>Cost-Effectiveness:</strong> One of the most significant advantages of Keycloak is its cost-effectiveness. Unlike commercial IAM solutions that operate on subscription-based pricing models, Keycloak eliminates licensing fees, enabling organizations to allocate resources more efficiently. With Keycloak, businesses can scale their identity infrastructure without worrying about escalating SSO, authentication, and other costs, making it an attractive option for startups, small businesses, and enterprises alike.</li>
-<li><strong>Customization and Extensibility:</strong> Keycloak stands out for its robust customization and extensibility capabilities. From authentication flows and user federation to role-based access control (RBAC) and fine-grained permissions, Keycloak provides a plethora of features that can be tailored to suit specific use cases and compliance requirements. Moreover, its modular architecture and comprehensive API support facilitate seamless integration with existing systems and third-party services, empowering developers to build bespoke identity solutions with ease.</li>
-<li><strong>On-Premise and Cloud Deployment:</strong> Whether organizations prefer on-premise deployment for enhanced security and compliance or cloud-based solutions for scalability and convenience, Keycloak offers the flexibility to meet diverse deployment needs. With support for Docker, Kubernetes, and other containerization technologies, Keycloak simplifies deployment across various environments, ensuring seamless integration into existing infrastructure and workflows.</li>
-<li><strong>Active Community and Support:</strong> Backed by a vibrant community of developers and contributors, Keycloak benefits from ongoing enhancements, bug fixes, and feature additions. This active ecosystem fosters innovation and collaboration, with users sharing best practices, troubleshooting tips, and extensions through forums, mailing lists, and code repositories. Additionally, organizations seeking professional support and services can leverage expertise of a growing ecosystem of companies providing support, ensuring reliable deployment and ongoing maintenance of their Keycloak instances.</li>
-</ol>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="keycloak-disadvantages">Keycloak disadvantages<a href="https://phasetwo.io/blog/open-source-iam/#keycloak-disadvantages" class="hash-link" aria-label="Direct link to Keycloak disadvantages" title="Direct link to Keycloak disadvantages">​</a></h3>
-<p>So, given Keycloak's inherent advantages, while solving all of the same problems, why has it failed to receive broad market adoption? Looking back, and polling our customer base, it seems that Keycloak has suffered from a couple of barriers:</p>
-<ol>
-<li><strong>Awareness:</strong> Other than a couple of markets (e.g. Germany) Keycloak is still relatively unknown. Because it’s not a commercial entity, there isn’t a content marketing engine that focuses on discovery for common use cases.</li>
-<li><strong>Onboarding</strong>: Documentation for getting successful for common use cases is fragmented and often hard to find. When solving a new problem, examples are a great way to get a developer “hooked”, but these are largely missing from official Keycloak documentation.</li>
-<li><strong>Community</strong>: Because the core Keycloak developers have largely been working for one customer (RedHat) and not the community at large, developers who are exploring Keycloak for the first time can find it hard to know where to ask question. While the Discourse, GitHub, Slack and mailing lists are a good direction, there’s not a definitive way to get support.</li>
-<li><strong>UI</strong>: The Keycloak Admin UI, while complete, is intimidating to new users. Unlike the commercial alternatives, that have invested resources in building and measuring customer success into their UIs, while Keycloak’s attitude has been "<a href="https://en.wikipedia.org/wiki/RTFM" target="_blank" rel="noopener noreferrer">RTFM</a>". Furthermore, the user facing UIs of Keycloak are notoriously “rough edged”, commercial alternatives are beautiful, modern, and capable of easy customization and branding.</li>
-</ol>
-<p>Obviously, we think that the barriers are something that can be solved, and <a href="https://phasetwo.io/" target="_blank" rel="noopener noreferrer">Phase Two</a> has been working hard in its <a href="https://github.com/p2-inc" target="_blank" rel="noopener noreferrer">open source extensions</a> and <a href="https://phasetwo.io/#pricing" target="_blank" rel="noopener noreferrer">cloud offerings</a> to overcome these barriers. We've already made great strides, and believe that we're at the point where customers can realize the above advantages, while compromising relatively little -- All while achieving tremendous cost savings in SSO, authentication, and user manangement.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="migrating-to-keycloak-from-your-current-identity-provider">Migrating to Keycloak from your current identity provider<a href="https://phasetwo.io/blog/open-source-iam/#migrating-to-keycloak-from-your-current-identity-provider" class="hash-link" aria-label="Direct link to Migrating to Keycloak from your current identity provider" title="Direct link to Migrating to Keycloak from your current identity provider">​</a></h3>
-<p>Already using one of the commercial systems? Keycloak is a complete, robust and mature identity solution that can replace your identity provider and user management systems <strong>today</strong>. It has complete parity with all of the major features of commercial IAM systems, and because of reliance on standards, migration is easier than you think. By migrating to Keycloak, you gain full control over your authentication and authorization processes, enabling seamless integration, customization, and scalability tailored to your organization's unique needs.</p>
-<p>Phase two has implemented <a href="https://phasetwo.io/docs/user-migration/" target="_blank" rel="noopener noreferrer">user migration</a> support in the product for all tiers. This is meant to ease your transition from your existing user management system so that migration can occur incrementally with a complete fallback plan.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="keycloak-support">Keycloak Support<a href="https://phasetwo.io/blog/open-source-iam/#keycloak-support" class="hash-link" aria-label="Direct link to Keycloak Support" title="Direct link to Keycloak Support">​</a></h3>
-<p>Configuring, integrating, and operating an Identity and Access Management (IAM) system can be a daunting task, especially for those new to Keycloak. For Premium and Enterprise subscribers, we include migration support. Whether you're a hosted or on-prem customer, or have your own Keycloak deployment, Phase Two can support your goals from configuration and integration to operation and maintenance. Don't let the complexities of IAM hold you back. <a href="email:sales@phasetwo.io" target="_blank" rel="noopener noreferrer">Contact us today</a> to learn more about how we can support your Keycloak journey and take your organization to the next level.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="conclusion">Conclusion<a href="https://phasetwo.io/blog/open-source-iam/#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion">​</a></h3>
-<p>In a landscape dominated by commercial IAM solutions, Keycloak shines as a compelling alternative that combines the power of open source with enterprise-grade features and flexibility. With its cost-effectiveness, customization capabilities, deployment flexibility, and active community support, Keycloak empowers organizations to take control of their identity infrastructure, unlock new possibilities, and adapt to evolving security and compliance requirements. Whether you're a startup looking to bootstrap your identity management or an enterprise seeking to streamline operations, Keycloak offers a compelling solution that puts you in the driver's seat of your IAM journey.</p>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="keycloak" term="keycloak"/>
-        <category label="phase_two" term="phase_two"/>
-        <category label="open_source" term="open_source"/>
-        <category label="auth0" term="auth0"/>
-        <category label="workos" term="workos"/>
-        <category label="okta" term="okta"/>
-        <category label="cognito" term="cognito"/>
-        <category label="keycloak_support" term="keycloak_support"/>
     </entry>
 </feed>
