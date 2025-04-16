@@ -2,11 +2,225 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Phase Two - Managed Keycloak Hosting and Enterprise Support Blog</title>
-    <updated>2025-04-10T00:00:00.000Z</updated>
+    <updated>2025-04-18T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Phase Two - Managed Keycloak Hosting and Enterprise Support Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Web Application Security with Your Keycloak Deployment]]></title>
+        <id>https://phasetwo.io/blog/waf-keycloak/</id>
+        <link href="https://phasetwo.io/blog/waf-keycloak/"/>
+        <updated>2025-04-18T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[As more companies adopt Keycloak for enterprise identity and access management, security is no longer just a back-end concern. One of the most frequent questions we hear at Phase Two is:]]></summary>
+        <content type="html"><![CDATA[<p>As more companies adopt Keycloak for enterprise identity and access management, security is no longer just a back-end concern. One of the most frequent questions we hear at Phase Two is:</p>
+<p><strong>"Should I put a Web Application Firewall (WAF) in front of Keycloak?"</strong></p>
+<p>The short answer? <strong>It depends</strong>—but it's a smart question to ask.</p>
+<p>In this post, we'll break down what Keycloak provides out of the box, explore common attack vectors (especially around authentication endpoints), and help you evaluate whether you need to add an external firewall or WAF to your deployment.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="what-security-does-keycloak-provide">What Security Does Keycloak Provide?<a href="https://phasetwo.io/blog/waf-keycloak/#what-security-does-keycloak-provide" class="hash-link" aria-label="Direct link to What Security Does Keycloak Provide?" title="Direct link to What Security Does Keycloak Provide?">​</a></h2>
+<p>Keycloak includes several built-in protections, especially around <strong>login abuse detection</strong>:</p>
+<ul>
+<li><strong>Brute Force Detection</strong>: Limit login attempts per user/IP combination</li>
+<li><strong>Event Logging</strong>: Track login attempts, errors, and success/failure trends</li>
+<li><strong>Account Lockout</strong>: Lock users after repeated failures</li>
+<li><strong>Rate Limiting</strong> (indirect via proxies): Supports integration with reverse proxies/load balancers</li>
+<li><strong>Session Expiry Controls</strong>: Limits token lifespan and session reuse</li>
+</ul>
+<p>These help protect against basic abuse patterns like credential stuffing and dictionary attacks—but they aren’t designed to stop <strong>network-level threats</strong> like DDoS or complex bot traffic.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="which-keycloak-endpoints-get-targeted">Which Keycloak Endpoints Get Targeted?<a href="https://phasetwo.io/blog/waf-keycloak/#which-keycloak-endpoints-get-targeted" class="hash-link" aria-label="Direct link to Which Keycloak Endpoints Get Targeted?" title="Direct link to Which Keycloak Endpoints Get Targeted?">​</a></h2>
+<p>The most vulnerable part of a Keycloak deployment is also its most exposed: the <strong>login page</strong>.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="commonly-targeted-endpoints">Commonly targeted endpoints:<a href="https://phasetwo.io/blog/waf-keycloak/#commonly-targeted-endpoints" class="hash-link" aria-label="Direct link to Commonly targeted endpoints:" title="Direct link to Commonly targeted endpoints:">​</a></h3>
+<ul>
+<li><code>/realms/{realm}/protocol/openid-connect/auth</code></li>
+<li><code>/realms/{realm}/protocol/openid-connect/token</code></li>
+<li><code>/realms/{realm}/account/</code></li>
+<li><code>/realms/{realm}/login-actions/authenticate</code></li>
+<li>Password reset and registration endpoints</li>
+</ul>
+<p>These routes are exposed by design. If your login page is available to users around the world, it’s available to bots and attackers too.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="so-when-should-you-consider-a-waf">So, When Should You Consider a WAF?<a href="https://phasetwo.io/blog/waf-keycloak/#so-when-should-you-consider-a-waf" class="hash-link" aria-label="Direct link to So, When Should You Consider a WAF?" title="Direct link to So, When Should You Consider a WAF?">​</a></h2>
+<p>A WAF can protect your Keycloak deployment from a wide range of threats that Keycloak itself is not built to handle, such as:</p>
+<ul>
+<li><strong>DDoS attacks</strong> targeting login endpoints</li>
+<li><strong>Bot-driven enumeration attacks</strong> (e.g., slow username probing)</li>
+<li><strong>IP spoofing or rotation attempts</strong></li>
+<li><strong>Malformed request injection or protocol abuse</strong></li>
+</ul>
+<p>A WAF provides <strong>layer 7 security</strong>, filtering traffic based on behavior, headers, and known attack patterns.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="you-might-consider-a-waf-if">You might consider a WAF if:<a href="https://phasetwo.io/blog/waf-keycloak/#you-might-consider-a-waf-if" class="hash-link" aria-label="Direct link to You might consider a WAF if:" title="Direct link to You might consider a WAF if:">​</a></h3>
+<ul>
+<li>You expose Keycloak login pages publicly to thousands/millions of users</li>
+<li>You run multi-tenant or CIAM deployments</li>
+<li>You’ve experienced repeated attack attempts (or near misses)</li>
+<li>You need deeper visibility and mitigation for L7 (application-level) traffic</li>
+<li>You want geo-blocking, bot detection, or rate limiting with fine control</li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="real-world-example-what-a-ddos-can-look-like">Real-World Example: What a DDoS Can Look Like<a href="https://phasetwo.io/blog/waf-keycloak/#real-world-example-what-a-ddos-can-look-like" class="hash-link" aria-label="Direct link to Real-World Example: What a DDoS Can Look Like" title="Direct link to Real-World Example: What a DDoS Can Look Like">​</a></h2>
+<p>A team running Keycloak recently shared their experience dealing with a <strong>multi-phase login enumeration DDoS attack</strong>:</p>
+<ul>
+<li>Attackers gradually increased pressure, beginning with low-rate enumeration</li>
+<li>A misconfiguration allowed for excessive open connections that exhausted resources</li>
+<li>Over time, they escalated to thousands of login requests per minute</li>
+<li>Sophisticated use of IP rotation made IP bans ineffective</li>
+</ul>
+<p>Even though no data was breached, the attack overwhelmed infrastructure and required layered mitigation—<strong>including a WAF</strong> to filter malicious patterns without affecting legitimate traffic.</p>
+<p>Phase Two has helped customers build resilient defenses to ensure they're ready <em>before</em> attackes like this happens.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-to-architect-defenses-around-keycloak">How to Architect Defenses Around Keycloak<a href="https://phasetwo.io/blog/waf-keycloak/#how-to-architect-defenses-around-keycloak" class="hash-link" aria-label="Direct link to How to Architect Defenses Around Keycloak" title="Direct link to How to Architect Defenses Around Keycloak">​</a></h2>
+<p>Whether or not you use a WAF, we recommend the following layered defense strategy. Using some or all of these can help.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="keycloak-brute-force--session-policies">Keycloak Brute Force &amp; Session Policies<a href="https://phasetwo.io/blog/waf-keycloak/#keycloak-brute-force--session-policies" class="hash-link" aria-label="Direct link to Keycloak Brute Force &amp; Session Policies" title="Direct link to Keycloak Brute Force &amp; Session Policies">​</a></h3>
+<p>Enable built-in brute force detection, set aggressive session expiration limits, and disable unused endpoints like user registration.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="waf-optional-but-recommended">WAF (Optional but Recommended)<a href="https://phasetwo.io/blog/waf-keycloak/#waf-optional-but-recommended" class="hash-link" aria-label="Direct link to WAF (Optional but Recommended)" title="Direct link to WAF (Optional but Recommended)">​</a></h3>
+<p>Use a WAF like Cloudflare, AWS WAF, or Fastly to block known bad actors and patterns. Look for features like:</p>
+<ul>
+<li>Rate limiting by path (e.g., <code>/auth</code>)</li>
+<li>Bot management</li>
+<li>CAPTCHA or JS challenge enforcement</li>
+<li>Real-time threat feeds</li>
+</ul>
+<p>As part of Phase Two's <a href="https://phasetwo.io/hosting/">Enterprise hosting</a> we provide the ability to integrate the WAF of your choosing along with your infrastructure.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="monitoring--anomaly-detection">Monitoring &amp; Anomaly Detection<a href="https://phasetwo.io/blog/waf-keycloak/#monitoring--anomaly-detection" class="hash-link" aria-label="Direct link to Monitoring &amp; Anomaly Detection" title="Direct link to Monitoring &amp; Anomaly Detection">​</a></h3>
+<p>Log traffic and authentication events. Set up alerts for spikes in failures, long-lived sessions, or abnormal IP geographies. Phase Two's built-in <a href="https://phasetwo.io/hosting/">monitoring</a> is already pre-configured to note changes in traffic and abnormal patterns.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="reverse-proxy">Reverse Proxy<a href="https://phasetwo.io/blog/waf-keycloak/#reverse-proxy" class="hash-link" aria-label="Direct link to Reverse Proxy" title="Direct link to Reverse Proxy">​</a></h3>
+<p>Use NGINX or Envoy in front of Keycloak to terminate TLS, cache static assets, and enforce basic rate limits.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="so-do-you-need-a-waf">So, Do You Need a WAF?<a href="https://phasetwo.io/blog/waf-keycloak/#so-do-you-need-a-waf" class="hash-link" aria-label="Direct link to So, Do You Need a WAF?" title="Direct link to So, Do You Need a WAF?">​</a></h2>
+<p>If you're running Keycloak inside a secure corporate network and exposing login only to employees, <strong>maybe not</strong>.</p>
+<p>But if you're serving external users—especially at scale—the answer leans strongly toward <strong>yes</strong>.</p>
+<p>Even the most robust IAM systems can be overwhelmed by network-level threats they weren’t built to handle. A WAF isn’t a silver bullet—but it’s a strong, smart addition to a well-architected identity stack. Defense-in-depth is truly the only option for full network security of any web property.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="️-how-phase-two-helps">🛠️ How Phase Two Helps<a href="https://phasetwo.io/blog/waf-keycloak/#%EF%B8%8F-how-phase-two-helps" class="hash-link" aria-label="Direct link to 🛠️ How Phase Two Helps" title="Direct link to 🛠️ How Phase Two Helps">​</a></h2>
+<p>At <strong>Phase Two</strong>, we specialize in managing and securing Keycloak at scale. Our hosted platform includes:</p>
+<ul>
+<li>Hardened Keycloak configurations</li>
+<li>Pre-integrated reverse proxy protections</li>
+<li>Best-practice DDoS and abuse mitigation</li>
+<li>Optional WAF integrations</li>
+<li>24/7 observability and response tooling</li>
+</ul>
+<p>We help teams design IAM infrastructure that’s not just compliant—but resilient.</p>
+<hr>
+<p><strong>Want to talk WAFs, login security, or DDoS mitigation?</strong><br>
+<!-- -->📩 <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer">Reach out to the team →</a>
+👉 <a href="https://phasetwo.io/dashboard" target="_blank" rel="noopener noreferrer">Get Started with Free Managed Keycloak</a></p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="open_source" term="open_source"/>
+        <category label="web_application_security" term="web_application_security"/>
+        <category label="security" term="security"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Webauthn and Passkeys with Keycloak]]></title>
+        <id>https://phasetwo.io/blog/webauthn-keycloak/</id>
+        <link href="https://phasetwo.io/blog/webauthn-keycloak/"/>
+        <updated>2025-04-17T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Passwords are on their way out. From phishing to password reuse, they've become one of the weakest links in modern authentication. The solution? Passkeys—a phishing-resistant, user-friendly, and increasingly supported replacement for traditional passwords.]]></summary>
+        <content type="html"><![CDATA[<p>Passwords are on their way out. From phishing to password reuse, they've become one of the weakest links in modern authentication. The solution? <strong>Passkeys</strong>—a phishing-resistant, user-friendly, and increasingly supported replacement for traditional passwords.</p>
+<p>In this post, we’ll break down what passkeys are, how they work, which platforms support them, how they relate to WebAuthn, and how you can integrate them into your Keycloak authentication flows. Finally, we’ll explore some of the real-world considerations and challenges.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="what-are-passkeys">What Are Passkeys?<a href="https://phasetwo.io/blog/webauthn-keycloak/#what-are-passkeys" class="hash-link" aria-label="Direct link to What Are Passkeys?" title="Direct link to What Are Passkeys?">​</a></h2>
+<p><strong>Passkeys</strong> are a modern alternative to passwords. Built on public-key cryptography, passkeys replace the traditional "something you know" (your password) with "something you have" (your device) and "something you are" (biometrics like a fingerprint or face scan).</p>
+<p>Unlike passwords, passkeys:</p>
+<ul>
+<li>Are resistant to phishing and brute-force attacks</li>
+<li>Can’t be reused across sites</li>
+<li>Don’t need to be remembered</li>
+<li>Are stored securely on your device or in a password manager that supports syncing</li>
+</ul>
+<p>They offer the security of hardware security keys (like YubiKey) but with the convenience of Face ID or Windows Hello.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-do-passkeys-work">How Do Passkeys Work?<a href="https://phasetwo.io/blog/webauthn-keycloak/#how-do-passkeys-work" class="hash-link" aria-label="Direct link to How Do Passkeys Work?" title="Direct link to How Do Passkeys Work?">​</a></h2>
+<p>Passkeys use <strong>public-private key pairs</strong> (<a href="https://en.wikipedia.org/wiki/Public-key_cryptography" target="_blank" rel="noopener noreferrer">link</a>). Here’s how a typical passkey login works:</p>
+<ol>
+<li>A website (relying party) sends a challenge to the user's browser.</li>
+<li>The user’s device uses a previously stored private key (protected by a biometric or PIN) to sign the challenge.</li>
+<li>The browser returns the signed challenge to the website.</li>
+<li>The website uses the stored public key to verify the response and complete authentication.</li>
+</ol>
+<p>No secrets are ever sent over the wire. This eliminates common password-based vulnerabilities.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="where-are-passkeys-supported">Where Are Passkeys Supported?<a href="https://phasetwo.io/blog/webauthn-keycloak/#where-are-passkeys-supported" class="hash-link" aria-label="Direct link to Where Are Passkeys Supported?" title="Direct link to Where Are Passkeys Supported?">​</a></h2>
+<p>Passkeys are no longer a concept of the future—they're here, and support is growing fast. To get a quick idea, here are some of the existing systems that offer support.</p>
+<table><thead><tr><th>Platform</th><th>Passkey Support</th></tr></thead><tbody><tr><td><strong>Apple</strong></td><td>Face ID / Touch ID via iCloud Keychain (macOS, iOS)</td></tr><tr><td><strong>Google</strong></td><td>Android and Chrome support passkeys via Google Password Manager</td></tr><tr><td><strong>Microsoft</strong></td><td>Windows Hello and Edge support WebAuthn-based passkeys</td></tr><tr><td><strong>Password Managers</strong></td><td>1Password and Dashlane have launched passkey support</td></tr><tr><td><strong>Browsers</strong></td><td>Chrome, Safari, Edge, and Firefox (with varying levels of polish)</td></tr></tbody></table>
+<p>Cross-platform syncing is also becoming easier thanks to initiatives like <strong>FIDO2</strong> and <strong>passkey.ro</strong>.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="whats-the-relationship-between-passkeys-and-webauthn">What’s the Relationship Between Passkeys and WebAuthn?<a href="https://phasetwo.io/blog/webauthn-keycloak/#whats-the-relationship-between-passkeys-and-webauthn" class="hash-link" aria-label="Direct link to What’s the Relationship Between Passkeys and WebAuthn?" title="Direct link to What’s the Relationship Between Passkeys and WebAuthn?">​</a></h2>
+<p><strong>WebAuthn</strong> (Web Authentication API) is the W3C standard that enables passwordless login in web applications. Passkeys are a <strong>user-friendly implementation of WebAuthn credentials</strong>, often synced across devices via a cloud provider (like iCloud or Google Password Manager).</p>
+<p>WebAuthn supports two main registration types:</p>
+<ul>
+<li><strong>Roaming authenticators</strong> like hardware keys (YubiKey)</li>
+<li><strong>Platform authenticators</strong> like biometrics on a phone or laptop (e.g., Touch ID, Windows Hello)</li>
+</ul>
+<p><strong>Passkeys</strong> use platform authenticators and often add cross-device syncing on top. So while WebAuthn is the standard, passkeys are the experience users interact with.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="adding-passkeys-to-keycloak">Adding Passkeys to Keycloak<a href="https://phasetwo.io/blog/webauthn-keycloak/#adding-passkeys-to-keycloak" class="hash-link" aria-label="Direct link to Adding Passkeys to Keycloak" title="Direct link to Adding Passkeys to Keycloak">​</a></h2>
+<p><strong>Keycloak supports WebAuthn natively</strong>, meaning you can offer passkeys as a sign-in method today—no plugins or external tools required.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="setup-steps">Setup Steps<a href="https://phasetwo.io/blog/webauthn-keycloak/#setup-steps" class="hash-link" aria-label="Direct link to Setup Steps" title="Direct link to Setup Steps">​</a></h3>
+<p>Test this next section using Phase Two's <a href="https://phasetwo.io/dashboard" target="_blank" rel="noopener noreferrer">Free Deployment</a>.</p>
+<ol>
+<li><strong>Enable user registration</strong> in your realm settings.</li>
+<li>Under <strong>Authentication → Required Actions</strong>, enable:<!-- -->
+<ul>
+<li><code>WebAuthn Register</code></li>
+<li><code>WebAuthn Register Passwordless</code></li>
+</ul>
+</li>
+<li>Create a custom browser login flow:<!-- -->
+<ul>
+<li>Duplicate the built-in browser flow.</li>
+<li>Remove the <code>Username Password Form</code> step. (optional if you don't want this as an option)</li>
+<li>Add a <code>Username Form</code> and the <code>WebAuthn Passwordless Authenticator</code> step.</li>
+<li>Set the WebAuthn step to <code>Required</code>.</li>
+</ul>
+</li>
+<li>Bind this new flow as your realm's <strong>browser flow</strong>.</li>
+</ol>
+<p>With this flow, users will log in using passkeys—no passwords, just their fingerprint, face, or device confirmation.</p>
+<blockquote>
+<p>✅ <strong>Pro tip:</strong> You can also offer passkeys as a second factor or as an upgrade path after initial password login.</p>
+</blockquote>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="challenges-and-considerations">Challenges and Considerations<a href="https://phasetwo.io/blog/webauthn-keycloak/#challenges-and-considerations" class="hash-link" aria-label="Direct link to Challenges and Considerations" title="Direct link to Challenges and Considerations">​</a></h2>
+<p>Implementing passkeys is powerful, but not without complexity. A few things to keep in mind:</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="device-recovery">Device Recovery<a href="https://phasetwo.io/blog/webauthn-keycloak/#device-recovery" class="hash-link" aria-label="Direct link to Device Recovery" title="Direct link to Device Recovery">​</a></h3>
+<p>If a user loses their device or wipes their phone, their passkey is lost unless it’s synced to the cloud (e.g., iCloud, Google). Ensure fallback options exist—like email OTP or re-registration.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="cross-platform-compatibility">Cross-Platform Compatibility<a href="https://phasetwo.io/blog/webauthn-keycloak/#cross-platform-compatibility" class="hash-link" aria-label="Direct link to Cross-Platform Compatibility" title="Direct link to Cross-Platform Compatibility">​</a></h3>
+<p>Passkeys behave differently across OSes and browsers. For example, Windows Hello may not sync with a MacBook’s Touch ID. Testing across platforms is key.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="user-education">User Education<a href="https://phasetwo.io/blog/webauthn-keycloak/#user-education" class="hash-link" aria-label="Direct link to User Education" title="Direct link to User Education">​</a></h3>
+<p>Passkeys are unfamiliar to many users. Provide clear onboarding, and consider hybrid flows that gradually move users from password-based logins to passkeys.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="deployment-architecture">Deployment Architecture<a href="https://phasetwo.io/blog/webauthn-keycloak/#deployment-architecture" class="hash-link" aria-label="Direct link to Deployment Architecture" title="Direct link to Deployment Architecture">​</a></h3>
+<p>If your Keycloak deployment involves multiple realms or external IDPs, you'll need to ensure your WebAuthn configuration is consistent across them.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-phase-two">Why Phase Two?<a href="https://phasetwo.io/blog/webauthn-keycloak/#why-phase-two" class="hash-link" aria-label="Direct link to Why Phase Two?" title="Direct link to Why Phase Two?">​</a></h2>
+<p>At <strong>Phase Two</strong>, we offer more than just Keycloak hosting—we help teams <strong>architect for modern identity</strong>.</p>
+<p>Need help rolling out passkeys and passwordless login in your apps? We can help you:</p>
+<ul>
+<li>Customize your Keycloak flows for WebAuthn</li>
+<li>Audit your security settings and fallback options</li>
+<li>Ensure your deployment scales with your users</li>
+<li>Keep your Keycloak up-to-date with the latest passkey support</li>
+</ul>
+<p>Let’s build a secure, passwordless future—together.</p>
+<p>📩 <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer">Reach out to the team →</a>
+👉 <a href="https://phasetwo.io/dashboard" target="_blank" rel="noopener noreferrer">Get Started with Free Managed Keycloak</a></p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="open_source" term="open_source"/>
+        <category label="webauthn" term="webauthn"/>
+        <category label="passkeys" term="passkeys"/>
+        <category label="authentication" term="authentication"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SAML, Simplified.]]></title>
         <id>https://phasetwo.io/blog/introduction-to-simple-saml/</id>
@@ -1376,83 +1590,6 @@ There is a narrower focus on authentication, but WorkOS provides a uniform API t
         <category label="authentication" term="authentication"/>
         <category label="authorization" term="authorization"/>
         <category label="workos" term="workos"/>
-        <category label="keycloak" term="keycloak"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Phase Two Organizations now support shared Identity Providers (IdPs)]]></title>
-        <id>https://phasetwo.io/blog/phase-two-organizations-shared-idps/</id>
-        <link href="https://phasetwo.io/blog/phase-two-organizations-shared-idps/"/>
-        <updated>2024-07-09T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Phase Two Organizations now support shared Identity Providers (IdPs) for mapping multiple organizations to a single IDP.]]></summary>
-        <content type="html"><![CDATA[<p>An exciting new feature has been added to <a href="https://github.com/p2-inc/keycloak-orgs" target="_blank" rel="noopener noreferrer">Phase Two Organizations Extension</a>! Organizations now support <a href="https://github.com/p2-inc/keycloak-orgs/issues/249" target="_blank" rel="noopener noreferrer">shared Identity Providers</a> (IdPs) for mapping multiple organizations to a single IDP. This feature is especially useful for organizations that have multiple organizations that need to share the same IDP.</p>
-<p>Often asked for by customers, this feature will now allow organizations to share the same IDP across multiple organizations. This will allow for a more streamlined user experience and easier management of users across multiple organizations. Meaning that admins can still keep organizations logically separated, but support the same IdP for authentication and authorization. The primary use case for this is applications that support both <strong>Google social login and Google Workspace enterprise SSO login</strong>. Some of our customers have 100's of organizations that use Google Workspace SSO. This change allows you to use a single OIDC integration with Google, rather than configuring 100's of SAML integrations.</p>
-<p>Configuration is fully supported in the Keycloak Admin UI, is up-to-date with the latest Keycloak version, and is fully tested. This feature is available now to any Phase Two hosted customers and can be adopted by anyone leveraging the Phase Two Keycloak Organization Extension.</p>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="phase_two" term="phase_two"/>
-        <category label="open_source" term="open_source"/>
-        <category label="authentication" term="authentication"/>
-        <category label="authorization" term="authorization"/>
-        <category label="organizations" term="organizations"/>
-        <category label="idp" term="idp"/>
-        <category label="keycloak" term="keycloak"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Keycloak vs. Okta, a Open-Source Alternative]]></title>
-        <id>https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/</id>
-        <link href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/"/>
-        <updated>2024-06-03T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[An in-depth comparison of Keycloak versus Okta and why Keycloak offers a strong and compelling alternative to a paid Authentication and Authorization service.]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="exploring-keycloak-as-an-alternative-to-okta-for-authentication-solutions">Exploring Keycloak as an Alternative to Okta for Authentication Solutions<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#exploring-keycloak-as-an-alternative-to-okta-for-authentication-solutions" class="hash-link" aria-label="Direct link to Exploring Keycloak as an Alternative to Okta for Authentication Solutions" title="Direct link to Exploring Keycloak as an Alternative to Okta for Authentication Solutions">​</a></h2>
-<p>In today's rapidly evolving digital landscape, securing and managing user identities has become more critical than ever. Organizations are faced with the challenge of choosing the right Identity and Access Management (IAM) solution that balances cost, ease of implementation, and robust feature sets. Two popular contenders in this space are Keycloak and Okta. Keycloak, an open-source solution developed by Red Hat, offers extensive customizability and a community-driven support model. On the other hand, Okta, a leading cloud-based IAM provider, promises quick deployment and comprehensive security features through its subscription-based service. In this blog post, we will delve into a detailed comparison of Keycloak and Okta, examining their costs, total cost of ownership, implementation processes, and the rich array of features and capabilities each brings to the table. Whether you're a small startup or a large enterprise, understanding these key differences will help you make an informed decision for your identity management needs.</p>
-<p>We've compared <a href="https://phasetwo.io/blog/keycloak-vs-auth0-open-source-alternative/">Keycloak to Auth0</a> and it's worth noting that Auth0 is owned by Okta. The differences between the offerings are subtle, where Auth0 bills it more as the "developer" tool while Okta is for "SSO". They are separate subscriptions.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="cost-of-ownership">Cost of Ownership<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#cost-of-ownership" class="hash-link" aria-label="Direct link to Cost of Ownership" title="Direct link to Cost of Ownership">​</a></h3>
-<p>When evaluating Identity and Access Management (IAM) solutions, both upfront cost and total cost of ownership (TCO) are critical considerations. There are many factors to think about with a total cost-of-ownership. We've written extensively about <a href="https://phasetwo.io/blog/open-source-iam/">choosing an Open-Source IAM</a> over a managed service.</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="okta">Okta:<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#okta" class="hash-link" aria-label="Direct link to Okta:" title="Direct link to Okta:">​</a></h4>
-<p>Okta operates on a subscription-based pricing model, with costs varying based on the number of users and selected features. This SaaS solution tries to simplify cost management by bundling infrastructure, maintenance, and support into its subscription fees. Organizations benefit from reduced internal IT burden, as Okta handles updates, patches, and system maintenance. However, the per-user costs can add up, especially for larger organizations, potentially leading to higher ongoing expenses compared to an open-source alternative like Keycloak. While Okta provides scalability, allowing businesses to grow without worrying about infrastructure investments, the costs that are incurred can quickly balloon far out of the original projections. With every feature enabled, the per user cost grows significantly and bills can rapidly sky-rocket in multi $100K+, becoming a large financial piece of the overall IT spend.</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="keycloak">Keycloak:<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#keycloak" class="hash-link" aria-label="Direct link to Keycloak:" title="Direct link to Keycloak:">​</a></h4>
-<p>Keycloak, on the other hand, is an open-source solution developed by Red Hat. It is free to use, regardless of the number of users or the scale of the project. This makes Keycloak particularly attractive for businesses looking to cut costs or those who prefer not to be tied to vendor-specific pricing structures.</p>
-<p>Keycloak, being an open-source solution, stands out with its zero licensing fees, regardless of the number of users or the scale of the project. This makes it an attractive option for organizations looking to minimize expenditures. However, it's important to note that while Keycloak is free to use, it does require infrastructure to <a href="https://phasetwo.io/hosting/" target="_blank" rel="noopener noreferrer">host</a> and run the application. This could involve costs related to cloud services or on-premises hardware. Additionally, maintaining and updating Keycloak, as well as implementing customizations, may necessitate dedicated internal resources or external support, which can add to the overall expenses. The primary cost associated with Keycloak comes from the need to self-host and manage the software, which includes server costs and potential overhead for setup and maintenance. This can mean the ongoing cost is fixed since its not driven by features or users.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak</p>
-<p>Leveraging Phase Two's <a href="https://phasetwo.io/hosting/" target="_blank" rel="noopener noreferrer">managed hosting</a> provides a more capable free tier to test out and integrate Authorization and Authentication into an application(s). When that application's needs grow for users and integrations, Keycloak quickly becomes a far more cost-effective choice.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="maintenance">Maintenance<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#maintenance" class="hash-link" aria-label="Direct link to Maintenance" title="Direct link to Maintenance">​</a></h3>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="okta-1">Okta:<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#okta-1" class="hash-link" aria-label="Direct link to Okta:" title="Direct link to Okta:">​</a></h4>
-<p>A strong advantage of Okta is that it is a managed service. From a Dev Ops perspective, it requires minimal maintenance. The Okta team handles updates, security patches, and infrastructure, ensuring that the system is kept up-to-date. This comes at a cost though since customization of Okta is limited.</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="keycloak-1">Keycloak:<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#keycloak-1" class="hash-link" aria-label="Direct link to Keycloak:" title="Direct link to Keycloak:">​</a></h4>
-<p>Conversely, Keycloak requires more attention since it's self-hosted. Organizations must allocate resources for installing, configuring, and updating the software, as well as managing the underlying infrastructure. This can be a drawback for teams without the necessary technical expertise or resources. However, it also offers greater control over the deployment and security standards, which can be a significant advantage for certain regulatory environments.</p>
-<p><strong>Winner</strong></p>
-<p>Okta.</p>
-<p>As a fully managed service, Okta abstracts away this work.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="functionality-and-flexibility">Functionality and Flexibility<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#functionality-and-flexibility" class="hash-link" aria-label="Direct link to Functionality and Flexibility" title="Direct link to Functionality and Flexibility">​</a></h3>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="okta-2">Okta:<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#okta-2" class="hash-link" aria-label="Direct link to Okta:" title="Direct link to Okta:">​</a></h4>
-<p>Okta’s authentication mechanisms support multiple methods for enhanced security and user convenience. The platform’s authorization capabilities include role-based access control (RBAC) and policy management, allowing organizations to enforce detailed security policies. Okta supports identity federation through SAML, OpenID Connect, and other standards, facilitating integration with various identity providers. Its single sign-on (SSO) functionality ensures a seamless user experience across different applications and services. Okta’s user management features are extensive, offering self-service registration, account recovery, and a comprehensive user directory. Additionally, Okta’s APIs and pre-built integrations with numerous third-party applications simplify the implementation process. The platform also provides detailed analytics, logging, and reporting features for monitoring and compliance, as well as automated user provisioning, deprovisioning, and workflow management through its lifecycle management capabilities.</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="keycloak-2">Keycloak:<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#keycloak-2" class="hash-link" aria-label="Direct link to Keycloak:" title="Direct link to Keycloak:">​</a></h4>
-<p>Keycloak offers a comprehensive suite of features designed to meet the needs of modern applications that are at parity (or better) in many ways with Okta. Keycloak provides various authentication methods, including username/password, social logins, and multi-factor authentication (MFA), ensuring secure access for users. It also supports fine-grained authorization capabilities through role-based access control (<a href="https://phasetwo.io/product/organizations/" target="_blank" rel="noopener noreferrer">RBAC</a>) and attribute-based access control (<a href="https://phasetwo.io/product/organizations/" target="_blank" rel="noopener noreferrer">ABAC</a>), enabling precise management of user permissions. Keycloak excels in identity federation, supporting protocols like SAML and OpenID Connect, which allows seamless integration with other identity providers. Additionally, Keycloak’s single sign-on (<a href="https://phasetwo.io/product/sso/" target="_blank" rel="noopener noreferrer">SSO</a>) feature facilitates a smooth user experience across multiple applications, while its extensive <a href="https://phasetwo.io/product/adminportal/" target="_blank" rel="noopener noreferrer">user management</a> capabilities, including user registration, password policies, and account linking, ensure comprehensive control over user identities. The platform is highly customizable, offering themes, custom code, and extensive configuration options, and benefits from strong community support and a wide range of extensions and plugins.</p>
-<p>A main point is that the features that Okta and Auth0 try to cover (somewhat separately) are all covered by why Keycloak can do.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak</p>
-<p>Okta and Keycloak offer much of the same functionality for Authentication and Authorization, however Keycloak is extremely flexible to extend and configure. It's a system that can adjust and grow with an application. In addition, there is no distinction in capabilities between different products, meaning Keycloak centralizes more use-cases.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="integrating-keycloak-with-external-systems-like-okta">Integrating Keycloak with External Systems like Okta<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#integrating-keycloak-with-external-systems-like-okta" class="hash-link" aria-label="Direct link to Integrating Keycloak with External Systems like Okta" title="Direct link to Integrating Keycloak with External Systems like Okta">​</a></h3>
-<p>For organizations looking to transition from Okta to Keycloak or integrate Keycloak with systems that are already using Okta, Keycloak's flexibility offers significant advantages. Keycloak can be configured to act as a broker that sits between Okta and your applications. This setup allows organizations to leverage the strengths of both platforms. For example, an organization can use Okta for external user management due to its robust third-party integrations while using Keycloak to handle more sensitive internal authentication needs.</p>
-<p>The identity brokering capability of Keycloak enables it to delegate authentication to external Identity Providers (IdPs), such as Okta. This means that Keycloak can manage internal permissions and roles, provide additional security checks, and maintain a user-friendly, consistent login experience across different systems. The ability to integrate seamlessly with services like Okta simplifies the migration process for companies transitioning from one authentication system to another and provides a layer of flexibility for new authentication strategies without disrupting user access or security.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="which-iam-solution-is-best-for-me">Which IAM Solution Is Best for Me?<a href="https://phasetwo.io/blog/keycloak-vs-okta-open-source-alternative/#which-iam-solution-is-best-for-me" class="hash-link" aria-label="Direct link to Which IAM Solution Is Best for Me?" title="Direct link to Which IAM Solution Is Best for Me?">​</a></h3>
-<p>Choosing between Okta and Keycloak largely depends on your organization’s specific needs and capabilities. Okta is an excellent choice for those who need a fully managed solution with costs linked to user numbers and features. However, for organizations that prioritize cost savings and predictability, have the capability to manage their infrastructure, or require extensive customization, Keycloak emerges as a powerful, budget-friendly alternative.</p>
-<p>Both platforms offer extensive documentation and community support, which can help mitigate some of the challenges associated with implementation and maintenance.</p>
-<p>Ultimately, we at Phase Two believe marrying the two together is the strongest match. We offer robust Keyloak <a href="https://phasetwo.io/hosting/" target="_blank" rel="noopener noreferrer">hosting</a>, migration, and support options that fit well for multiple business sizes. Coupling the capabilities of Keycloak and the advantages of a managed service translates directly to implementation and cost control in SSO, authenication, authorization, user management, and other areas. <strong>Leveraging Keycloak means that ongoing costs are relatively fixed</strong>, since concerns about user growth or feature needs don't have to factor into every decision.</p>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="phase_two" term="phase_two"/>
-        <category label="open_source" term="open_source"/>
-        <category label="authentication" term="authentication"/>
-        <category label="authorization" term="authorization"/>
-        <category label="okta" term="okta"/>
         <category label="keycloak" term="keycloak"/>
     </entry>
 </feed>
