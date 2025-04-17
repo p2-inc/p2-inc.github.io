@@ -2,11 +2,114 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Phase Two - Managed Keycloak Hosting and Enterprise Support Blog</title>
-    <updated>2025-04-18T00:00:00.000Z</updated>
+    <updated>2025-04-21T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Phase Two - Managed Keycloak Hosting and Enterprise Support Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Understanding Multi-Tenancy Options in Keycloak]]></title>
+        <id>https://phasetwo.io/blog/multi-tenancy-options-keycloak/</id>
+        <link href="https://phasetwo.io/blog/multi-tenancy-options-keycloak/"/>
+        <updated>2025-04-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[As more companies build SaaS platforms, the need to serve multiple customer groups—or tenants—from a single system becomes critical. In the identity world, this means implementing multi-tenancy within your identity provider.]]></summary>
+        <content type="html"><![CDATA[<p>As more companies build SaaS platforms, the need to serve multiple customer groups—or tenants—from a single system becomes critical. In the identity world, this means implementing <strong>multi-tenancy</strong> within your identity provider.</p>
+<p>In this post, we’ll walk through:</p>
+<ul>
+<li>What multi-tenancy means in Keycloak</li>
+<li>The drawbacks of using multiple realms for tenants</li>
+<li>Why organizations are a better, more scalable approach</li>
+<li>How the Phase Two <a href="https://phasetwo.io/product/organizations/">Organizations</a> extension supports advanced use cases like theming, shared IdPs, and user membership</li>
+<li>How our implementation differs from (and improves on) the new native Keycloak organizations feature</li>
+</ul>
+<p>We've written extensively about how to <a href="https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/">model multi-tenancy with organizations</a> and how Phase Two's <a href="https://phasetwo.io/blog/phase-two-organizations-shared-idps/">Organizations extension differs from the native implementation</a> being undertaken by the Keycloak team.</p>
+<p>All of Phase Two's <a href="https://phasetwo.io/hosting/">hosted</a> environments come standard with all of our <a href="https://github.com/p2-inc#our-extensions-" target="_blank" rel="noopener noreferrer">popular extensions</a> to make it easy to hit the ground running and cover 95% of all IAM use-cases.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="what-is-multi-tenancy">What Is Multi-Tenancy?<a href="https://phasetwo.io/blog/multi-tenancy-options-keycloak/#what-is-multi-tenancy" class="hash-link" aria-label="Direct link to What Is Multi-Tenancy?" title="Direct link to What Is Multi-Tenancy?">​</a></h2>
+<p>Multi-tenancy is a system architecture where a single instance of software serves multiple logically-separated customers or organizations—each with their own users, permissions, and sometimes custom branding.</p>
+<!-- -->
+<p>By contrast in a single-tenancy approach, there would need to be a single realm per IAM.</p>
+<!-- -->
+<p>In Keycloak terms, multi-tenancy means allowing multiple organizations to authenticate users, manage roles, and access apps—<strong>all from a single realm</strong>. In a <strong>single-tenant</strong> architecture, each customer (or tenant) has their own Keycloak realm.</p>
+<p>Taking the graph above and changing it to display how Organizations come into play looks as follows. Don't worry if this is confusing at first, we're going to walk through all of it.</p>
+<!-- -->
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-multi-realm-doesnt-work">Why Multi-Realm Doesn't Work<a href="https://phasetwo.io/blog/multi-tenancy-options-keycloak/#why-multi-realm-doesnt-work" class="hash-link" aria-label="Direct link to Why Multi-Realm Doesn't Work" title="Direct link to Why Multi-Realm Doesn't Work">​</a></h2>
+<p>One of Keycloak’s most common multi-tenant patterns is to create <strong>a realm per tenant</strong>. This seems clean at first—but has significant downsides:</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="problems-with-multi-realm">Problems with Multi-Realm:<a href="https://phasetwo.io/blog/multi-tenancy-options-keycloak/#problems-with-multi-realm" class="hash-link" aria-label="Direct link to Problems with Multi-Realm:" title="Direct link to Problems with Multi-Realm:">​</a></h3>
+<ul>
+<li><strong>Performance</strong>: Keycloak performance degrades when you have hundreds of realms</li>
+<li><strong>Limited Cross-Tenant Features</strong>: You can’t easily link users or resources across realms</li>
+<li><strong>Duplication</strong>: Users with accounts in multiple realms must manage separate logins and passwords</li>
+<li><strong>Management Overhead</strong>: Updating roles, theming, and settings across many realms is tedious and error-prone</li>
+</ul>
+<p>The model simply doesn’t scale when you have 50, 100, or 500 tenants.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="organizations-a-smarter-approach-to-multi-tenancy">Organizations: A Smarter Approach to Multi-Tenancy<a href="https://phasetwo.io/blog/multi-tenancy-options-keycloak/#organizations-a-smarter-approach-to-multi-tenancy" class="hash-link" aria-label="Direct link to Organizations: A Smarter Approach to Multi-Tenancy" title="Direct link to Organizations: A Smarter Approach to Multi-Tenancy">​</a></h2>
+<p>Phase Two's <a href="https://phasetwo.io/product/organizations/"><strong>Organizations Extension for Keycloak</strong></a> enables true multi-tenancy <strong>within a single realm</strong>—a more scalable and resource-efficient model.</p>
+<p>With Organizations, Keycloak gains first-class multi-tenant capabilities:</p>
+<ul>
+<li><strong>Organizations</strong>: Define isolated tenant groups</li>
+<li><strong>Memberships</strong>: Users can belong to one or more orgs</li>
+<li><strong>Org Roles</strong>: Assign roles and permissions within each org</li>
+<li><strong>Invitations</strong>: Invite users by email (even before they exist)</li>
+<li><strong>Domain association</strong>: Automatically map users to orgs by email domain</li>
+<li><strong>Active organization context</strong>: Switch between orgs in a single session</li>
+</ul>
+<p>This lets you maintain secure, segmented access <strong>without managing dozens of realms</strong>.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="theming-per-tenant-client-level-customization">Theming Per Tenant (Client-Level Customization)<a href="https://phasetwo.io/blog/multi-tenancy-options-keycloak/#theming-per-tenant-client-level-customization" class="hash-link" aria-label="Direct link to Theming Per Tenant (Client-Level Customization)" title="Direct link to Theming Per Tenant (Client-Level Customization)">​</a></h2>
+<p>Need custom branding for each organization? You can theme Keycloak <strong>per client</strong>—and by linking each client to an organization, you effectively get <strong>per-tenant theming</strong>.</p>
+<ol>
+<li>Create a separate client per organization</li>
+<li>Assign custom theme to each client (via client settings)</li>
+<li>Use <code>login_theme</code> and <code>account_theme</code> in client metadata</li>
+<li>Use the Organization ID or client ID in templates to style login pages dynamically</li>
+</ol>
+<p>This allows each org to have its own login screen—perfect for white-label SaaS.</p>
+<p>In order to build out dynamic themes, we highly recommend leveraging <a href="https://keycloakify.com/" target="_blank" rel="noopener noreferrer">Keycloakify</a>, which Phase Two <a href="https://phasetwo.io/blog/phasetwo-keycloakify-partnership/">sponsors</a> and believes heavily in.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="users-in-multiple-organizations">Users in Multiple Organizations<a href="https://phasetwo.io/blog/multi-tenancy-options-keycloak/#users-in-multiple-organizations" class="hash-link" aria-label="Direct link to Users in Multiple Organizations" title="Direct link to Users in Multiple Organizations">​</a></h2>
+<p>Unlike the multi-realm model (where each user is siloed), the Organizations extension allows <strong>a single user to exist in multiple organizations</strong>:</p>
+<ul>
+<li>One email, one username, one login</li>
+<li>Organization-specific roles and permissions</li>
+<li>Ability to switch active org via the <code>/me</code> <a href="https://phasetwo.io/api/get-me/">endpoint</a></li>
+</ul>
+<p>This is especially powerful for admins, consultants, or vendors who interact with multiple customer orgs.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="assign-identity-providers-to-organizations">Assign Identity Providers to Organizations<a href="https://phasetwo.io/blog/multi-tenancy-options-keycloak/#assign-identity-providers-to-organizations" class="hash-link" aria-label="Direct link to Assign Identity Providers to Organizations" title="Direct link to Assign Identity Providers to Organizations">​</a></h2>
+<p>Organizations can now <strong>assign the Identity Provider (IdP)</strong> to tenants—ideal for social login or enterprise SSO scenarios like Google Workspace:</p>
+<ul>
+<li>Define a single OIDC IdP (e.g., Google)</li>
+<li>Map it to the orgs</li>
+<li>Use email domain matching to assign incoming users to the correct org</li>
+</ul>
+<p>It’s centralized, scalable, and easier to manage.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="get-started-with-multi-tenant-keycloak">Get Started with Multi-Tenant Keycloak<a href="https://phasetwo.io/blog/multi-tenancy-options-keycloak/#get-started-with-multi-tenant-keycloak" class="hash-link" aria-label="Direct link to Get Started with Multi-Tenant Keycloak" title="Direct link to Get Started with Multi-Tenant Keycloak">​</a></h2>
+<p>Multi-tenancy doesn’t have to be hard—or fragile.</p>
+<p>With Phase Two’s Organizations extension and our managed Keycloak platform, you can:</p>
+<ul>
+<li>Support any number of tenants from a single realm</li>
+<li>Assign custom branding per org</li>
+<li>Link IdPs and manage federated users</li>
+<li>Scale securely, with support from the people who built the system</li>
+</ul>
+<p>👉 <a href="https://phasetwo.io/product/organizations" target="_blank" rel="noopener noreferrer">Learn more about Organizations →</a><br>
+<!-- -->👉 <a href="https://phasetwo.io/dashboard" target="_blank" rel="noopener noreferrer">Get Started with Free Managed Keycloak →</a></p>
+<p>📩 <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer">Reach out to the team →</a></p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="open_source" term="open_source"/>
+        <category label="multi_tenancy" term="multi_tenancy"/>
+        <category label="organizations" term="organizations"/>
+        <category label="keycloak" term="keycloak"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Web Application Security with Your Keycloak Deployment]]></title>
         <id>https://phasetwo.io/blog/waf-keycloak/</id>
@@ -1523,77 +1626,6 @@ OneLogin provides dedicated customer support, along with comprehensive documenta
         <category label="authentication" term="authentication"/>
         <category label="authorization" term="authorization"/>
         <category label="onelogin" term="onelogin"/>
-        <category label="keycloak" term="keycloak"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Keycloak vs. WorkOS, an Open-Source Alternative]]></title>
-        <id>https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/</id>
-        <link href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/"/>
-        <updated>2024-07-22T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[An in-depth comparison of Keycloak versus WorkOS and why Keycloak is a strong alternative to a paid Authentication and Authorization service.]]></summary>
-        <content type="html"><![CDATA[<p>Exploring Keycloak as an Alternative to WorkOS for Authentication Solutions</p>
-<p>Keycloak and WorkOS are both identity and access management (IAM) solutions that offer various features for authentication, authorization, and user management. While they serve similar purposes, there are key differences between the two platforms that make them unique and suitable for different use cases. Keycloak is an open source platform under active development for over 8 years and known for its scalability and customization options. WorkOS is a closed-source platform that can quickly integrate SSO to an application. In this blog post, we'll explore the key differences between Keycloak and WorkOS, focusing on factors such as cost of ownership, scalability, deployments, and maintenance.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="cost-of-ownership">Cost of Ownership<a href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/#cost-of-ownership" class="hash-link" aria-label="Direct link to Cost of Ownership" title="Direct link to Cost of Ownership">​</a></h3>
-<p><strong>Keycloak:</strong>
-Keycloak is an open-source solution and is available for free, making it a cost-effective choice for startups, small businesses, and enterprises alike. It allows organizations to save on licensing fees and scale without worrying about escalating SSO, authentication, and other costs. It does, however, require infrastructure to host and run the application, which can run up costs if a business does not have the proper internal resources or external support. This provides a more predictable cost model when bringing together multiple applications, knowing that as additional connections are created, costs will not increase. The biggest factor in cost becomes the scale of needed infrastructure.</p>
-<p><strong>WorkOS:</strong>
-WorkOS operates on a subscription-based model, where pricing is tied to the number of monthly active users. While the first million users are included (at time of publishing), WorkOs charges for Custom domains, SSO connections, SCIM, and Audit logs. The more enterprise customers you have, the more your costs will grow. This approach allows customers to scale their identity management solution as needed, while also gaining access to additional features and support based on their chosen plan. Organizations must keep in mind that with every feature enabled, the per user cost grows significantly and bills can rapidly sky-rocket, becoming a large financial piece of the overall IT spend.</p>
-<p><strong>Winner</strong></p>
-<p>With the proper hosting solution, Keycloak is a far more cost-effective choice. Since cost isn't driven by features or users, the ongoing cost is fixed, enabling organizations to allocate funds to other resources. Leverage <a href="https://phasetwo.io/hosting/" target="_blank" rel="noopener noreferrer">Phase Two's Free Hosting Tier</a> to test and integrate Authorization and Authentication into an application(s).</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="deployment-and-maintenance">Deployment and Maintenance<a href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/#deployment-and-maintenance" class="hash-link" aria-label="Direct link to Deployment and Maintenance" title="Direct link to Deployment and Maintenance">​</a></h3>
-<p><strong>Keycloak:</strong>
-Keycloak is a solution that can be deployed on-premises or in a private cloud. It provides complete control over the infrastructure and allows customization and integration with existing systems. With support for Docker, Kubernetes, and other containerization technologies, Keycloak simplifies deployment across various environments, ensuring seamless integration into existing infrastructure and workflows.</p>
-<p>Due to Keycloak’s self-hosted nature, however, organizations must allocate resources for installing, configuring, and updating the software, as well as managing the underlying infrastructure.</p>
-<p><strong>WorkOS:</strong>
-WorkOS is a cloud-based identity platform that is hosted and managed by WorkOS. It offers a simpler deployment process as there is no need to set up or maintain any infrastructure.
-Organizations benefit from reduced internal IT burden, as WorkOS handles updates, security patches, and system maintenance.</p>
-<p><strong>Winner</strong></p>
-<p>WorkOS provides a more hassle-free identity management experience by offloading infrastructure responsibilities through a fully managed service.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="customization-and-branding">Customization and Branding<a href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/#customization-and-branding" class="hash-link" aria-label="Direct link to Customization and Branding" title="Direct link to Customization and Branding">​</a></h3>
-<p><strong>Keycloak:</strong>
-Keycloak offers unparalleled customization and extensibility -- from authentication flows and user federation to role-based access control (RBAC) and fine-grained permission -- enabling organizations to tailor the user experience, login screens, and authentication process to their specific needs. This level of customization requires working in and gaining knowledge of the capabilities of Keycloak.</p>
-<p><strong>WorkOS:</strong>
-WorkOS on the other hand, offers limited customization options and focuses more on providing a unified user experience across different identity providers. We certainly tip our hats to WorkOS for the fantastic job they’ve done at creating a wonderful user experience from a design and user experience perspective.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak by a nose. Keycloak offers complete control over the look and feel of the authentication and authorization process. However, WorkOS has done a strong job at simplifying and constraining the world for quick implementation.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="scalability-and-performance">Scalability and Performance<a href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/#scalability-and-performance" class="hash-link" aria-label="Direct link to Scalability and Performance" title="Direct link to Scalability and Performance">​</a></h3>
-<p><strong>Keycloak:</strong>
-With its robust architecture, Keycloak is designed to handle large-scale user bases, making it an ideal choice for enterprises. It can be easily scaled horizontally by adding more instances or running in a clustered mode, ensuring high performance and reliability. Keycloak offers a great platform to unify on for companies that find themselves with a burgeoning number of applications that have each gone their own way of IAM implementation.</p>
-<p><strong>WorkOS:</strong>
-While WorkOS offers scalable infrastructure, it's better suited for smaller to medium-sized applications with moderate to high traffic volumes. Its architecture is optimized for efficient performance, but may not be as well-equipped to handle extremely high volumes of user traffic or a ballooning of connected enterprises. It’s better at working with a specific application rather than connecting multiple applications.</p>
-<p><strong>Winner</strong></p>
-<p>Depends. Keycloak is a strong contender for large-scale applications looking to scale, but WorkOS may deliver stronger performance for small-mediums sized apps.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="functionality-and-flexibility">Functionality and Flexibility<a href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/#functionality-and-flexibility" class="hash-link" aria-label="Direct link to Functionality and Flexibility" title="Direct link to Functionality and Flexibility">​</a></h3>
-<p><strong>Keycloak:</strong>
-Keycloak offers a comprehensive suite of features to meet the needs of modern apps. It provides secure authentication methods, including username/password, social logins, and MFA, as well as fine-grained authorization controls through RBAC and ABAC. Keycloak excels in identity federation with support for SAML and OpenID Connect, and its SSO feature offers a seamless user experience across apps. It also offers robust user management capabilities, customization options, self-registration, and active community support. For any functionality that might be missing, extensions to Keycloak can be written and deployed. This allows for Keycloak to bend and mold to the needs of its developers.</p>
-<p><strong>WorkOS:</strong>
-WorkOS offers robust authentication and authorization capabilities, including role-based access control, policy management, and support for multiple identity standards. Its single sign-on feature provides a seamless user experience across apps and services. WorkOS also features self-service registration, account recovery, and a comprehensive user directory. Integration with third-party apps is simplified through APIs and pre-built integrations, while analytics and logging tools help with monitoring and compliance.</p>
-<p><strong>Winner</strong></p>
-<p>Both WorkOS and Keycloak offer robust functionality, but Keycloak's advanced identity federation capabilities, fine-grained authorization controls, and ability to customize and extend give it an edge over WorkOS.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="integration-capabilities">Integration Capabilities<a href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/#integration-capabilities" class="hash-link" aria-label="Direct link to Integration Capabilities" title="Direct link to Integration Capabilities">​</a></h3>
-<p><strong>Keycloak:</strong>
-The identity brokering capability of Keycloak enables delegation authentication to external Identity Providers (IdPs), applications, and protocols such as LDAP, SAML, OAuth, OpenID Connect. Managing internal permissions and roles, security checks, login experiences across different systems can be done seamlessly.</p>
-<p>If you’re switching from WorkOS, for example, Keycloak can be configured to act as a broker that sits between WorkOS and your applications to leverage the strengths of both platforms. For example, WorkOS can be used for external user management, while Keycloak can handle more sensitive, internal authentication needs.</p>
-<p><strong>WorkOS:</strong>
-There is a narrower focus on authentication, but WorkOS provides a uniform API to integrate with popular identity providers like Google, Microsoft, and Okta. The unified interface reduces the complexity and development time.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak is the most versatile choice for organizations with complex requirements.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="community-and-support">Community and Support<a href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/#community-and-support" class="hash-link" aria-label="Direct link to Community and Support" title="Direct link to Community and Support">​</a></h3>
-<p><a href="https://github.com/keycloak" target="_blank" rel="noopener noreferrer">Keycloak</a> has a large and active community of developers and contributors, ensuring continuous development, bug fixes, and updates. It has extensive documentation, forums, and <a href="https://keycloak.discourse.group/" target="_blank" rel="noopener noreferrer">community support channels</a> where users can seek help and share knowledge. WorkOS also provides support but may have limitations in terms of community contributions and public resources. It offers dedicated support channels and resources to its users for assistance and issue resolution.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="which-one-is-best-for-me">Which One Is Best for Me?<a href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/#which-one-is-best-for-me" class="hash-link" aria-label="Direct link to Which One Is Best for Me?" title="Direct link to Which One Is Best for Me?">​</a></h3>
-<p>In determining the most suitable identity and access management solution for your organization, it is essential to consider the specific requirements and priorities of your enterprise. In summary, Keycloak is an open-source identity and access management solution that offers extensive customization and integration capabilities, making it suitable for organizations with complex requirements. WorkOS, on the other hand, is a cloud-based identity platform that simplifies integration and deployment but may have limitations in terms of scalability and customization options.</p>
-<p>Working with Phase Two provides some of the best of both worlds: easy integration with ability to scale without incurring additional costs.</p>
-<p>If you’re looking to <a href="https://phasetwo.io/support/migrate-to-keycloak/" target="_blank" rel="noopener noreferrer">migrate to Keycloak</a>, or have questions about Phase Two’s <a href="https://phasetwo.io/support/" target="_blank" rel="noopener noreferrer">enterprise support</a>, please <a href="https://scheduler.zoom.us/phasetwo" target="_blank" rel="noopener noreferrer">contact us</a>.</p>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="phase_two" term="phase_two"/>
-        <category label="open_source" term="open_source"/>
-        <category label="authentication" term="authentication"/>
-        <category label="authorization" term="authorization"/>
-        <category label="workos" term="workos"/>
         <category label="keycloak" term="keycloak"/>
     </entry>
 </feed>
