@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
                        xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-  <ShortName>Phase Two - Managed Keycloak Hosting and Enterprise Support</ShortName>
-  <Description>Search Phase Two - Managed Keycloak Hosting and Enterprise Support</Description>
+  <ShortName>Managed Keycloak Hosting and Enterprise Keycloak Support</ShortName>
+  <Description>Search Managed Keycloak Hosting and Enterprise Keycloak Support</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <Image width="16" height="16" type="image/x-icon">https://phasetwo.io/img/favicon.ico</Image>
   <Url type="text/html" method="get" template="https://phasetwo.io/search?q={searchTerms}"/>
