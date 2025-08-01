@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[9249],{62199:(s,e,h)=>{h.r(e),h.d(e,{default:()=>d});h(96540);var a=h(78543),c=h(74848);const d=()=>(0,c.jsx)(a.A,{title:"Backups",children:(0,c.jsxs)("div",{children:[(0,c.jsx)("h1",{children:"Self host vs managed"}),(0,c.jsx)("p",{children:"This is the self host vs managed page."})]})})}}]);
