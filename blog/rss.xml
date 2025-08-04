@@ -4,10 +4,71 @@
         <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
         <link>https://phasetwo.io/blog/</link>
         <description>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</description>
-        <lastBuildDate>Thu, 24 Jul 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 01 Aug 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[User Events in Keycloak: Best Practices, Management, and Purging]]></title>
+            <link>https://phasetwo.io/blog/user-events-in-keycloak/</link>
+            <guid>https://phasetwo.io/blog/user-events-in-keycloak/</guid>
+            <pubDate>Fri, 01 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Keycloak tracks various "user events" to provide auditing and monitoring capabilities related to user activities within a realm. These events capture actions performed by users, such as authentication attempts, account management operations, and more.]]></description>
+            <content:encoded><![CDATA[<p>Keycloak tracks various "user events" to provide auditing and monitoring capabilities related to user activities within a realm. These events capture actions performed by users, such as authentication attempts, account management operations, and more.</p>
+<p>When these events have been tracked and not purged for a long period, for high traffic installations, trying to change the retention period can lead to a massive performance problem with your installation. We will walk you through what to consider and how to safely purge these events.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="what-are-keycloak-user-events">What are Keycloak User Events?<a href="https://phasetwo.io/blog/user-events-in-keycloak/#what-are-keycloak-user-events" class="hash-link" aria-label="Direct link to What are Keycloak User Events?" title="Direct link to What are Keycloak User Events?">​</a></h2>
+<p>Keycloak user events are records of significant actions taken by users within a realm. These events can include (but are not limited to):</p>
+<ul>
+<li><strong>Login attempts</strong>: Successful and failed login attempts.</li>
+<li><strong>Account management</strong>: Actions like password changes, profile updates, and account deletions.</li>
+<li><strong>Session management</strong>: Events related to session creation, termination, and expiration. Including token refreshes.</li>
+</ul>
+<p>For more about event metric observability, see the <a href="https://www.keycloak.org/docs/latest/server_admin/#configuring-auditing-to-track-events" target="_blank" rel="noopener noreferrer">Keycloak documentation on events</a>.</p>
+<p>Also, we're speaking about user events, but admin events are also tracked in Keycloak. These are actions taken by administrators, such as creating or deleting users, managing roles, and configuring realms. Similar principles apply to admin events.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-track-user-events">Why Track User Events?<a href="https://phasetwo.io/blog/user-events-in-keycloak/#why-track-user-events" class="hash-link" aria-label="Direct link to Why Track User Events?" title="Direct link to Why Track User Events?">​</a></h2>
+<p>Tracking user events can be useful for several reasons:</p>
+<ul>
+<li><strong>Monitoring</strong>: Understanding user behavior and system performance by tracking number of logins, failed attempts, token refreshes, etc.</li>
+<li><strong>Exporting</strong>: Exporting user events to external systems for further analysis or reporting. This can include creating dashboards or alerts based on user activity.</li>
+<li><strong>Auditing</strong>: Maintaining a record of user actions for compliance and security purposes.</li>
+</ul>
+<p>One item of note, if you are running a Keycloak cluster, user events need to be collected from all instances to get a per cluster view.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-long-should-user-events-be-retained">How Long Should User Events Be Retained?<a href="https://phasetwo.io/blog/user-events-in-keycloak/#how-long-should-user-events-be-retained" class="hash-link" aria-label="Direct link to How Long Should User Events Be Retained?" title="Direct link to How Long Should User Events Be Retained?">​</a></h2>
+<p>The configuration for user event retention is set in the Keycloak admin console under the <code>Realm Settings &gt; Events &gt; User events settings</code>. Make sure that "Save events" is toggled to "On" and then in the expiration section, you can set the retention period for user events.</p>
+<p>We recommend setting a reasonable retention period based on your application's needs. For example, you might choose to retain user events for 30 days, 90 days, or longer, depending on your compliance requirements and the volume of user activity. If you have a lot of user activity, you may want to set a shorter retention period to avoid performance issues.</p>
+<p>Keycloak will save these events in the database, and if you have a high volume of user activity, this can lead to a large number of records over time. This can impact the performance of your Keycloak instance, especially when querying or managing these events. Exporting events on a periodic basis to back up or use in external systems not only helps with performance but also allows you to keep a historical record of user activity.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-to-purge-user-events">How to Purge User Events<a href="https://phasetwo.io/blog/user-events-in-keycloak/#how-to-purge-user-events" class="hash-link" aria-label="Direct link to How to Purge User Events" title="Direct link to How to Purge User Events">​</a></h2>
+<p>There are two ways to purge user events in Keycloak in the Admin UI:</p>
+<ol>
+<li>Hit a big red button in the admin console that says "Clear user events".</li>
+<li>Change the retention period to a shorter time frame, which will automatically purge events older than the new retention period.</li>
+</ol>
+<p>The thing is, those options are much to easy to hit and lead to unintended consequences. Clicking a button or changing a setting can lead to a large number of events being purged at once, which can cause performance issues or even downtime in your Keycloak instance. This effectively locks up the database and can lead to massive latency issues for you and your users.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="considerations-before-purging-user-events">Considerations Before Purging User Events<a href="https://phasetwo.io/blog/user-events-in-keycloak/#considerations-before-purging-user-events" class="hash-link" aria-label="Direct link to Considerations Before Purging User Events" title="Direct link to Considerations Before Purging User Events">​</a></h2>
+<p>Before purging user events, consider the following:</p>
+<ol>
+<li><strong>How many events are currently stored?</strong> If you have a large number of events, purging them can take some time and may impact performance during the operation.</li>
+<li><strong>What is the current retention period?</strong> If you have a long retention period set, you may want to consider shortening it before purging to avoid performance issues in the future.</li>
+<li><strong>What is the impact on auditing and monitoring?</strong> Purging user events will remove historical data, so consider how this will affect your ability to monitor user activity and maintain compliance.</li>
+<li><strong>Backup your data</strong>: If you need to keep a record of user events for compliance or auditing purposes, consider exporting the events to an external system before purging them. This way, you can retain a historical record of user activity without impacting the performance of your Keycloak instance.</li>
+</ol>
+<p>With that in mind, the Admin UI provides some really safe and unguarded ways to just "push a button" and introduce almost immediate performance issues.</p>
+<p>So what should you do?</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="safe-steps-to-purge-user-events">Safe Steps to Purge User Events<a href="https://phasetwo.io/blog/user-events-in-keycloak/#safe-steps-to-purge-user-events" class="hash-link" aria-label="Direct link to Safe Steps to Purge User Events" title="Direct link to Safe Steps to Purge User Events">​</a></h2>
+<p>If you have a large number of user events and need to purge them safely, the only real way to do this is to create a manual script that will purge the events in small batches. This way, you can avoid locking up the database and causing performance issues.</p>
+<p>Another option is to slowly pull in the retention period over time. For example, if you have a retention period of 365 days, you can change it to 180 days and then wait a few days before changing it to 90 days. This will allow Keycloak to purge events in smaller batches and hopefully avoid performance issues.</p>
+<p>In addition, to avoid Admin UI click-ops oopsies, ensure that users with access to the Admin UI do not have permissions to <code>manage-events</code>. This will prevent them from accidentally purging user events through the UI.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="conclusion">Conclusion<a href="https://phasetwo.io/blog/user-events-in-keycloak/#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion">​</a></h2>
+<p>Purging user events in Keycloak is an important task to maintain performance and manageability, especially for high-traffic installations. By understanding the implications of user event retention and following safe practices for purging, you can ensure that your Keycloak instance remains responsive and efficient.</p>
+<p>If you have any questions or need assistance with purging user events, feel free to reach out to the Phase Two support team at <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer">support@phasetwo.io</a>. We’re here to help you manage your Keycloak resources effectively and ensure your deployment runs smoothly.</p>]]></content:encoded>
+            <author>support@phasetwo.io (Phase Two)</author>
+            <category>phase_two</category>
+            <category>keycloak</category>
+            <category>user_events</category>
+            <category>admin_events</category>
+            <category>database</category>
+            <category>performance</category>
+        </item>
         <item>
             <title><![CDATA[Phase Two Launches New Dashboard for Keycloak Resource Management]]></title>
             <link>https://phasetwo.io/blog/dashboard-launch/</link>
@@ -1325,74 +1386,6 @@ Frontegg provides dedicated customer support along with a library of resources. 
             <category>authentication</category>
             <category>authorization</category>
             <category>frontegg</category>
-            <category>keycloak</category>
-        </item>
-        <item>
-            <title><![CDATA[Keycloak vs. PingIdentity, an Open-Source Alternative]]></title>
-            <link>https://phasetwo.io/blog/keycloak-vs-PingIdentity-open-source-alternative/</link>
-            <guid>https://phasetwo.io/blog/keycloak-vs-PingIdentity-open-source-alternative/</guid>
-            <pubDate>Mon, 05 Aug 2024 00:00:00 GMT</pubDate>
-            <description><![CDATA[An in-depth comparison of Keycloak versus PingIdentity and why Keycloak is a strong alternative to a paid Authentication and Authorization service.]]></description>
-            <content:encoded><![CDATA[<p>Exploring Keycloak as an alternative to PingIdentity for Authentication Solutions</p>
-<p>In the evolving landscape of identity and access management (IAM), organizations face critical decisions regarding the tools that will best meet their needs. Keycloak and <a href="https://www.pingidentity.com/" target="_blank" rel="noopener noreferrer">Ping Identity</a> are two noteworthy solutions, each exhibiting unique features that cater to different organizational requirements. This blog provides a detailed comparison of open-source Keycloak and the commercial offering of Ping Identity across essential aspects of IAM solutions.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="deployment-model">Deployment Model<a href="https://phasetwo.io/blog/keycloak-vs-PingIdentity-open-source-alternative/#deployment-model" class="hash-link" aria-label="Direct link to Deployment Model" title="Direct link to Deployment Model">​</a></h3>
-<p><strong>Keycloak:</strong>
-Keycloak is an open-source IAM solution that can be deployed both <a href="https://phasetwo.io/product/onprem/" target="_blank" rel="noopener noreferrer">on-prem</a> and in cloud environments. This flexibility allows organizations to choose their preferred hosting option while maintaining control over their identity management infrastructure. Its ability to adapt quickly to new standards makes it particularly suitable for agile development environments.</p>
-<p><strong>PingIdentity:</strong>
-Ping Identity offers a hybrid deployment model that combines both cloud-based and on-premises options. This versatility is particularly beneficial for large enterprises where regulatory compliance dictates specific control over identity services.</p>
-<p><strong>Winner</strong></p>
-<p>Tie. Both solutions offer strong options for those seeking to deploy the way they want to and need to. Both provide enterprise-centric hybrid options that accommodate complex infrastructure needs.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="customization-and-flexibility">Customization and Flexibility<a href="https://phasetwo.io/blog/keycloak-vs-PingIdentity-open-source-alternative/#customization-and-flexibility" class="hash-link" aria-label="Direct link to Customization and Flexibility" title="Direct link to Customization and Flexibility">​</a></h3>
-<p><strong>Keycloak:</strong>
-Keycloak shines with its extensive customization features, allowing developers to modify everything from login pages to role-based access controls. Being open-source software, organizations have the freedom to make adjustments at any time without vendor lock-in, making it a powerful and cost-effective solution. It can be used as a standalone solution or integrated as an element of a broader IT infrastructure.</p>
-<p><strong>PingIdentity:</strong>
-Ping Identity also offers customization capabilities but often demands more technical effort to implement tailored solutions. While it is configurable, achieving significant customizations may be more challenging compared to Keycloak.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak wins for its superior flexibility and ease of customization, particularly appealing to developers.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="user-experience-and-ease-of-use">User Experience and Ease of Use<a href="https://phasetwo.io/blog/keycloak-vs-PingIdentity-open-source-alternative/#user-experience-and-ease-of-use" class="hash-link" aria-label="Direct link to User Experience and Ease of Use" title="Direct link to User Experience and Ease of Use">​</a></h3>
-<p><strong>Keycloak:</strong>
-Keycloak is designed with usability in mind, featuring an intuitive interface and straightforward setup process. Its fast, agile nature allows it to adapt quickly to changing application landscapes, ensuring accessibility for users. It supports Single Sign-On (SSO), identity brokering, and various protocols (OAuth2, OpenID Connect, SAML), streamlining user experience.</p>
-<p><strong>PingIdentity:</strong>
-Ping Identity prioritizes a comprehensive user experience targeting both technical and non-technical users. Although it features a polished interface, the initial setup can be complex, resulting in a steeper learning curve for administrators.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak edges out in user-friendliness during initial setup and usability.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="scalability-and-performance">Scalability and Performance<a href="https://phasetwo.io/blog/keycloak-vs-PingIdentity-open-source-alternative/#scalability-and-performance" class="hash-link" aria-label="Direct link to Scalability and Performance" title="Direct link to Scalability and Performance">​</a></h3>
-<p><strong>Keycloak:</strong>
-With its cloud-native adaptation and support for high-volume user bases, Keycloak scales effectively to meet organizational needs. However, the management of a scaled Keycloak system can require significant time and resources without <a href="https://phasetwo.io/support/" target="_blank" rel="noopener noreferrer">proper enterprise support</a>.</p>
-<p><strong>PingIdentity:</strong>
-Ping Identity is designed for large-scale environments with robust scalability features, ensuring seamless performance under heavy loads, making it particularly suited for large organizations.</p>
-<p><strong>Winner</strong></p>
-<p>Ping Identity excels in scalability and performance, proving its capability to manage large-scale authentication requests. However, this comes at a larger cost which could be offset by taking on the management of Keycloak.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="pricing-model">Pricing Model<a href="https://phasetwo.io/blog/keycloak-vs-PingIdentity-open-source-alternative/#pricing-model" class="hash-link" aria-label="Direct link to Pricing Model" title="Direct link to Pricing Model">​</a></h3>
-<p><strong>Keycloak:</strong>
-Being open-source software, Keycloak has no licensing fees, making it highly cost-effective. However, organizations should consider potential indirect costs related to deployment and system management.</p>
-<p><strong>PingIdentity:</strong>
-Ping Identity operates on a traditional licensing model based on user count and features, which can lead to higher costs, particularly for larger deployments.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak is the clear winner for pricing, offering a more budget-friendly option. Coupled with a cost-conscious hosting provider, this can save a corporation literal millions of dollars over the course of an implementation.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="integration-ecosystem">Integration Ecosystem<a href="https://phasetwo.io/blog/keycloak-vs-PingIdentity-open-source-alternative/#integration-ecosystem" class="hash-link" aria-label="Direct link to Integration Ecosystem" title="Direct link to Integration Ecosystem">​</a></h3>
-<p><strong>Keycloak:</strong>
-Keycloak provides a strong API and powerful Admin portal, making it compatible with a wide range of frameworks like Spring Boot, Django, React, and more. Its supportive community extensions with integrations and continuous improvements, enhancing its adaptability.</p>
-<p><strong>PingIdentity:</strong>
-Ping Identity features a curated integration ecosystem focused on enterprise-level applications, providing documentation and support for integrations, but may lack the range of community-driven options available with Keycloak.</p>
-<p><strong>Winner</strong>
-Keycloak takes the lead for its extensive integration options and supportive community. Leverage <a href="https://phasetwo.io/hosting/" target="_blank" rel="noopener noreferrer">Phase Two's Free Hosting Tier</a> to test and integrate Authorization and Authentication into an application(s).</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="advanced-features">Advanced Features<a href="https://phasetwo.io/blog/keycloak-vs-PingIdentity-open-source-alternative/#advanced-features" class="hash-link" aria-label="Direct link to Advanced Features" title="Direct link to Advanced Features">​</a></h3>
-<p><strong>Keycloak:</strong>
-Keycloak supports fine-grained authorization and customizable themes, making it a flexible and cost-effective solution for diverse security needs. Its rapid adaptability to new technologies ensures organizations can stay relevant in a changing landscape.</p>
-<p><strong>PingIdentity:</strong>
-Ping Identity excels with advanced features such as fraud detection, identity verification, and robust orchestration capabilities, positioning it as a strong choice for larger enterprises requiring comprehensive security and compliance.</p>
-<p><strong>Winner</strong>
-Both Keycloak and Ping Identity offer valuable advanced features, with Keycloak providing flexibility for diverse environments, while Ping Identity delivers robust security measures suitable for complex enterprise needs.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="which-one-is-best-for-me">Which one is best for me?<a href="https://phasetwo.io/blog/keycloak-vs-PingIdentity-open-source-alternative/#which-one-is-best-for-me" class="hash-link" aria-label="Direct link to Which one is best for me?" title="Direct link to Which one is best for me?">​</a></h3>
-<p>Both Keycloak and Ping Identity provide essential IAM solutions, but their strengths cater to different organizational needs. Keycloak excels in customization, user experience, cost-effectiveness, and flexibility, making it ideal for organizations prioritizing quick adaptation and flexibility. In contrast, Ping Identity stands out with its hybrid deployment capabilities, scalability, and advanced security functionalities, positioning it as a strong choice for larger enterprises. Ultimately, the decision should align with the specific requirements, resources, and strategic goals of your organization.</p>
-<p>If you’re looking to <a href="https://phasetwo.io/support/migrate-to-keycloak/" target="_blank" rel="noopener noreferrer">migrate to Keycloak</a>, or have questions about Phase Two’s <a href="https://phasetwo.io/support/" target="_blank" rel="noopener noreferrer">enterprise support</a>, please <a href="https://scheduler.zoom.us/phasetwo" target="_blank" rel="noopener noreferrer">contact us</a>.</p>]]></content:encoded>
-            <author>support@phasetwo.io (Phase Two)</author>
-            <category>phase_two</category>
-            <category>open_source</category>
-            <category>authentication</category>
-            <category>authorization</category>
-            <category>pingidentity</category>
             <category>keycloak</category>
         </item>
     </channel>
