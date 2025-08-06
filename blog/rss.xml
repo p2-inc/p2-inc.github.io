@@ -4,10 +4,78 @@
         <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
         <link>https://phasetwo.io/blog/</link>
         <description>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</description>
-        <lastBuildDate>Fri, 01 Aug 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 06 Aug 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Phase Two Recognized as Official CockroachDB Partner]]></title>
+            <link>https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/</link>
+            <guid>https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/</guid>
+            <pubDate>Wed, 06 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[<div]]></description>
+            <content:encoded><![CDATA[<div style="display:flex;align-items:center;gap:10px;margin-bottom:20px"><img src="https://phasetwo.io/blog/crdb_partnership/crdb.webp" alt="CockroachDB logo" style="box-shadow:none"><span>+</span><img src="https://phasetwo.io/img/logo-phasetwo.png" style="box-shadow:none" alt="Phase Two Logo"></div>
+<p><a href="https://phasetwo.io/" target="_blank" rel="noopener noreferrer">Phase Two</a> is thrilled to announce that we have been recognized as an <strong>official partner</strong> of <a href="https://www.cockroachlabs.com/partners/locator/" target="_blank" rel="noopener noreferrer">CockroachDB</a>. This partnership marks a significant milestone in our commitment to providing robust, scalable, and high-performance database solutions for our the Keycloak community and our customers.</p>
+<p>Phase Two originally built our <a href="https://github.com/p2-inc?q=crdb&amp;type=all&amp;language=&amp;sort=#our-docker-images" target="_blank" rel="noopener noreferrer">CockroachDB integration</a> for <a href="https://quay.io/repository/phasetwo/keycloak-crdb" target="_blank" rel="noopener noreferrer">Keycloak</a> over two years ago, and since then we have been working closely with the CockroachDB team to ensure that our integration is optimized for performance and reliability. Our customers have seen significant improvements in database performance, scalability, and a overall cost savings by using CockroachDB with Keycloak.</p>
+<p>Our commitment to CockroachDB is built on years of using the <a href="https://www.cockroachlabs.com/" target="_blank" rel="noopener noreferrer">Cockroach Cloud</a> to power all of our dedicated <a href="https://phasetwo.io/product/hosting" target="_blank" rel="noopener noreferrer">hosting</a>.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="what-is-cockroachdb">What is CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#what-is-cockroachdb" class="hash-link" aria-label="Direct link to What is CockroachDB?" title="Direct link to What is CockroachDB?">​</a></h2>
+<p><a href="https://www.cockroachlabs.com/" target="_blank" rel="noopener noreferrer">CockroachDB</a> is a cloud-native, distributed SQL database designed for high availability, scalability, and resilience. It provides a single, unified database platform that can handle large volumes of data across multiple geographic locations while ensuring strong consistency and fault tolerance. CockroachDB is built on a distributed architecture that allows it to scale horizontally, making it an ideal choice for applications that require high performance and reliability. Payments systems, IAM, logistics, user accounts, and more — are powered by CockroachDB. Mission-critical applications rely on CockroachDB to deliver consistent performance and availability, scaling to meet demand and transaction heavy workloads.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-keycloak-and-cockroachdb">Why Keycloak and CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#why-keycloak-and-cockroachdb" class="hash-link" aria-label="Direct link to Why Keycloak and CockroachDB?" title="Direct link to Why Keycloak and CockroachDB?">​</a></h2>
+<p>Keycloak is a powerful open-source identity and access management solution that provides authentication and authorization services for applications and services. It is designed to be flexible, extensible, and easy to use, making it a popular choice for organizations looking to implement secure user management.</p>
+<p>When combined with CockroachDB, Keycloak benefits from the following:</p>
+<ul>
+<li><strong>Scalability</strong>: CockroachDB's distributed architecture allows Keycloak to scale horizontally, handling large volumes of user data and authentication requests without compromising performance.</li>
+<li><strong>Heavy Transaction Support</strong>: CockroachDB is designed to handle high transaction volumes, making it suitable for Keycloak deployments support millions of users and high-frequency authentication requests.</li>
+<li><strong>High Availability</strong>: CockroachDB's fault-tolerant design ensures that Keycloak remains available even in the event of hardware failures or network issues, providing a reliable user experience.</li>
+<li><strong>Strong Consistency</strong>: CockroachDB's distributed SQL capabilities ensure that Keycloak can maintain strong consistency across multiple nodes, preventing data inconsistencies and ensuring accurate user management.</li>
+<li><strong>Cost Efficiency</strong>: CockroachDB's ability to scale horizontally means that organizations can optimize their infrastructure costs while still meeting the demands of their Keycloak deployments.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="real-world-latency-performance">Real-World Latency Performance<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#real-world-latency-performance" class="hash-link" aria-label="Direct link to Real-World Latency Performance" title="Direct link to Real-World Latency Performance">​</a></h3>
+<p>One of the key performance indicators we monitor in our production environments is query latency — a critical factor for identity systems like Keycloak, where responsiveness directly impacts user experience.</p>
+<p>Over the past month (July 2025), our Keycloak deployments running on CockroachDB have consistently demonstrated impressive latency metrics:</p>
+<ul>
+<li><strong>P99 Latency</strong> (99th percentile) consistently remained <strong>below 10ms</strong>, even during traffic spikes.</li>
+<li><strong>P90 Latency</strong> (90th percentile) hovered well under 5ms across the board.</li>
+<li><strong>Spikes</strong>: Occasional spikes up to 70ms (but usually below 35ms) for P99 and 15ms for P90 were observed lasting 5-60 mins with quick recovery afterward.</li>
+</ul>
+<p>These low-latency metrics are a testament to the <strong>combined performance of CockroachDB’s distributed SQL engine</strong> and our infrastructure tuning, ensuring fast and reliable authentication and authorization at scale.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="phase-twos-commitment-to-cockroachdb">Phase Two's Commitment to CockroachDB<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#phase-twos-commitment-to-cockroachdb" class="hash-link" aria-label="Direct link to Phase Two's Commitment to CockroachDB" title="Direct link to Phase Two's Commitment to CockroachDB">​</a></h2>
+<p>As the original builders and continued maintainers of the Keycloak CockroachDB integration, Phase Two is committed to supporting the integration and ensuring that it meets the evolving needs of our customers. Our partnership with CockroachDB is a cementing of that commitment, and we are excited to work together to deliver the best possible experience for our users.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="what-this-means-for-our-customers">What This Means for Our Customers<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#what-this-means-for-our-customers" class="hash-link" aria-label="Direct link to What This Means for Our Customers" title="Direct link to What This Means for Our Customers">​</a></h3>
+<p>For customers already leveraging CockroachDB in their applications, this partnership ensures even deeper integration and support for running Keycloak on the same trusted, resilient database platform. You can expect streamlined operations, improved compatibility, and direct access to expertise from both the Phase Two and CockroachDB teams.</p>
+<p>For those new to CockroachDB or considering it for the first time, our partnership means you can confidently adopt a modern, distributed database solution for your Keycloak deployments. Phase Two will guide you through best practices, migration strategies, and ongoing support to help you realize the benefits of CockroachDB’s scalability, reliability, and performance.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="customer-success-story---grocery-store-chain">Customer Success Story - Grocery Store Chain<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#customer-success-story---grocery-store-chain" class="hash-link" aria-label="Direct link to Customer Success Story - Grocery Store Chain" title="Direct link to Customer Success Story - Grocery Store Chain">​</a></h3>
+<blockquote>
+<p>A customer of Phase Two, a <strong>major US grocery store chain</strong>, had zero experience with CockroachDB before partnering with us. They were running on legacy Oracle systems and were looking for a modern, scalable, cloud solution. Leveraging our CRDB integration, we were able to migrate their Ping implementation to Keycloak with CockroachDB, resulting in a major cost reduction and improved performance. Their system is now running smoothly with millions of users and transactions. Those Friday coupon releases are now a breeze!</p>
+</blockquote>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="customer-success-story---global-leader-in-rail-technology">Customer Success Story - Global Leader in Rail Technology<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#customer-success-story---global-leader-in-rail-technology" class="hash-link" aria-label="Direct link to Customer Success Story - Global Leader in Rail Technology" title="Direct link to Customer Success Story - Global Leader in Rail Technology">​</a></h3>
+<blockquote>
+<p>A global leader in rail technology partnered with Phase Two to modernize their identity infrastructure. With operations spanning continents and complex security requirements, they needed a scalable and resilient solution. Using our enhanced Keycloak distribution with native CockroachDB support, they migrated from their legacy system to a platform built for high availability and global scale. Today, their identity layer supports users across critical transportation systems—delivering performance, reliability, and peace of mind, even at full throttle.</p>
+</blockquote>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="customer-success-story---global-automobile-and-tire-supplier">Customer Success Story - Global Automobile and Tire Supplier<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#customer-success-story---global-automobile-and-tire-supplier" class="hash-link" aria-label="Direct link to Customer Success Story - Global Automobile and Tire Supplier" title="Direct link to Customer Success Story - Global Automobile and Tire Supplier">​</a></h3>
+<blockquote>
+<p>What started as a open-source user of our CRDB integration, a <strong>global automobile and tire supplier</strong>, has now become a key customer of Phase Two. They started with using our CRDB integration for their Keycloak deployments and have since involved Phase Two in their enterprise Keycloak deployments. Working together, Phase Two has helped to optimize and scale their Keycloak + CockroachDB deployments. We have been able to streamline their deployment processes, integrate or upgrade custom SPI's (or migrate to more effective ones), and integrate use of the Phase Two <a href="https://phasetwo.io/product/organizations/">Organization's extension</a> to better manage their Keycloak users within their system. As a result of the CRDB partnership, we were able to optimize specific Keycloak queries and the CRDB dialect to improve performance within both systems, which would not have been possible without the close collaboration with CockroachDB.</p>
+</blockquote>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="ready-to-power-your-keycloak-deployment-with-cockroachdb">Ready to Power Your Keycloak Deployment with CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#ready-to-power-your-keycloak-deployment-with-cockroachdb" class="hash-link" aria-label="Direct link to Ready to Power Your Keycloak Deployment with CockroachDB?" title="Direct link to Ready to Power Your Keycloak Deployment with CockroachDB?">​</a></h2>
+<p><a href="https://phasetwo.io/contact" target="_blank" rel="noopener noreferrer">Contact us</a> to learn how Phase Two can help you implement a scalable, resilient, and high-performing identity infrastructure with CockroachDB and Keycloak.</p>
+<p>Or test it out for yourself at <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer">dash.phasetwo.io</a> where you can deploy Keycloak with CockroachDB in minutes.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="frequently-asked-questions-faq">Frequently Asked Questions (FAQ)<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#frequently-asked-questions-faq" class="hash-link" aria-label="Direct link to Frequently Asked Questions (FAQ)" title="Direct link to Frequently Asked Questions (FAQ)">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="what-is-the-advantage-of-using-cockroachdb-with-keycloak">What is the advantage of using CockroachDB with Keycloak?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#what-is-the-advantage-of-using-cockroachdb-with-keycloak" class="hash-link" aria-label="Direct link to What is the advantage of using CockroachDB with Keycloak?" title="Direct link to What is the advantage of using CockroachDB with Keycloak?">​</a></h3>
+<p>Using CockroachDB with Keycloak improves horizontal scalability, high availability, and ensures strong consistency for identity data across distributed systems.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="can-i-migrate-an-existing-keycloak-deployment-to-cockroachdb">Can I migrate an existing Keycloak deployment to CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#can-i-migrate-an-existing-keycloak-deployment-to-cockroachdb" class="hash-link" aria-label="Direct link to Can I migrate an existing Keycloak deployment to CockroachDB?" title="Direct link to Can I migrate an existing Keycloak deployment to CockroachDB?">​</a></h3>
+<p>Yes. Phase Two provides migration tools and support for transitioning your Keycloak deployment to CockroachDB.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="is-cockroachdb-a-drop-in-replacement-for-postgresql-in-keycloak">Is CockroachDB a drop-in replacement for PostgreSQL in Keycloak?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#is-cockroachdb-a-drop-in-replacement-for-postgresql-in-keycloak" class="hash-link" aria-label="Direct link to Is CockroachDB a drop-in replacement for PostgreSQL in Keycloak?" title="Direct link to Is CockroachDB a drop-in replacement for PostgreSQL in Keycloak?">​</a></h3>
+<p>Yes. CockroachDB with Phase Two's integration, it can serve as a drop-in replacement in most Keycloak deployments default PostgreSQL implementation.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="does-phase-two-offer-support-for-running-keycloak-on-cockroachdb">Does Phase Two offer support for running Keycloak on CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#does-phase-two-offer-support-for-running-keycloak-on-cockroachdb" class="hash-link" aria-label="Direct link to Does Phase Two offer support for running Keycloak on CockroachDB?" title="Direct link to Does Phase Two offer support for running Keycloak on CockroachDB?">​</a></h3>
+<p>Yes. As official CockroachDB partners, Phase Two offers enterprise-grade support, consulting, and managed services for Keycloak + CockroachDB.</p>]]></content:encoded>
+            <author>support@phasetwo.io (Phase Two)</author>
+            <category>phase_two</category>
+            <category>keycloak</category>
+            <category>cockroachdb</category>
+            <category>partnership</category>
+            <category>database</category>
+            <category>performance</category>
+        </item>
         <item>
             <title><![CDATA[User Events in Keycloak: Best Practices, Management, and Purging]]></title>
             <link>https://phasetwo.io/blog/user-events-in-keycloak/</link>
@@ -1320,73 +1388,6 @@ The Service Provider refers to the application that the user seeks to access. On
             <category>extensions</category>
             <category>events</category>
             <category>webhooks</category>
-        </item>
-        <item>
-            <title><![CDATA[Keycloak vs. FrontEgg, an Open-Source Alternative]]></title>
-            <link>https://phasetwo.io/blog/keycloak-vs-frontegg-open-source-alternative/</link>
-            <guid>https://phasetwo.io/blog/keycloak-vs-frontegg-open-source-alternative/</guid>
-            <pubDate>Sat, 10 Aug 2024 00:00:00 GMT</pubDate>
-            <description><![CDATA[An in-depth comparison of Keycloak versus FrontEgg and why Keycloak is a strong alternative to a paid Authentication and Authorization service.]]></description>
-            <content:encoded><![CDATA[<p>Keycloak and Frontegg are two prominent solutions in the identity and access management (IAM) space, each serving distinct needs. Keycloak is an open-source IAM solution with over eight years of development, known for its scalability and deep customization options, allowing organizations full control over user identity management. On the other hand, Frontegg is a cloud-native platform designed for quick deployment and integration, specifically tailored for SaaS applications, offering a user-friendly management experience. In this blog post, we will compare Keycloak and Frontegg based on cost structure, deployment options, customization, scalability, functionality, and support.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="cost-structure">Cost Structure<a href="https://phasetwo.io/blog/keycloak-vs-frontegg-open-source-alternative/#cost-structure" class="hash-link" aria-label="Direct link to Cost Structure" title="Direct link to Cost Structure">​</a></h3>
-<p><strong>Keycloak</strong>
-As an open-source solution, Keycloak is free to use, making it an attractive option for organizations of all sizes. While there are no licensing fees, organizations need to consider hosting costs and the resources required for system management. This cost model makes Keycloak particularly appealing for startups and enterprises that can manage their own infrastructure effectively.</p>
-<p><strong>Frontegg</strong>
-Frontegg operates on a subscription-based pricing model, starting with a free 30-day trial that unlocks all features. Following the trial, costs begin at $499 per month for the Growth Plan. While it simplifies IAM implementation and reduces developmental burden, organizations must weigh the recurring costs against the value gained from Frontegg's streamlined user management capabilities.<br>
-<!-- -->Frontegg provides a nice “free forever” tier that gives you enough to play with the platform. You would not want to use this for a production application with serious user covenants. To move upward, it is based on features and requires sales contact to assess pricing. While the next tiers allow for “growth to unlimited users”, pricing is heavily dependent on that usage.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak stands out as a more economically advantageous option, particularly for organizations with the technical capability to manage their own infrastructure. Leverage <a href="https://phasetwo.io/hosting/" target="_blank" rel="noopener noreferrer">Phase Two's Free Hosting Tier</a> to test and integrate Authorization and Authentication into an application(s).</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="deployment-options">Deployment Options<a href="https://phasetwo.io/blog/keycloak-vs-frontegg-open-source-alternative/#deployment-options" class="hash-link" aria-label="Direct link to Deployment Options" title="Direct link to Deployment Options">​</a></h3>
-<p><strong>Keycloak</strong>
-Keycloak offers flexibility in deployment, supporting both on-premises and cloud-based solutions. This capability allows organizations to maintain control over their identity management infrastructure, making it suitable for varying operational requirements and compliance needs.</p>
-<p><strong>Frontegg</strong>
-Frontegg is primarily a cloud-based solution designed for rapid deployment, offering a plug-and-play experience that facilitates quick integration into existing applications. While it doesn’t provide robust on-premises capabilities, it excels in cloud environments, catering particularly well to SaaS platforms aiming for fast time-to-market.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak offers superior deployment flexibility, accommodating both complex cloud and on-premises infrastructures. Frontegg, however, excels in ease of use for cloud-based deployments.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="customization-and-branding">Customization and Branding<a href="https://phasetwo.io/blog/keycloak-vs-frontegg-open-source-alternative/#customization-and-branding" class="hash-link" aria-label="Direct link to Customization and Branding" title="Direct link to Customization and Branding">​</a></h3>
-<p><strong>Keycloak</strong>
-Keycloak is renowned for its extensive customization options, enabling organizations to tailor authentication flows, user interfaces, and security protocols to meet their specific needs. Its open-source nature allows for modifications that avoid vendor lock-in, facilitating a user experience that matches organizational needs. While branding and theming Keycloak is possible, the current ability to do so is not straightforward. Phase Two has made this easier through extending the Keycloak Admin UI (<a href="https://phasetwo.io/docs/getting-started/customizing-ui/" target="_blank" rel="noopener noreferrer">https://phasetwo.io/docs/getting-started/customizing-ui/</a>) which is available in all its <a href="https://phasetwo.io/hosting/" target="_blank" rel="noopener noreferrer">hosted</a> offerings.</p>
-<p><strong>Frontegg</strong>
-Frontegg also provides customization capabilities but focuses on delivering a user-friendly interface that prioritizes speed and accessibility. It allows basic branding and minor adjustments but may not match the depth of customization available in Keycloak. The branding tool built by Frontegg is well done and prioritizes the user experience.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak takes the lead in customization and flexibility, providing organizations more granular control over user interfaces and workflows. While Frontegg leads with providing the a strong user experience for branding customization.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="scalability-and-performance">Scalability and Performance<a href="https://phasetwo.io/blog/keycloak-vs-frontegg-open-source-alternative/#scalability-and-performance" class="hash-link" aria-label="Direct link to Scalability and Performance" title="Direct link to Scalability and Performance">​</a></h3>
-<p><strong>Keycloak</strong>
-Keycloak is designed for high scalability, accommodating large user bases through horizontal scaling and clustered deployments. This architecture makes it suitable for extensive enterprise environments that require robust performance under varying loads.</p>
-<p><strong>Frontegg</strong>
-Frontegg is also built with scalability in mind, catering to growing SaaS applications through its multi-tenant architecture. While it's designed to manage increasing user volumes effectively, its performance may not yet match Keycloak's capabilities in extremely large-scale environments.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak is the preferred option for larger applications requiring robust scalability. However, Frontegg is well-suited for rapidly growing applications, especially in the SaaS space.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="functionality-and-flexibility">Functionality and Flexibility<a href="https://phasetwo.io/blog/keycloak-vs-frontegg-open-source-alternative/#functionality-and-flexibility" class="hash-link" aria-label="Direct link to Functionality and Flexibility" title="Direct link to Functionality and Flexibility">​</a></h3>
-<p><strong>Keycloak</strong>:Keycloak<!-- --> provides a comprehensive suite of IAM features, including various authentication methods, fine-grained access control, and advanced identity federation capabilities. Its versatility in integrating with existing infrastructures makes Keycloak a powerful solution for complex IAM scenarios.</p>
-<p><strong>Frontegg</strong>
-Frontegg focuses on user management, facilitating seamless authentication and role management. Its end-to-end user management platform integrates easily with existing applications, offering a robust alternative for companies seeking quick implementation without extensive customization.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak leads in functionality and versatility, offering a broader range of advanced IAM features, making it a better choice for diverse security needs. Phase Two can provide <a href="https://phasetwo.io/support/" target="_blank" rel="noopener noreferrer">expert enterprise help</a>, custom development, and migrations.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="integration-capabilities">Integration Capabilities<a href="https://phasetwo.io/blog/keycloak-vs-frontegg-open-source-alternative/#integration-capabilities" class="hash-link" aria-label="Direct link to Integration Capabilities" title="Direct link to Integration Capabilities">​</a></h3>
-<p><strong>Keycloak</strong>
-Keycloak’s extensive integration capabilities include support for various identity providers and protocols like SAML, OAuth 2.0, and OpenID Connect. This allows organizations to leverage existing systems while enabling seamless authentication across applications.</p>
-<p><strong>Frontegg</strong>
-Frontegg also supports a wide range of integrations but primarily focuses on simplifying connections for SaaS applications. Its plug-and-play approach makes it easy to incorporate into existing products but may lack the depth of integration options available in Keycloak.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak emerges as the more versatile option, providing greater flexibility for organizations with complex integration requirements. Frontegg offers a great and easy interface to integrate with things they have support for.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="community-and-support">Community and Support<a href="https://phasetwo.io/blog/keycloak-vs-frontegg-open-source-alternative/#community-and-support" class="hash-link" aria-label="Direct link to Community and Support" title="Direct link to Community and Support">​</a></h3>
-<p><strong>Keycloak</strong>
-Keycloak benefits from a robust open-source community, with extensive documentation, forums, and active user contributions. Organizations can rely on community-driven support and resources to troubleshoot issues and share best practices.</p>
-<p><strong>Frontegg</strong>
-Frontegg provides dedicated customer support along with a library of resources. While still relatively new, it focuses on delivering good customer experiences and support for its users. Much of Frontegg’s Enterprise tier is focused on providing support.</p>
-<p><strong>Winner</strong></p>
-<p>Keycloak's established community offers a good way to get answers and help. Frontegg’s support channels are only available with the correct license. Phase Two helps to fill the gap between community help and Enterprise support (<a href="https://phasetwo.io/support/" target="_blank" rel="noopener noreferrer">https://phasetwo.io/support/</a>).</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="how-should-i-choose-iams">How Should I Choose IAMs?<a href="https://phasetwo.io/blog/keycloak-vs-frontegg-open-source-alternative/#how-should-i-choose-iams" class="hash-link" aria-label="Direct link to How Should I Choose IAMs?" title="Direct link to How Should I Choose IAMs?">​</a></h3>
-<p>Choosing the right IAM solution depends on your organization's specific needs and strategic goals. Keycloak is ideal for those seeking a customizable, open-source platform with extensive features and deployment flexibility. Frontegg, with its focus on rapid implementation and simplicity for SaaS applications, is a compelling option for tech companies looking to reduce development time and overhead.</p>
-<p>If you're looking to explore Keycloak further or have questions about <a href="https://phasetwo.io/support/migrate-to-keycloak/" target="_blank" rel="noopener noreferrer">integrating</a> it into your organization, please <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer">reach out for assistance</a>. The right IAM solution can help you secure your digital environment and streamline user management effectively.</p>]]></content:encoded>
-            <author>support@phasetwo.io (Phase Two)</author>
-            <category>phase_two</category>
-            <category>open_source</category>
-            <category>authentication</category>
-            <category>authorization</category>
-            <category>frontegg</category>
-            <category>keycloak</category>
         </item>
     </channel>
 </rss>
