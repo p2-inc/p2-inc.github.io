@@ -2,11 +2,65 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
-    <updated>2025-08-06T00:00:00.000Z</updated>
+    <updated>2025-08-11T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Shadcn Keycloak Theme Starter with Tailwind CSS]]></title>
+        <id>https://phasetwo.io/blog/shadcn-keycloak-theme/</id>
+        <link href="https://phasetwo.io/blog/shadcn-keycloak-theme/"/>
+        <updated>2025-08-11T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Get the theme: Shadcn Keycloak Theme Starter]]></summary>
+        <content type="html"><![CDATA[<p>Get the theme: <a href="https://github.com/p2-inc/keycloakify-starter-shadcn" target="_blank" rel="noopener noreferrer">Shadcn Keycloak Theme Starter</a></p>
+<p>A <a href="https://ui.shadcn.com/" target="_blank" rel="noopener noreferrer">shadcn</a> theme starter for Keycloak using <a href="https://www.tailwindcss.com/" target="_blank" rel="noopener noreferrer">Tailwind CSS</a> and <a href="https://www.radix-ui.com/" target="_blank" rel="noopener noreferrer">Radix UI</a> components. This starter provides a foundation for building a custom, component-based Keycloak theme.</p>
+<p>Phase Two are <a href="https://phasetwo.io/blog/phasetwo-keycloakify-partnership/">sponsors</a> of <a href="https://www.keycloakify.dev/" target="_blank" rel="noopener noreferrer">Keycloakify</a> as we are deeply convinced by this project's value.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="the-shadcn-keycloak-theme-starter">The Shadcn Keycloak Theme Starter<a href="https://phasetwo.io/blog/shadcn-keycloak-theme/#the-shadcn-keycloak-theme-starter" class="hash-link" aria-label="Direct link to The Shadcn Keycloak Theme Starter" title="Direct link to The Shadcn Keycloak Theme Starter">​</a></h2>
+<p>We chose to use <a href="https://ui.shadcn.com/" target="_blank" rel="noopener noreferrer">shadcn</a> as the component library for this starter because it provides a set of modern, accessible, and customizable components that can be easily integrated into Keycloakify themes. shadcn is built on top of <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">Tailwind CSS</a> and <a href="https://www.radix-ui.com/" target="_blank" rel="noopener noreferrer">Radix UI</a>, which makes it a great fit for building custom Keycloak themes.</p>
+<p>The starter provides a basic structure for building Keycloak themes using shadcn components, including:</p>
+<ul>
+<li><strong>Initial Setup</strong>: A basic Keycloakify project setup with shadcn and Tailwind CSS configured.</li>
+<li><strong>Login Page</strong>: A customized login page using shadcn components.</li>
+<li><strong>Baseline Components</strong>: A set of reusable shadcn components that can be used throughout the theme.</li>
+<li><strong>Baseline Ejections</strong>: Minimum set of pages ejected to get you started with customizing the login.</li>
+</ul>
+<p>Since shadcn ejects components into the project, you can customize them (or replace) as needed. This makes it quick and easy to introduce styles or components.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="options-for-customizing-keycloak-ui">Options for Customizing Keycloak UI<a href="https://phasetwo.io/blog/shadcn-keycloak-theme/#options-for-customizing-keycloak-ui" class="hash-link" aria-label="Direct link to Options for Customizing Keycloak UI" title="Direct link to Options for Customizing Keycloak UI">​</a></h2>
+<ol>
+<li><strong>FTL Templates</strong>: Keycloak's default theming system using FreeMarker templates. This is the traditional way to customize Keycloak's UI, but it can be cumbersome and lacks modern component-based design. Phase Two provides a <a href="https://phasetwo.io/docs/getting-started/customizing-ui/">simple CSS customization guide</a> for basic styling changes to avoid having to go into FTL templates.</li>
+<li><strong>CSS Customization</strong>: You can override the default CSS styles to change the appearance of Keycloak's UI. This is a simple way to apply custom styles, but it doesn't provide the flexibility of a component-based approach. Phase Two provides a <a href="https://phasetwo.io/docs/getting-started/customizing-ui/">simple CSS customization guide</a> for basic styling changes to base themes.</li>
+<li><strong>Keycloakify</strong>: A modern theming solution that allows you to build Keycloak themes using React components. It provides a more flexible and maintainable way to customize Keycloak's UI, leveraging the power of React and modern web development practices.</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="built-in-keycloak-themes">Built-in Keycloak Themes<a href="https://phasetwo.io/blog/shadcn-keycloak-theme/#built-in-keycloak-themes" class="hash-link" aria-label="Direct link to Built-in Keycloak Themes" title="Direct link to Built-in Keycloak Themes">​</a></h2>
+<p>The built-in Keycloak themes are built using not just FTL templates, but use <a href="https://www.patternfly.org/" target="_blank" rel="noopener noreferrer">PatternFly</a> as a design library. PatternFly provides a set of components and styles that are used to build the Keycloak UI. However, it can be difficult to customize these components to fit your specific design needs. The semantics and structure is not always clear, and the CSS can be difficult to override. Components use variables without consistency and getting that right can be a challenge, leaving you wondering if you covered all your use cases.</p>
+<p>In addition, there is no easy way to "preview" all variations of the pages. Keycloakify provides a built-in Storybook preview for all page variations.</p>
+<p>If you follow the official <a href="https://www.keycloak.org/ui-customization/themes" target="_blank" rel="noopener noreferrer">Guides for theme ui-customization</a> you will quickly find that the dev experience is an after-thought. There is only one sentence about development: "During development you can copy the theme to the themes directory,...". Knowing how the theme inherits from the base, how to override styles, add components, what data is available, or preview a page, is not documented or easy.</p>
+<p>As Keycloak releases new versions, the themes are not guaranteed to be compatible. This means that you will have to review and possibly update your custom theme with each Keycloak release, which can be a significant effort.</p>
+<p>Lastly, adjusting the Account UI or the Emails, is documented to the extent of changing message templates. As something almost every Keycloak user needs, this leaves a major hole in the theming experience.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="where-keycloakify-fits-in">Where Keycloakify Fits In<a href="https://phasetwo.io/blog/shadcn-keycloak-theme/#where-keycloakify-fits-in" class="hash-link" aria-label="Direct link to Where Keycloakify Fits In" title="Direct link to Where Keycloakify Fits In">​</a></h2>
+<p><a href="https://www.keycloakify.dev/" target="_blank" rel="noopener noreferrer">Keycloakify</a> is a theming solution that allows you a couple methods, CSS or custom components, of configuration to customize the three main areas of Keycloak:</p>
+<ol>
+<li><strong>Login Pages</strong></li>
+<li><strong>Account UI</strong></li>
+<li><strong>Emails</strong></li>
+</ol>
+<p>It is backwards compatible so that as new Keycloak versions are released, you can continue to use your custom theme without having to worry about breaking changes. It also provides a built-in Storybook preview for all page variations, making it easy to see how your customizations will look in different scenarios.</p>
+<p>Of the two methods that Keycloakify provides, we see that almost in all cases, the custom components method ends up being used. Dealing with PatternFly's CSS is difficult and error prone. That being said, Keycloakify requires some initial configuration to do custom component development: adding libraries, ejecting pages, etc. For this reason, we are taking a baseline starter and sharing it with the community in the hopes that it will help save people time in getting started with Keycloakify.</p>
+<p>Also, we know that eventually there will be development to remove the need for this starter, but until then, we hope this will help you get started with Keycloakify and building custom themes for Keycloak.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="summary">Summary<a href="https://phasetwo.io/blog/shadcn-keycloak-theme/#summary" class="hash-link" aria-label="Direct link to Summary" title="Direct link to Summary">​</a></h2>
+<p>We look forward to seeing how the community uses this starter to build custom themes for Keycloak. If you have any questions or feedback, please feel free to file an issue on the <a href="https://github.com/p2-inc/keycloakify-starter-shadcn" target="_blank" rel="noopener noreferrer">GitHub repository</a> or <a href="https://phasetwo.io/contact/">reach out</a>.</p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="theme" term="theme"/>
+        <category label="shadcn" term="shadcn"/>
+        <category label="tailwind" term="tailwind"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Phase Two Recognized as Official CockroachDB Partner]]></title>
         <id>https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/</id>
@@ -1446,26 +1500,5 @@ The Service Provider refers to the application that the user seeks to access. On
         <category label="keycloak themes" term="keycloak themes"/>
         <category label="partnership" term="partnership"/>
         <category label="keycloakify" term="keycloakify"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Presentation on Extending Keycloak for All Your Identity Use Cases]]></title>
-        <id>https://phasetwo.io/blog/keycloak-extensions-presentation/</id>
-        <link href="https://phasetwo.io/blog/keycloak-extensions-presentation/"/>
-        <updated>2024-09-27T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[A detailed introduction to building Keycloak extensions. This talk presents an overview of Keycloak’s commonly used extension mechanisms, best practices for development and testing of extensions, and several exemplary, real-world examples. Finally, it puts it all together with a deep-dive into one such extension that is available in the Phase Two keycloak-events extension.]]></summary>
-        <content type="html"><![CDATA[<p>We recently gave a talk at the <a href="https://keyconf.dev/" target="_blank" rel="noopener noreferrer">Keyconf24</a> conference in Vienna on how to extend Keycloak using its extensible SPI structure. In addition to showing what is possible and how to get started in building extensions, we also use our <a href="https://github.com/p2-inc/keycloak-events" target="_blank" rel="noopener noreferrer">Events and Webhooks</a> extension as a real-world example. The hosts of the conference have posted the <a href="https://www.youtube.com/watch?v=t8u-QO02Qn8?si=OH6V1w564UysihSu" target="_blank" rel="noopener noreferrer">video of the talk</a> on Youtube.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/t8u-QO02Qn8?si=OH6V1w564UysihSu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-<p>Take a look, and try it out today with our <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer">free hosted Keycloak</a> instances that run all of our <a href="https://github.com/p2-inc" target="_blank" rel="noopener noreferrer">open source Keycloak extensions</a>.</p>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="release" term="release"/>
-        <category label="keycloak" term="keycloak"/>
-        <category label="phase_two" term="phase_two"/>
-        <category label="extensions" term="extensions"/>
-        <category label="events" term="events"/>
-        <category label="webhooks" term="webhooks"/>
     </entry>
 </feed>
