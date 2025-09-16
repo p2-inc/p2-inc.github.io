@@ -4,10 +4,39 @@
         <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
         <link>https://phasetwo.io/blog/</link>
         <description>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</description>
-        <lastBuildDate>Mon, 11 Aug 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 03 Sep 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Custom domains on Phase Two Paid Plans]]></title>
+            <link>https://phasetwo.io/blog/custom-domains/</link>
+            <guid>https://phasetwo.io/blog/custom-domains/</guid>
+            <pubDate>Wed, 03 Sep 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Phase Two is happy to announce that custom domains can now be configured via self-serve right in the Dashboard. This feature is only available on paid plans.]]></description>
+            <content:encoded><![CDATA[<p>Phase Two is happy to announce that custom domains can now be configured via self-serve right in the <a href="https://dash.phasetwo.com/" target="_blank" rel="noopener noreferrer">Dashboard</a>. This feature is only available on paid plans.</p>
+<p>Custom domains are a key piece of branding and trust for your users. By using your own domain, you can ensure that your users see a familiar URL when interacting with your Keycloak instance.</p>
+<p>Read more about how to set up custom domains in our <a href="https://phasetwo.io/docs/self-service/custom-domains/">Custom Domains documentation</a>.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="custom-domains-overview">Custom Domains Overview<a href="https://phasetwo.io/blog/custom-domains/#custom-domains-overview" class="hash-link" aria-label="Direct link to Custom Domains Overview" title="Direct link to Custom Domains Overview">​</a></h2>
+<p>Up until this point, custom domains were offered, but had to be setup and managed by Phase Two support. Now, you can configure and manage your own custom domains directly from the Dashboard. This allows for multiple custom domains to be used as required.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-use-custom-domains">Why Use Custom Domains?<a href="https://phasetwo.io/blog/custom-domains/#why-use-custom-domains" class="hash-link" aria-label="Direct link to Why Use Custom Domains?" title="Direct link to Why Use Custom Domains?">​</a></h2>
+<p>Using a custom domain for your Keycloak instance provides several benefits:</p>
+<ol>
+<li><strong>Branding</strong>: A custom domain allows you to maintain consistent branding across your applications and services. This helps reinforce your brand identity and provides a seamless experience for your users.</li>
+<li><strong>Trust</strong>: Users are more likely to trust a familiar domain. By using your
+own domain, you can increase user confidence and reduce the likelihood of phishing attacks.</li>
+<li><strong>SSL/TLS</strong>: Phase Two provides free SSL/TLS certificates for your custom domains, ensuring that all communications are secure and encrypted.</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="whats-next">What's next?<a href="https://phasetwo.io/blog/custom-domains/#whats-next" class="hash-link" aria-label="Direct link to What's next?" title="Direct link to What's next?">​</a></h2>
+<p>Phase Two has many exciting features planned for the future. Stay tuned for more updates and improvements to our platform.</p>]]></content:encoded>
+            <author>support@phasetwo.io (Phase Two)</author>
+            <category>phase_two</category>
+            <category>keycloak</category>
+            <category>domains</category>
+            <category>ssl</category>
+            <category>certificates</category>
+            <category>custom_domains</category>
+        </item>
         <item>
             <title><![CDATA[Shadcn Keycloak Theme Starter with Tailwind CSS]]></title>
             <link>https://phasetwo.io/blog/shadcn-keycloak-theme/</link>
@@ -1403,26 +1432,6 @@ The Service Provider refers to the application that the user seeks to access. On
             <category>authorization</category>
             <category>keycloak</category>
             <category>oidc_spa</category>
-            <category>keycloakify</category>
-        </item>
-        <item>
-            <title><![CDATA[Phase Two and Keycloakify, Making Keycloak Better Together]]></title>
-            <link>https://phasetwo.io/blog/phasetwo-keycloakify-partnership/</link>
-            <guid>https://phasetwo.io/blog/phasetwo-keycloakify-partnership/</guid>
-            <pubDate>Wed, 09 Oct 2024 00:00:00 GMT</pubDate>
-            <description><![CDATA[Phase Two and Keycloakify deepen their relationship with sponsorship and adding our extension templates.]]></description>
-            <content:encoded><![CDATA[<div id="illustrationId" style="position:relative"><img src="https://phasetwo.io/blog/keycloakify/keycloakify-logo-hero-moving-DW_SYkPC.png" alt="Rotating react logo" style="width:200px;box-shadow:none;animation:rotate 20s linear infinite"><img src="https://phasetwo.io/blog/keycloakify/keycloakify-logo-hero-still-NiNHhekl.png" alt="keyhole" style="width:200px;box-shadow:none;position:absolute;top:0;left:0"></div>
-<p>Phase Two has long been big fans of <a href="https://www.keycloakify.dev/" target="_blank" rel="noopener noreferrer">Keycloakify</a>. The work being done by <a href="https://github.com/garronej" target="_blank" rel="noopener noreferrer">Joseph Garrone</a> is in our opinion some of the best user-focused work in the Keycloak community. Keycloakify brings the ability to theme the Keycloak frontend applications: Login, Account, Admin(coming) using modern toolsets like React or Angular and theming systems like Tailwind or Material-UI. Keycloakify allows you to build quickly and deploy themes to your Keycloak installation in a manner that the existing Keycloak toolset (ftl templates) does not.</p>
-<p>Many of Phase Two customers use Keycloakify and because we value it as an important piece of the Keycloak community, Phase Two has officially entered into a sponsorship agreement with Keycloakify.</p>
-<p>To make using our <a href="https://github.com/p2-inc#our-extensions-" target="_blank" rel="noopener noreferrer">extensions</a> easier with Keycloakify, we've started with porting our <a href="https://phasetwo.io/blog/set-up-magic-links/" target="_blank" rel="noopener noreferrer">Magic Link</a> <a href="https://github.com/p2-inc/keycloak-magic-link" target="_blank" rel="noopener noreferrer">extension</a> to Keycloakify templates. At present, those templates can be found in Phase Two's forked <a href="https://github.com/p2-inc/keycloakify-starter/tree/p2/magic-link-extension-templates/src/login/pages" target="_blank" rel="noopener noreferrer">Keycloakify Starter</a>. We are actively working on adding them to the main line of templates which can be customized directly from the Keycloakify CLI. Until that time, follow the <a href="https://docs.keycloakify.dev/styling-custom-extension-page" target="_blank" rel="noopener noreferrer">instructions</a> from Keycloakify to integrate those templates.</p>
-<p>We've also joined the Keycloakify <a href="https://discord.gg/mJdYJSdcm4" target="_blank" rel="noopener noreferrer">Discord</a> for quick and direct communication.</p>
-<p>Join us and the Keycloakify <a href="https://discord.gg/mJdYJSdcm4" target="_blank" rel="noopener noreferrer">community</a> to build themes and improve the experience of working with Keycloak.</p>]]></content:encoded>
-            <author>support@phasetwo.io (Phase Two)</author>
-            <category>phase_two</category>
-            <category>open_source</category>
-            <category>keycloak</category>
-            <category>keycloak themes</category>
-            <category>partnership</category>
             <category>keycloakify</category>
         </item>
     </channel>
