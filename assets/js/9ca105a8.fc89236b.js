@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[80323],{33514:(s,t,e)=>{e.r(t),e.d(t,{default:()=>a});var n=e(44586),o=e(80541),c=e(96540),i=e(74848);const a=function(){const s=(0,n.default)(),{siteConfig:t={}}=s;return(0,c.useEffect)(()=>{window.location="/pricing/hosting"},[]),(0,i.jsx)(o.A,{description:`${t.tagline}`})}}}]);

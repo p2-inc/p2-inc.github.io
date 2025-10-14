@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[62971],{98178:(s,e,c)=>{c.r(e),c.d(e,{default:()=>p});c(96540);var h=c(80541),a=c(74848);const p=()=>(0,a.jsx)(h.A,{title:"Backups",children:(0,a.jsxs)("div",{children:[(0,a.jsx)("h1",{children:"Backups"}),(0,a.jsx)("p",{children:"This is the Backups page."})]})})}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkphasetwo_docs=self.webpackChunkphasetwo_docs||[]).push([[96540],{60571:(s,e,n)=>{n.r(e),n.d(e,{default:()=>c});n(96540);var i=n(59867),t=n(74848);function c(){return(0,t.jsx)(i.A,{title:"Community",children:(0,t.jsxs)("div",{children:[(0,t.jsx)("h1",{children:"Community"}),(0,t.jsx)("p",{children:"This page is under construction."})]})})}}}]);
