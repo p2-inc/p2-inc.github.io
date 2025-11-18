@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://www.googletagmanager.com">
 <script src="https://www.termsfeed.com/public/cookie-consent/4.1.0/cookie-consent.js" charset="UTF-8" defer="defer"></script>
 <script src="https://www.googletagmanager.com/gtag/js?id=UA-160183620-1" async data-cookie-consent="tracking"></script><link rel="stylesheet" href="/assets/css/styles.cb427a13.css">
-<script src="/assets/js/runtime~main.882baebc.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.52dcfaf8.js" defer="defer"></script>
 <script src="/assets/js/main.eb990b7e.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -40,6 +40,9 @@
 <p>Adapt the <a href="https://github.com/p2-inc/keycloak-orgs?tab=readme-ov-file#authentication" target="_blank" rel="noopener noreferrer">Authentication</a> according to your needs.</p>
 <p>Note: Users must have a verified email address to accept an invitation, as it presents a security issue to allow any User to register with an unverified email address and claim the invitation.</p>
 <p>Following user creation and authentication, invitees will be prompted to accept or decline any outstanding invitations. In addition to any roles that were selected in the invitation, the user will automatically be added as a member to the inviting organization.</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="admin-portal">Admin Portal<a href="#admin-portal" class="hash-link" aria-label="Direct link to Admin Portal" title="Direct link to Admin Portal" translate="no">​</a></h4>
+<p>If you plan to use the Admin Portal to manage invitations, then you must configure the invitation template because there is no <code>redirectUri</code> field provided like in the Keycloak admin UI. In order to configure this template easily in the Phase Two deployments, enable the <code>attributes</code> theme for emails in the Realm Settings &gt; Themes &gt; Email Theme.</p>
+<p>Once the attributes theme is set, go to (Extensions) Styles &gt; <a href="https://phasetwo.io/docs/getting-started/email/#content-templates" target="_blank" rel="noopener noreferrer">Emails</a>, select the <code>invitation-email</code> template and configure the <code>{{link}}</code> you would like to have in your email for the user to click on.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="options-for-user-registration">Options for user registration<a href="#options-for-user-registration" class="hash-link" aria-label="Direct link to Options for user registration" title="Direct link to Options for user registration" translate="no">​</a></h3>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="self-registration">Self-registration<a href="#self-registration" class="hash-link" aria-label="Direct link to Self-registration" title="Direct link to Self-registration" translate="no">​</a></h4>
 <p>This option requires either creating users on behalf of them before sending the invitation or enabling user registration on the realm.</p>
