@@ -2,11 +2,30 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
-    <updated>2025-10-14T00:00:00.000Z</updated>
+    <updated>2025-12-15T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Auth.it featured on Keycloak Friday Chat]]></title>
+        <id>https://phasetwo.io/blog/authit-on-kfc/</id>
+        <link href="https://phasetwo.io/blog/authit-on-kfc/"/>
+        <updated>2025-12-15T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Phase Two's new hosting platform, Auth.it, was featured on Mr. Keycloak's livestream]]></summary>
+        <content type="html"><![CDATA[<p>Phase Two has recently <a href="https://auth.it/blog/welcome" target="_blank" rel="noopener noreferrer">launched</a> <a href="https://auth.it/" target="_blank" rel="noopener noreferrer">Auth.it</a>, a modern authentication platform built for developers who want the power of Keycloak with the simplicity, polish, and developer experience of modern identity providers like WorkOS, Stytch, and Clerk — all at a fraction of the cost.</p>
+<p>Last Friday, Niko Köbler (aka "Mr. Keycloak"), invited us to demonstrate Auth.it and explain how we built it on his livestream, <a href="https://www.n-k.de/2025/12/kfc-keycloak-friday-chat-xmas-edition-authit-phase-two.html" target="_blank" rel="noopener noreferrer">Keycloak Friday Chat</a>. If you're interested in an overview of the new platform, and would like to know the details of how it was implemented as a set of Keycloak extensions, please <a href="https://www.youtube.com/watch?v=a2thzEs35ws" target="_blank" rel="noopener noreferrer">watch the recording of the livestream</a>.</p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="hosting" term="hosting"/>
+        <category label="open_source" term="open_source"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="authit" term="authit"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Run the Keycloak Admin UI Locally (with Phase Two Extensions)]]></title>
         <id>https://phasetwo.io/blog/run-admin-ui/</id>
@@ -1408,60 +1427,5 @@ The Service Provider refers to the application that the user seeks to access. On
         <category label="phase_two" term="phase_two"/>
         <category label="keycloak_magic_link" term="keycloak_magic_link"/>
         <category label="keycloak_extensions" term="keycloak_extensions"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Why your startup should use Keycloak for SSO and User Management - Part 2: Data]]></title>
-        <id>https://phasetwo.io/blog/keycloak-for-startups-data/</id>
-        <link href="https://phasetwo.io/blog/keycloak-for-startups-data/"/>
-        <updated>2024-10-28T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Part 2: The ability to control your data is essential, now and in the future.]]></summary>
-        <content type="html"><![CDATA[<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>In this <a href="https://phasetwo.io/blog/keycloak-for-startups-overview/">series</a> we are proposing Keycloak as a superior alternative to commercial identity offerings.</p><ul>
-<li><a href="https://phasetwo.io/blog/keycloak-for-startups-standards/">Part 1: Standards</a></li>
-<li><a href="https://phasetwo.io/blog/keycloak-for-startups-data/">Part 2: Data Ownership</a></li>
-<li><a href="https://phasetwo.io/blog/keycloak-for-startups-customization/">Part 3: Customization</a></li>
-<li><a href="https://phasetwo.io/blog/keycloak-for-startups-cost/">Part 4: Cost</a></li>
-</ul></div></div>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="part-2---owning-your-data-security-privacy-and-control">Part 2 - Owning Your Data: Security, Privacy, and Control<a href="https://phasetwo.io/blog/keycloak-for-startups-data/#part-2---owning-your-data-security-privacy-and-control" class="hash-link" aria-label="Direct link to Part 2 - Owning Your Data: Security, Privacy, and Control" title="Direct link to Part 2 - Owning Your Data: Security, Privacy, and Control" translate="no">​</a></h3>
-<p>In the age of data breaches and privacy concerns, owning and controlling your user data is not just a preference but a strategic imperative for organizations, particularly when it comes to Identity and Access Management (IAM) solutions. Let's explore the reasons why owning your data matters and the risks associated with entrusting it to a Software-as-a-Service (SaaS) solution.</p>
-<ol>
-<li>
-<p><strong>Data Security</strong>: By hosting your IAM solution on-premise on your own infrastructure, or with a hybrid that allows you to control the database, you retain control over the security measures implemented to safeguard your user data. This includes encryption protocols, access controls, network security configurations, and intrusion detection systems. <strong>With data breaches becoming increasingly common</strong>, maintaining tight control over your data security posture is paramount for protecting sensitive information and mitigating risks.</p>
-</li>
-<li>
-<p><strong>Data Privacy Compliance</strong>: Depending on your industry or geographical location, you may be subject to stringent data privacy regulations such as the General Data Protection Regulation (GDPR) or the California Consumer Privacy Act (CCPA). By owning your data, you can ensure compliance with these regulations through appropriate data handling practices, transparent communication with users about data collection and usage, and streamlined management of data subject access requests (DSAR's) and consent processes.</p>
-</li>
-<li>
-<p><strong>Customization and Integration</strong>: When you own your data, you have the freedom to customize your IAM solution and integrate it seamlessly with other systems and applications within your organization's ecosystem. This level of flexibility enables you to tailor the solution to meet your specific business requirements, streamline workflows, and enhance operational efficiency. In contrast, SaaS solutions may impose limitations on customization and integration, hindering your ability to adapt the solution to evolving business needs. For example, with Keycloak, you can create custom authentication flows, such as multi-factor authentication with step-up policies based on user roles or risk profiles, or integrate Keycloak with your CRM to automatically sync user permissions with customer account changes.</p>
-</li>
-</ol>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="risks-of-saas-data-hosting">Risks of SaaS Data Hosting<a href="https://phasetwo.io/blog/keycloak-for-startups-data/#risks-of-saas-data-hosting" class="hash-link" aria-label="Direct link to Risks of SaaS Data Hosting" title="Direct link to Risks of SaaS Data Hosting" translate="no">​</a></h4>
-<p>While SaaS solutions offer convenience and ease of deployment, they also present inherent risks when it comes to hosting your user data:</p>
-<ol>
-<li>
-<p><strong>Data Access and Control</strong>: Entrusting your user data to a SaaS provider means relinquishing control over how that data is stored, accessed, and managed. You are reliant on the provider to implement robust security measures and adhere to data privacy regulations, with limited visibility and oversight on your part.</p>
-</li>
-<li>
-<p><strong>Vendor Lock-In</strong>: Adopting a SaaS IAM solution may result in vendor lock-in, where migrating away from the solution becomes challenging or costly. This lock-in can restrict your ability to switch providers or transition to a self-hosted solution in the future, potentially limiting your flexibility and independence.</p>
-</li>
-<li>
-<p><strong>Data Sovereignty Concerns</strong>: Depending on the jurisdiction in which the SaaS provider operates, you may encounter data sovereignty issues that impact your ability to control where your data is stored and processed. This lack of control over data residency can complicate compliance efforts and expose your organization to regulatory risks.</p>
-</li>
-</ol>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="conclusion-empowering-organizations-with-data-ownership">Conclusion: Empowering Organizations with Data Ownership<a href="https://phasetwo.io/blog/keycloak-for-startups-data/#conclusion-empowering-organizations-with-data-ownership" class="hash-link" aria-label="Direct link to Conclusion: Empowering Organizations with Data Ownership" title="Direct link to Conclusion: Empowering Organizations with Data Ownership" translate="no">​</a></h4>
-<p>In conclusion, owning and controlling your user data offers numerous benefits, including enhanced security, compliance, customization, and integration capabilities. While SaaS solutions may offer convenience, organizations must carefully weigh the risks associated with relinquishing control over their data and consider the long-term implications for security, privacy, and regulatory compliance.</p>
-<p>In order to provide customers who are used to SaaS solutions with flexibility in data sovereignty, Phase Two has developed "BYODB" (bring your own Database). BYODB allows customers the ability to benefit from the ease, scalability, and robustness of our <a href="https://phasetwo.io/hosting/">hosted offering</a> while still owning and controlling their data.</p>
-<p>For those hosting Keycloak entirely themselves, Phase Two offers <a href="https://phasetwo.io/support/">Enterprise level support</a> to ensure that systems are properly configured, setup, upgraded, and managed by customers.</p>
-<p>By prioritizing data ownership and implementing robust IAM solutions that align with organizational objectives and values, organizations can mitigate risks, safeguard sensitive information, and maintain sovereignty over their data assets in an increasingly interconnected and data-driven world.</p>
-<p><em>Read <a href="https://phasetwo.io/blog/keycloak-for-startups-customization/">Part 3: Customizability for Tailored Solutions</a> now</em></p>
-<p>Get in touch at <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer">sales@phasetwo.io</a> to learn more.</p>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="keycloak" term="keycloak"/>
-        <category label="phase_two" term="phase_two"/>
-        <category label="startup" term="startup"/>
-        <category label="data" term="data"/>
     </entry>
 </feed>
