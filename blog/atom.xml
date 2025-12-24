@@ -2,11 +2,67 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
-    <updated>2025-12-15T00:00:00.000Z</updated>
+    <updated>2026-01-05T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Security Capabilities Now Available for Keycloak Clusters]]></title>
+        <id>https://phasetwo.io/blog/dedicated-clusters-security-capabilities/</id>
+        <link href="https://phasetwo.io/blog/dedicated-clusters-security-capabilities/"/>
+        <updated>2026-01-05T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Enhance the security of your Keycloak clusters with new features available on the Phase Two Dash.]]></summary>
+        <content type="html"><![CDATA[<p>At Phase Two, we are committed to providing our customers with the most secure and reliable managed Keycloak hosting platform. As part of this commitment, we are excited to announce the release of new security capabilities for Keycloak clusters available through the Phase Two Dash.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="new-security-features">New Security Features<a href="https://phasetwo.io/blog/dedicated-clusters-security-capabilities/#new-security-features" class="hash-link" aria-label="Direct link to New Security Features" title="Direct link to New Security Features" translate="no">​</a></h2>
+<p>We have introduced the first of several new security features that can be easily configured through the Phase Two Dash. These features are designed to enhance the security posture of your Keycloak clusters and provide you with greater control over your authentication environment.</p>
+<p>The initial set of security features includes the ability to configure <strong>IP level access</strong> to your Keycloak clusters. There are three types of IP restrictions you can apply:</p>
+<ol>
+<li class=""><strong>Admin Paths</strong>: Restrict access to the administrative interfaces of your Keycloak instance (e.g., /admin, /auth/admin) to specific IP addresses or ranges. This ensures that only authorized personnel can access sensitive admin functions.</li>
+<li class=""><strong>Public Allowed Paths</strong>: Specify IP addresses that are allowed to access public endpoints (e.g., /token). This is useful for limiting access to known clients while blocking all other traffic. Particularly useful for development and staging environments.</li>
+<li class=""><strong>Public Blocked Paths</strong>: Block specific IP addresses from accessing public endpoints (e.g., /token). This allows you to prevent known malicious IPs from interacting with your Keycloak instance without affecting legitimate traffic. Or to just block abuse to your application for any reason.</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-to-configure-security-features">How to Configure Security Features<a href="https://phasetwo.io/blog/dedicated-clusters-security-capabilities/#how-to-configure-security-features" class="hash-link" aria-label="Direct link to How to Configure Security Features" title="Direct link to How to Configure Security Features" translate="no">​</a></h2>
+<p>Visit your cluster's page &gt; Config tab &gt; Restrictions to manage IP restrictions for your Keycloak cluster. You can easily add or remove IP addresses or CIDR ranges for each type of restriction.</p>
+<p>Learn more in the <a href="https://phasetwo.io/docs/self-service/restrictions/" target="_blank" rel="noopener noreferrer" class="">Cluster Restrictions documentation</a>.</p>
+<hr>
+<p>Want to learn more or have feedback? Log in to the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and try adding your IP restriction now. This feature is included with all <strong>dedicated cluster plans</strong>. For any questions or concerns, please reach out to <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="hosting" term="hosting"/>
+        <category label="open_source" term="open_source"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="security" term="security"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Configure Environment Variables for Dedicated Keycloak Clusters]]></title>
+        <id>https://phasetwo.io/blog/dedicated-clusters-environment-variables/</id>
+        <link href="https://phasetwo.io/blog/dedicated-clusters-environment-variables/"/>
+        <updated>2025-12-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[How to set environment variables for dedicated Keycloak clusters on the Phase Two Dash]]></summary>
+        <content type="html"><![CDATA[<p>Phase Two has been storming ahead with our managed Keycloak hosting platform, <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">dash.phasetwo.io</a>. As part of our commitment to providing flexible and powerful hosting solutions, we are excited to announce that users can now set environment variables for their dedicated Keycloak clusters directly through the Phase Two Dash.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-environment-variables">Why Environment Variables?<a href="https://phasetwo.io/blog/dedicated-clusters-environment-variables/#why-environment-variables" class="hash-link" aria-label="Direct link to Why Environment Variables?" title="Direct link to Why Environment Variables?" translate="no">​</a></h2>
+<p>Environment variables are a crucial aspect of configuring and managing applications. They allow you to customize the behavior of your Keycloak instances without modifying the underlying code or configuration files. This is especially important for managing sensitive information such as API keys and other configuration settings. For customers building custom Keycloak extensions or integrating with third-party services, the ability to set environment variables is essential.</p>
+<p>With this new feature, you can easily manage your Keycloak cluster's environment variables through a user-friendly interface, streamlining the deployment and configuration process. Updates are applied seamlessly, requiring no downtime for your authentication services.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-to-set-environment-variables">How to Set Environment Variables<a href="https://phasetwo.io/blog/dedicated-clusters-environment-variables/#how-to-set-environment-variables" class="hash-link" aria-label="Direct link to How to Set Environment Variables" title="Direct link to How to Set Environment Variables" translate="no">​</a></h2>
+<p>Within your cluster, visit your cluster's page &gt; Config tab &gt; Keycloak features. From there, you can add new environment variables or remove existing ones. You have the option to set variables as plaintext or as secrets, ensuring that sensitive information remains secure.</p>
+<p>Learn more in the <a href="https://phasetwo.io/docs/self-service/environment-variables/" target="_blank" rel="noopener noreferrer" class="">Environment Variables documentation</a>.</p>
+<hr>
+<p>Want to learn more or have feedback? Log in to the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and try adding your first environment variable. This feature is included with all <strong>dedicated cluster plans</strong>. For any questions or concerns, please reach out to <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="hosting" term="hosting"/>
+        <category label="open_source" term="open_source"/>
+        <category label="keycloak" term="keycloak"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Auth.it featured on Keycloak Friday Chat]]></title>
         <id>https://phasetwo.io/blog/authit-on-kfc/</id>
@@ -1344,88 +1400,5 @@ The Service Provider refers to the application that the user seeks to access. On
         <category label="phase_two" term="phase_two"/>
         <category label="organizations" term="organizations"/>
         <category label="multitenant" term="multitenant"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Why your startup should use Keycloak for SSO and User Management - Part 3: Customization]]></title>
-        <id>https://phasetwo.io/blog/keycloak-for-startups-customization/</id>
-        <link href="https://phasetwo.io/blog/keycloak-for-startups-customization/"/>
-        <updated>2024-11-04T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Part 3: Keycloak stands out in customizability for tailored solutions.]]></summary>
-        <content type="html"><![CDATA[<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>In this <a class="" href="https://phasetwo.io/blog/keycloak-for-startups-overview/">series</a> we are proposing Keycloak as a superior alternative to commercial identity offerings.</p><ul>
-<li class=""><a class="" href="https://phasetwo.io/blog/keycloak-for-startups-standards/">Part 1: Standards</a></li>
-<li class=""><a class="" href="https://phasetwo.io/blog/keycloak-for-startups-data/">Part 2: Data Ownership</a></li>
-<li class=""><a class="" href="https://phasetwo.io/blog/keycloak-for-startups-customization/">Part 3: Customization</a></li>
-<li class=""><a class="" href="https://phasetwo.io/blog/keycloak-for-startups-cost/">Part 4: Cost</a></li>
-</ul></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="part-3-customizability-for-tailored-solutions-why-keycloak-stands-out">Part 3: Customizability for Tailored Solutions: Why Keycloak Stands Out<a href="https://phasetwo.io/blog/keycloak-for-startups-customization/#part-3-customizability-for-tailored-solutions-why-keycloak-stands-out" class="hash-link" aria-label="Direct link to Part 3: Customizability for Tailored Solutions: Why Keycloak Stands Out" title="Direct link to Part 3: Customizability for Tailored Solutions: Why Keycloak Stands Out" translate="no">​</a></h3>
-<p>One size rarely fits all, especially in the world of enterprise software. Startups require flexibility to adapt and tailor IAM solutions to their unique business requirements. Keycloak shines in this aspect, offering extensive customization capabilities that empower startups to mold the platform according to their specific needs.</p>
-<p>From branding and user interface customization to advanced authentication flows and authorization policies, Keycloak provides a comprehensive toolkit for startups to craft seamless and secure user experiences. Whether integrating with existing systems or building entirely new functionalities, Keycloak's flexibility ensures a perfect fit for any enterprise SaaS startup. Here’s how Keycloak’s flexibility stands apart from commercial, closed-source solutions, and why this is a key differentiator:</p>
-<ol>
-<li class="">
-<p><strong>Flexible Authentication and Authorization Flows</strong>: Keycloak supports a broad range of authentication flows out of the box, including standard Single Sign-On (<a class="" href="https://phasetwo.io/product/sso/">SSO</a>), multi-factor authentication (MFA), and custom flows that can incorporate additional security checks or personalized user experiences. Through its flexible Authentication Flow configuration, Keycloak allows you to define step-by-step authentication processes, integrating custom forms, conditional checks, and required actions. This customization ensures that security and compliance requirements can be met without compromising on user experience.</p>
-</li>
-<li class="">
-<p><strong>Adaptable User Interfaces and Branding</strong>: The user experience is a major part of identity management. Keycloak makes it easy to customize login pages, consent screens, and other interfaces to align with your brand’s look and feel. You can alter these templates by modifying Keycloak’s HTML, CSS, and JavaScript files, enabling seamless brand integration and a cohesive customer experience. Closed-source solutions, by contrast, often provide limited UI customization options, restricting the degree to which you can personalize the user experience.</p>
-</li>
-<li class="">
-<p><strong>Modular Extensions with Service Provider Interfaces (SPIs)</strong>: Keycloak’s modular architecture is built to support extensive custom extensions via Service Provider Interfaces (SPIs). SPIs are essentially integration points that allow developers to replace or enhance Keycloak’s default behavior. For instance, if you need a unique authentication method, such as biometric authentication or a custom identity provider integration, you can build and plug in your own SPI modules. This extensibility offers startups the freedom to experiment, innovate, and introduce unique capabilities not available in off-the-shelf commercial IAM solutions.</p>
-</li>
-<li class="">
-<p><strong>Seamless Integration with Existing Systems</strong>: Because it is open source, Keycloak is highly compatible with various enterprise ecosystems and can be deeply integrated with existing IT <a class="" href="https://phasetwo.io/product/integrations/">infrastructure and applications</a>. Keycloak’s ability to connect with external identity providers, databases, custom authentication mechanisms, and business systems allows startups to create a seamless experience for users who may be interacting with multiple applications. This integration potential extends to support for protocols such as LDAP, Active Directory, SAML, and OIDC, making it possible to incorporate Keycloak into hybrid and legacy environments with minimal friction.</p>
-</li>
-<li class="">
-<p><strong>API-Driven Customization and Developer-Friendly Environment</strong>: Keycloak’s comprehensive APIs and developer-friendly tooling make it an ideal choice for startups that value agility and the ability to innovate quickly. Through Keycloak’s REST APIs, developers can programmatically manage users, sessions, roles, permissions, and more. This API-driven approach allows startups to automate IAM workflows, create custom dashboards, or extend functionalities as business needs evolve. In a closed-source solution, API access may be limited or gated behind premium licensing tiers, restricting the organization’s ability to fully integrate IAM within its applications.</p>
-</li>
-<li class="">
-<p><strong>Open Source Freedom and Community-Driven Innovation</strong>: Keycloak’s open-source nature provides the ultimate freedom to customize, extend, and experiment without limitations. The active Keycloak community continuously contributes new features, plugins, and enhancements, making it possible to stay on the cutting edge of IAM innovation. Startups benefit not only from this community-driven innovation but also from the ability to create proprietary modifications or custom forks of Keycloak to meet unique requirements—a level of freedom and flexibility typically unavailable with commercial IAM providers.</p>
-</li>
-</ol>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-customizability-matters-in-comparison-to-closed-source-solutions">Why Customizability Matters in Comparison to Closed-Source Solutions<a href="https://phasetwo.io/blog/keycloak-for-startups-customization/#why-customizability-matters-in-comparison-to-closed-source-solutions" class="hash-link" aria-label="Direct link to Why Customizability Matters in Comparison to Closed-Source Solutions" title="Direct link to Why Customizability Matters in Comparison to Closed-Source Solutions" translate="no">​</a></h3>
-<p>In contrast, commercial IAM solutions like <a class="" href="https://phasetwo.io/blog/keycloak-vs-auth0-open-source-alternative/">Auth0</a> or <a class="" href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/">WorkOS</a> often limit customization to predefined configuration options. These providers typically restrict access to source code and SPIs, which can prevent organizations from fully adapting the IAM solution to fit unique workflows, branding requirements, or security demands. Additionally, while some commercial IAM providers offer custom integrations or enhanced features, these are often gated behind higher-tier pricing plans, increasing costs as startups scale.</p>
-<p>The flexibility Keycloak offers through customization allows startups to truly own their IAM strategy, aligning it directly with their brand identity, security protocols, and business objectives. By choosing Keycloak, startups retain the freedom to innovate at every layer of the IAM process, without being constrained by the limitations or financial restrictions imposed by closed-source, SaaS-based IAM providers.</p>
-<p>For your extension needs, Phase Two provides the ability to load custom themes and extensions for customers at the <a class="" href="https://phasetwo.io/hosting/">Enterprise level</a>. Please contact <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a> for more information about how to benefit from our hosting platform while customizing Keycloak to your specific needs.</p>
-<p><em>Read <a class="" href="https://phasetwo.io/blog/keycloak-for-startups-cost/">Part 4: Cost</a> now</em></p>
-<p>Get in touch at <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a> to learn more.</p>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="keycloak" term="keycloak"/>
-        <category label="phase_two" term="phase_two"/>
-        <category label="startup" term="startup"/>
-        <category label="customization" term="customization"/>
-        <category label="extension" term="extension"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Using Magic Links Within a Native iOS, Android, or Other Application for Fast and Secure Login]]></title>
-        <id>https://phasetwo.io/blog/magic-links-native-applications/</id>
-        <link href="https://phasetwo.io/blog/magic-links-native-applications/"/>
-        <updated>2024-10-31T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Leverage the Keycloak Magic Link extension to easily and securely log users into native applications.]]></summary>
-        <content type="html"><![CDATA[<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="keycloak-and-native-applications">Keycloak and Native Applications<a href="https://phasetwo.io/blog/magic-links-native-applications/#keycloak-and-native-applications" class="hash-link" aria-label="Direct link to Keycloak and Native Applications" title="Direct link to Keycloak and Native Applications" translate="no">​</a></h3>
-<p>Native applications for iOS, Android, and other platforms can integrate with Keycloak to provide secure, centralized authentication and authorization services. By utilizing Keycloak, these applications can streamline the user login experience through various protocols such as OAuth 2.0 and OpenID Connect, which Keycloak natively supports. With Keycloak, mobile applications can handle user sign-in, token management, and session handling securely, ensuring user identities are managed consistently across devices and platforms. This setup enables native applications to offload the complexities of authentication to Keycloak, allowing seamless integrations with features like Single Sign-On (SSO), social logins, and multi-factor authentication, while developers can focus on app functionality rather than handling sensitive user data directly. Additionally, Keycloak’s support for fine-grained access control and roles ensures that native apps can manage user permissions efficiently, creating a robust foundation for secure, scalable mobile applications.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="keycloak-magic-link">Keycloak Magic Link<a href="https://phasetwo.io/blog/magic-links-native-applications/#keycloak-magic-link" class="hash-link" aria-label="Direct link to Keycloak Magic Link" title="Direct link to Keycloak Magic Link" translate="no">​</a></h3>
-<p>The <a href="https://github.com/p2-inc/keycloak-magic-link" target="_blank" rel="noopener noreferrer" class="">Keycloak Magic Link extension</a> by Phase Two offers a plugin that enables passwordless authentication for Keycloak through the use of magic links. This plugin allows users to log in without needing to remember a password by simply clicking a secure link sent to their email. It works by generating a one-time-use link, which, when clicked, authenticates the user directly, improving both security and user experience. This approach is particularly useful for applications where ease of access and reducing password fatigue are priorities. The repository provides a robust, configurable setup compatible with Keycloak’s authentication workflows, making it straightforward to implement in various types of applications that require seamless, passwordless login functionality.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="leveraging-magic-link-for-easy-sso">Leveraging Magic Link for Easy SSO<a href="https://phasetwo.io/blog/magic-links-native-applications/#leveraging-magic-link-for-easy-sso" class="hash-link" aria-label="Direct link to Leveraging Magic Link for Easy SSO" title="Direct link to Leveraging Magic Link for Easy SSO" translate="no">​</a></h3>
-<p>Applications can use the Magic Link <a href="https://github.com/p2-inc/keycloak-magic-link" target="_blank" rel="noopener noreferrer" class="">resource</a> to issue a request to get a link or generate an email. For example:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">curl --request POST https://keycloak.host/auth/realms/test/magic-link \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"> --header "Accept: application/json" \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"> --header "Content-Type: application/json" \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"> --header "Authorization: Bearer &lt;access_token&gt;" \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"> --data '{"email":"foo@foo.com","client_id":"account-console","redirect_uri":"https://keycloak.host/auth/realms/test/account/","expiration_seconds":3600,"force_create":true,"update_profile":true,"update_password":true,"send_email":false}'</span><br></span></code></pre></div></div>
-<p>would result in a sample response of</p>
-<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token property">"user_id"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">"386edecf-3e43-41fd-886c-c674eea41034"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token property">"link"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">"https://keycloak.host/auth/realms/test/login-actions/action-token?key=eyJhbG...KWuDyE&amp;client_id=account-console"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token property">"sent"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token boolean" style="color:rgb(255, 88, 116)">false</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre></div></div>
-<p>Simply change the <code>redirect_uri</code> to be a registered URI scheme for the application.</p>
-<p>Once a user clicks that link in the email, extract the <code>code</code> param of the url, and use that to then issue requests to the <code>token</code> endpoint. For example:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">curl -X "POST" "https://keycloak.host/auth/realms/test/openid-connect/token" \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">     -H 'Content-Type: application/x-www-form-urlencoded' \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">     --data-urlencode "grant_type=authorization_code" \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">     --data-urlencode "code=b5c7a811-0e61-42b9-9fc5-934fd614b57e.ff2148c2-a20d-4efc-ba8e-e7825f5ae204.edd26036-7f7e-4a91-be47-84603e57e3aa" \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">     --data-urlencode "client_id=account-console" \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">     --data-urlencode "redirect_uri=myapp://redirect"</span><br></span></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="conclusion">Conclusion<a href="https://phasetwo.io/blog/magic-links-native-applications/#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion" translate="no">​</a></h3>
-<p>Using magic links with Keycloak for a native application offers a streamlined, user-friendly authentication experience, especially beneficial for mobile users. With magic links, users can log in effortlessly without needing to remember or type passwords—often a challenging task on mobile devices. Instead, a secure, one-time-use link is sent to their email, allowing them to authenticate with a simple tap. This approach not only simplifies the login process but also enhances security by reducing password-related vulnerabilities, such as weak or reused passwords. For the end user, this means a smoother, faster, and more secure login experience, allowing them to access the application with minimal effort and without the risk of password fatigue. Magic link authentication via Keycloak aligns well with modern security standards and significantly improves user engagement by lowering login barriers in native applications.</p>
-<p>Use Phase Two's free <a class="" href="https://phasetwo.io/hosting/">hosting</a> to try it out or send us a message at <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a> to discuss your use case or learn more.</p>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="keycloak" term="keycloak"/>
-        <category label="phase_two" term="phase_two"/>
-        <category label="keycloak_magic_link" term="keycloak_magic_link"/>
-        <category label="keycloak_extensions" term="keycloak_extensions"/>
     </entry>
 </feed>
