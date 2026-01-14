@@ -4,10 +4,29 @@
         <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
         <link>https://phasetwo.io/blog/</link>
         <description>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</description>
-        <lastBuildDate>Mon, 05 Jan 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 14 Jan 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Cockroach Labs features Phase Two's Managed Keycloak Hosting]]></title>
+            <link>https://phasetwo.io/blog/cockroach-labs-features-phasetwo-managed-keycloak-hosting/</link>
+            <guid>https://phasetwo.io/blog/cockroach-labs-features-phasetwo-managed-keycloak-hosting/</guid>
+            <pubDate>Wed, 14 Jan 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Cockroach Labs highlights Phase Two's managed Keycloak hosting platform in their latest blog post.]]></description>
+            <content:encoded><![CDATA[<p>We’re pleased to share that Cockroach Labs has published a new blog post featuring Phase Two and our managed Keycloak hosting platform.</p>
+<p>In <a href="https://www.cockroachlabs.com/blog/deploying-keycloak-on-cockroachdb-with-phase-two/" target="_blank" rel="noopener noreferrer" class=""><em>Deploying Keycloak on CockroachDB with Phase Two: A Complete Guide</em></a>, Cockroach Labs walks through how Phase Two and CockroachDB work together to provide a strong foundation for secure, multi-tenant identity at scale. The post outlines why strong consistency, high availability, and horizontal scalability are critical requirements for modern SaaS identity systems—and how combining managed Keycloak with CockroachDB meets those needs in production environments.</p>
+<p>The article also includes an overview of Phase Two’s managed Keycloak offering, highlighting how teams can offload operational complexity such as infrastructure management, upgrades, backups, and high-availability configuration. By pairing this with CockroachDB’s globally distributed SQL database, organizations can deploy enterprise-grade authentication and SSO while maintaining strong consistency and predictable performance.</p>
+<p>We appreciate Cockroach Labs’ collaboration and the opportunity to showcase how this complementary stack helps SaaS teams move faster without compromising on reliability or security.</p>
+<p>You can read the full post on the Cockroach Labs blog here:
+<a href="https://www.cockroachlabs.com/blog/deploying-keycloak-on-cockroachdb-with-phase-two/" target="_blank" rel="noopener noreferrer" class=""><strong>Deploying Keycloak on CockroachDB with Phase Two: A Complete Guide</strong></a></p>]]></content:encoded>
+            <author>support@phasetwo.io (Phase Two)</author>
+            <category>phase_two</category>
+            <category>hosting</category>
+            <category>open_source</category>
+            <category>keycloak</category>
+            <category>cockroachdb</category>
+        </item>
         <item>
             <title><![CDATA[Security Capabilities Now Available for Keycloak Clusters]]></title>
             <link>https://phasetwo.io/blog/dedicated-clusters-security-capabilities/</link>
@@ -1220,107 +1239,6 @@ The Service Provider refers to the application that the user seeks to access. On
             <category>startup</category>
             <category>customization</category>
             <category>extension</category>
-        </item>
-        <item>
-            <title><![CDATA[Implement Multi-Tenancy Applications with Keycloak Organizations]]></title>
-            <link>https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/</link>
-            <guid>https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/</guid>
-            <pubDate>Mon, 11 Nov 2024 00:00:00 GMT</pubDate>
-            <description><![CDATA[Applications needing to leverage Keycloak to consolidate logins can leverage Keycloak Organizations.]]></description>
-            <content:encoded><![CDATA[<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="overview">Overview<a href="https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/#overview" class="hash-link" aria-label="Direct link to Overview" title="Direct link to Overview" translate="no">​</a></h3>
-<p>A multi-tenant application is a software architecture where a single instance of an application serves multiple, distinct customer groups or “tenants.” Each tenant, often representing an organization or user group, shares the same underlying infrastructure and codebase but operates within its own securely isolated environment. This allows each tenant to have individualized data, configurations, and sometimes even unique customizations, while benefiting from a shared platform that reduces overall resource demands and maintenance. Multi-tenancy is commonly used in SaaS (Software as a Service) applications, enabling businesses to scale efficiently, lower costs, and streamline updates while ensuring that each tenant’s data and settings remain private and distinct from others within the same application. This approach is particularly valuable in enterprise applications, where companies may need to provide access to different organizations, departments, or customer groups within a single solution.</p>
-<p>This post will cover a few things:</p>
-<ul>
-<li class="">Concept of how to implement this with Keycloak and Phase Two's <a href="https://phasetwo.io/product/organizations/" target="_blank" rel="noopener noreferrer" class="">Organization</a> extension (<a href="https://github.com/p2-inc/keycloak-orgs" target="_blank" rel="noopener noreferrer" class="">Github</a>).</li>
-<li class="">Proof-of-concept implementation that will include how to configure a Keycloak instance with clients, organizations, roles, and example applications to consume these implementations.</li>
-</ul>
-<p>We have also given a detailed talk at Keycloak Dev Day on <a class="" href="https://phasetwo.io/blog/keycloak-orgs-presentation/">Multi-Tenancy within a Single Realm</a>.</p>
-<p>The implementation, while not difficult, does require knowledge of how to use Keycloak. If you're unclear at any point, please reach out <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a>.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-use-organizations-instead-of-multiple-realms">Why use Organizations Instead of Multiple Realms?<a href="https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/#why-use-organizations-instead-of-multiple-realms" class="hash-link" aria-label="Direct link to Why use Organizations Instead of Multiple Realms?" title="Direct link to Why use Organizations Instead of Multiple Realms?" translate="no">​</a></h3>
-<p>Using Phase Two’s Keycloak Extension for <a href="https://phasetwo.io/product/organizations/" target="_blank" rel="noopener noreferrer" class="">Organizations</a> provides a more efficient and scalable way to implement multi-tenancy than managing multiple realms in Keycloak. Here’s why:</p>
-<ol>
-<li class="">Resource Efficiency: Each realm in Keycloak creates isolated resources, which can lead to increased memory and CPU usage as the number of realms grows. By using a single realm with organizational support, you can maintain performance while still supporting multiple tenants.</li>
-<li class="">Centralized Management: Managing numerous realms can become complex, especially for shared configurations and customizations. The extension allows you to manage users, roles, and configurations within a single realm, reducing overhead.</li>
-<li class="">Simplified User Access Control: With organizations, you can easily segment users by tenant within the same realm. This allows for straightforward user and role management without needing to duplicate settings across realms.</li>
-<li class="">Improved Scalability: As your application scales, the single-realm approach with organizational structures is more sustainable, reducing maintenance and potential errors. It supports a logical separation for tenants without the performance and management limitations of numerous realms.</li>
-</ol>
-<p>Overall, the extension simplifies and optimizes Keycloak for multi-tenant applications, focusing on efficient resource usage and management scalability.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="conceptualizing-multi-tenant-implementation">Conceptualizing Multi-Tenant Implementation<a href="https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/#conceptualizing-multi-tenant-implementation" class="hash-link" aria-label="Direct link to Conceptualizing Multi-Tenant Implementation" title="Direct link to Conceptualizing Multi-Tenant Implementation" translate="no">​</a></h3>
-<p>We're going to use the following example system:</p>
-<ul>
-<li class="">2 applications</li>
-<li class="">2 tenants of each applications</li>
-<li class="">Single Keycloak realm</li>
-<li class="">Two Keycloak Organizations to represent the tenants</li>
-<li class="">Role names that match the applications</li>
-</ul>
-<p>We can visualize this in the following diagram:</p>
-<p><img decoding="async" loading="lazy" alt="System" src="https://phasetwo.io/assets/images/system-77f0bb306b484ef7aa0635f2b8952455.png" width="2354" height="1601" class="img_ev3q"></p>
-<p>In Keycloak, we match the system implementation by doing the following:</p>
-<ul>
-<li class="">Two Clients match the two Applications. More Clients added per tenant.</li>
-<li class="">Two Organizations match the two Tenants. This could be scaled out for additional tenants.</li>
-<li class="">One role per Tenant within each Organization.</li>
-</ul>
-<p>If we break this down specifically with the names:</p>
-<p><em>Application system</em></p>
-<ul>
-<li class="">Two applications: Zoo, Aquarium</li>
-<li class="">Two tenants: California, New York</li>
-</ul>
-<p><em>Keycloak system</em></p>
-<ul>
-<li class="">Two clients: Zoo, Aquarium</li>
-<li class="">Two organizations: California, New York</li>
-<li class="">Two roles per for Org: zoo, aquarium</li>
-</ul>
-<p>In order for users to then have access to the various Clients and Tenants, we would add them as members to the Organization, then assign them roles that match their access.</p>
-<p>We can visualize this as follows:</p>
-<p><img decoding="async" loading="lazy" alt="User Access" src="https://phasetwo.io/assets/images/user-access-f73e24ee7247a5d91563e808e0fbc5af.png" width="1681" height="1138" class="img_ev3q"></p>
-<p>This represents following access:</p>
-<ul>
-<li class="">User 1<!-- -->
-<ul>
-<li class="">Zoo application, California tenant</li>
-<li class="">Aquarium application, California tenant</li>
-<li class="">Aquarium application, New York tenant</li>
-</ul>
-</li>
-<li class="">User 2<!-- -->
-<ul>
-<li class="">Zoo application, California tenant</li>
-<li class="">Zoo application, New York tenant</li>
-</ul>
-</li>
-</ul>
-<p>Users are granted roles to represent application access. Users are made members of an Organization to represent tenant access.</p>
-<p>Consuming and implementing this representation can be done via the Organizations API on the <a href="https://phasetwo.io/api/get-me/" target="_blank" rel="noopener noreferrer" class=""><code>/me</code> endpoint</a>.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="sample-implementation">Sample Implementation<a href="https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/#sample-implementation" class="hash-link" aria-label="Direct link to Sample Implementation" title="Direct link to Sample Implementation" translate="no">​</a></h3>
-<p>Now that we've discussed how the system is designed, let's work through an example of this application.</p>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="keycloak-configuration">Keycloak Configuration<a href="https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/#keycloak-configuration" class="hash-link" aria-label="Direct link to Keycloak Configuration" title="Direct link to Keycloak Configuration" translate="no">​</a></h4>
-<p>We'll be using Phase Two's <a class="" href="https://phasetwo.io/hosting/">free hosted Keycloak</a> to set up a deployment and associated organizations. Visit <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dashboard</a> to sign up for a free account and create a deployment. After you have created the deployment, click the "Open Console" link to go to the Keycloak deployment.</p>
-<p>Next we'll configure Keycloak and then configure the applications.</p>
-<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuring-keycloak">Configuring Keycloak<a href="https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/#configuring-keycloak" class="hash-link" aria-label="Direct link to Configuring Keycloak" title="Direct link to Configuring Keycloak" translate="no">​</a></h5>
-<ol>
-<li class="">Go to the Clients tab. We will create two Clients. Provide a <code>Client ID</code> of <code>aquarium</code> and <code>zoo</code> to each. Enter a value of <code>*</code> for <code>Valid redirect URIs</code> (don't use this for production).</li>
-<li class="">Go to the Users tab. Add a user with a username of <code>jane</code>, first name of <code>jane</code>, and last name of <code>goodall</code>. Add a second user with a username of <code>jacques</code>, first name of <code>jacques</code>, and last name of <code>cousteau</code>.</li>
-<li class="">Go to the Organizations tab. Create two Organizations. Name one <code>california</code> and the other <code>new york</code>. For each organization, create two roles: <code>aquarium</code> and <code>zoo</code>. For each organization, add the two user's created to them as members.</li>
-<li class="">Inside the <code>california</code> organization, assign the <code>aquarium</code> role to the <code>jacques</code> user. Assign the <code>zoo</code> role to the <code>jane</code> user.</li>
-<li class="">Inside the <code>newyork</code> organization, assign the <code>aquarium</code> role to both users. Assign the <code>zoo</code> role only to the <code>jane</code> user.</li>
-</ol>
-<p>At this point we should have all we require for configuring our client applications as needed.</p>
-<h5 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuring-client-applications">Configuring Client Applications<a href="https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/#configuring-client-applications" class="hash-link" aria-label="Direct link to Configuring Client Applications" title="Direct link to Configuring Client Applications" translate="no">​</a></h5>
-<p>We won't go through all the steps required to build a client application in this post. We have a <code>nx</code> <a href="https://github.com/p2-inc/examples/tree/main/multitenant" target="_blank" rel="noopener noreferrer" class="">monorepo</a> generated for use where you can clone it and change the OIDC client config to speak to the correct applications.</p>
-<p>Update the associated values make use of the Keycloak configuration you created above: realm name, clients, and so on. The app is setup already with a scaffold to pull the <code>/orgs/me</code> endpoint.</p>
-<p>Once you have the application setup (check readme for more details), log in as the <code>jane</code> and <code>jacques</code> user to see the variation of which organization and roles they have access to. You'll see a variation of this:</p>
-<p><img decoding="async" loading="lazy" alt="Organizations" src="https://phasetwo.io/assets/images/orgs-39834411eecdd9d92991c919f3777a05.png" width="1100" height="796" class="img_ev3q"></p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="in-conclusion">In Conclusion<a href="https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/#in-conclusion" class="hash-link" aria-label="Direct link to In Conclusion" title="Direct link to In Conclusion" translate="no">​</a></h3>
-<p>Creating a multi-tenant application isn't necessarily easy, but it is well within the capability of Keycloak. If you end up leveraging our Organization's extension to support multi-tenancy, let us <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">know</a>.</p>]]></content:encoded>
-            <author>support@phasetwo.io (Phase Two)</author>
-            <category>keycloak</category>
-            <category>phase_two</category>
-            <category>organizations</category>
-            <category>multitenant</category>
         </item>
     </channel>
 </rss>
