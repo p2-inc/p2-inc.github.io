@@ -4,10 +4,29 @@
         <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
         <link>https://phasetwo.io/blog/</link>
         <description>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</description>
-        <lastBuildDate>Wed, 14 Jan 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 04 Feb 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Cluster Observability and Logs]]></title>
+            <link>https://phasetwo.io/blog/cluster-observability-and-logs/</link>
+            <guid>https://phasetwo.io/blog/cluster-observability-and-logs/</guid>
+            <pubDate>Wed, 04 Feb 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Phase Two now includes built-in observability for dedicated clusters, starting with log downloads via the self-service dashboard.]]></description>
+            <content:encoded><![CDATA[<p>We’re excited to announce built-in observability for dedicated clusters, starting with <strong>log downloads</strong> in the Phase Two dashboard.</p>
+<p>Access to logs is essential for monitoring health, diagnosing incidents, and understanding performance. With this initial release, you can filter logs by time range and download them as a zip file for offline analysis. This helps teams quickly pinpoint issues and keep their services running smoothly.</p>
+<p>Next up: <strong>live log streaming</strong> and <strong>exports to external systems</strong>, giving you more flexibility for centralized log management and analysis.</p>
+<p>Learn more in the <a href="https://phasetwo.io/docs/self-service/observability/" target="_blank" rel="noopener noreferrer" class="">Observability and Logs documentation</a>.</p>
+<p>Ready to try it? Log in to the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and view logs for your cluster. This feature is included with all <strong>dedicated cluster plans</strong>. Questions? Reach us at <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content:encoded>
+            <author>support@phasetwo.io (Phase Two)</author>
+            <category>phase_two</category>
+            <category>hosting</category>
+            <category>open_source</category>
+            <category>keycloak</category>
+            <category>observability</category>
+            <category>logs</category>
+        </item>
         <item>
             <title><![CDATA[Cockroach Labs features Phase Two's Managed Keycloak Hosting]]></title>
             <link>https://phasetwo.io/blog/cockroach-labs-features-phasetwo-managed-keycloak-hosting/</link>
@@ -1173,66 +1192,6 @@ The Service Provider refers to the application that the user seeks to access. On
 <h3 class="anchor anchorTargetStickyNavbar_ukyt" id="ready-to-elevate-your-keycloak-deployment">Ready to Elevate Your Keycloak Deployment?<a href="https://phasetwo.io/blog/managed-keycloak-hosting/#ready-to-elevate-your-keycloak-deployment" class="hash-link" aria-label="Direct link to Ready to Elevate Your Keycloak Deployment?" title="Direct link to Ready to Elevate Your Keycloak Deployment?" translate="no">​</a></h3>
 <p>If you’re looking for a Managed Keycloak provider that goes beyond hosting, Phase Two is here to help. Explore our Managed Keycloak Hosting or Enterprise Support to learn more.</p>
 <p>Schedule a consultation today or get in touch at <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a> to learn how we can transform your identity solution.</p>]]></content:encoded>
-            <author>support@phasetwo.io (Phase Two)</author>
-            <category>keycloak</category>
-            <category>phase_two</category>
-            <category>startup</category>
-            <category>customization</category>
-            <category>extension</category>
-        </item>
-        <item>
-            <title><![CDATA[Why your startup should use Keycloak for SSO and User Management - Part 4: Cost]]></title>
-            <link>https://phasetwo.io/blog/keycloak-for-startups-cost/</link>
-            <guid>https://phasetwo.io/blog/keycloak-for-startups-cost/</guid>
-            <pubDate>Mon, 02 Dec 2024 00:00:00 GMT</pubDate>
-            <description><![CDATA[Part 4: There is no justification for variable cost for individual features.]]></description>
-            <content:encoded><![CDATA[<div class="theme-admonition theme-admonition-note admonition_q1yr alert alert--secondary"><div class="admonitionHeading_XcfJ"><span class="admonitionIcon_zGmV"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_gGeU"><p>In this <a class="" href="https://phasetwo.io/blog/keycloak-for-startups-overview/">series</a> we are proposing Keycloak as a superior alternative to commercial identity offerings.</p><ul>
-<li class=""><a class="" href="https://phasetwo.io/blog/keycloak-for-startups-standards/">Part 1: Standards</a></li>
-<li class=""><a class="" href="https://phasetwo.io/blog/keycloak-for-startups-data/">Part 2: Data Ownership</a></li>
-<li class=""><a class="" href="https://phasetwo.io/blog/keycloak-for-startups-customization/">Part 3: Customization</a></li>
-<li class=""><a class="" href="https://phasetwo.io/blog/keycloak-for-startups-cost/">Part 4: Cost</a></li>
-</ul></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="part-4-cost-effectiveness-of-open-source">Part 4: Cost-Effectiveness of Open Source<a href="https://phasetwo.io/blog/keycloak-for-startups-cost/#part-4-cost-effectiveness-of-open-source" class="hash-link" aria-label="Direct link to Part 4: Cost-Effectiveness of Open Source" title="Direct link to Part 4: Cost-Effectiveness of Open Source" translate="no">​</a></h3>
-<p>At the heart of every startup's decision-making process lies the bottom line. We’re in an economy where cost-cutting measures are being taken across organizations, and many companies are starting to ask why their identity stack is such an outsized drag on their margins. Keycloak presents a compelling case with its open-source nature. Unlike proprietary IAM solutions that come with hefty price tags and recurring subscription fees, Keycloak offers a cost-effective alternative without compromising on features or security.</p>
-<p>By leveraging Keycloak, startups can significantly reduce their operational expenses, channeling those resources into core business activities such as product development and market expansion. Moreover, the open-source community surrounding Keycloak ensures continuous improvement and innovation, all without the burden of additional licensing costs.</p>
-<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="cost-of-hosting-an-open-source-product-like-keycloak">Cost of Hosting an Open-Source Product like Keycloak<a href="https://phasetwo.io/blog/keycloak-for-startups-cost/#cost-of-hosting-an-open-source-product-like-keycloak" class="hash-link" aria-label="Direct link to Cost of Hosting an Open-Source Product like Keycloak" title="Direct link to Cost of Hosting an Open-Source Product like Keycloak" translate="no">​</a></h3>
-<p>Keycloak, being an open-source IAM solution, offers startups a significant advantage in terms of cost-effectiveness. Here's why:</p>
-<ol>
-<li class="">
-<p><strong>No Licensing Fees</strong>: The most apparent benefit of using Keycloak is the absence of licensing fees. Startups can leverage the full spectrum of Keycloak's features without incurring any upfront costs or recurring subscription fees. This eliminates a significant financial burden, allowing startups to allocate resources more efficiently towards core business activities.</p>
-</li>
-<li class="">
-<p><strong>Infrastructure Flexibility</strong>: With Keycloak, startups have the freedom to choose their hosting infrastructure, whether it's on-premises or in the cloud. This flexibility enables startups to optimize infrastructure costs based on their specific requirements and budget constraints. Additionally, Keycloak's lightweight footprint ensures minimal resource consumption, further reducing operational expenses.</p>
-</li>
-<li class="">
-<p><strong>Community Support</strong>: The vibrant open-source community surrounding Keycloak provides startups with access to a wealth of resources, including documentation, forums, and community-contributed extensions. This extensive support network ensures timely resolution of issues and continuous improvement of the platform, all at no additional cost to startups.</p>
-</li>
-<li class="">
-<p><strong>Expertise</strong>: Using an open-source solution means adopting that code base in a manner of speaking. Your team must build expertise in the code base and the capabilities of the tool in addition to all the protocols that come with IAM. That includes things like setting up authentication flows, configuring <a class="" href="https://phasetwo.io/product/organizations/">organizations</a>, or <a class="" href="https://phasetwo.io/support/#upgrades">performing upgrades</a>.</p>
-</li>
-</ol>
-<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="predatory-nature-of-saas-solutions-like-auth0-and-workos">Predatory Nature of SaaS Solutions like Auth0 and WorkOS<a href="https://phasetwo.io/blog/keycloak-for-startups-cost/#predatory-nature-of-saas-solutions-like-auth0-and-workos" class="hash-link" aria-label="Direct link to Predatory Nature of SaaS Solutions like Auth0 and WorkOS" title="Direct link to Predatory Nature of SaaS Solutions like Auth0 and WorkOS" translate="no">​</a></h3>
-<p>While SaaS solutions like Auth0 and WorkOS offer convenience and ease of use, their pricing models can be detrimental to startups, especially those operating on limited budgets:</p>
-<ol>
-<li class="">
-<p><strong>Subscription Fees</strong>: Auth0 and WorkOS typically operate on a subscription-based pricing model, where startups are required to pay recurring fees based on usage or the number of active users or identity providers (aka “SSO connections”). These fees can quickly escalate as startups scale their operations, potentially eating into precious financial resources that could otherwise be invested in growth initiatives.</p>
-</li>
-<li class="">
-<p><strong>Vendor Lock-In</strong>: By relying on proprietary SaaS solutions, startups risk becoming locked into a vendor ecosystem, making it difficult to migrate to alternative solutions in the future. This lack of vendor independence can pose significant challenges, especially if the SaaS provider decides to increase prices or modify terms of service, leaving startups vulnerable to unforeseen expenses and disruptions.</p>
-</li>
-<li class="">
-<p><strong>Hidden Costs</strong>: Beyond the base subscription fees, startups may encounter additional hidden costs associated with SaaS solutions, such as implementation fees, integration costs, and fees for accessing premium features or support services. These hidden costs can quickly accumulate, further exacerbating the financial strain on startups.</p>
-</li>
-</ol>
-<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="conclusion-empowering-startups-with-financial-freedom-and-flexibility">Conclusion: Empowering Startups with Financial Freedom and Flexibility<a href="https://phasetwo.io/blog/keycloak-for-startups-cost/#conclusion-empowering-startups-with-financial-freedom-and-flexibility" class="hash-link" aria-label="Direct link to Conclusion: Empowering Startups with Financial Freedom and Flexibility" title="Direct link to Conclusion: Empowering Startups with Financial Freedom and Flexibility" translate="no">​</a></h3>
-<p>In conclusion, the cost comparison between hosting an open-source product like Keycloak and opting for SaaS solutions like <a class="" href="https://phasetwo.io/blog/keycloak-vs-auth0-open-source-alternative/">Auth0</a> and <a class="" href="https://phasetwo.io/blog/keycloak-vs-workos-open-source-alternative/">WorkOS</a> underscores the importance of financial freedom and flexibility for startups.</p>
-<p>By choosing Keycloak, startups can break free from the predatory pricing models of SaaS solutions, empowering themselves with a cost-effective and customizable IAM solution that aligns seamlessly with their budgetary constraints and growth objectives. With Keycloak, startups can redirect their financial resources towards innovation, differentiation, and sustainable growth, unlocking their full potential in the competitive landscape of Enterprise SaaS.</p>
-<p>At Phase Two, we’ve embraced Keycloak, and want to share it’s value with as many companies as possible. If you are going to self-host, and need help getting started, we provide architecture review, installation help and ongoing <a class="" href="https://phasetwo.io/support/">support</a>. If you’d prefer to go the SaaS direction, but want to avoid the disadvantages of proprietary solutions, our <a class="" href="https://phasetwo.io/hosting/">hosted</a> offerings provide the benefits of Keycloak on our hosted infrastructure with pricing that isn’t predatory on your business model and growth.</p>
-<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="series-conclusion">Series conclusion<a href="https://phasetwo.io/blog/keycloak-for-startups-cost/#series-conclusion" class="hash-link" aria-label="Direct link to Series conclusion" title="Direct link to Series conclusion" translate="no">​</a></h3>
-<p>While alternatives like Auth0 and WorkOS may boast similar features, Keycloak stands out as the superior choice for enterprise SaaS startups. Auth0, though feature-rich, often comes with a higher price tag, making it less accessible for startups operating on tight budgets. On the other hand, these proprietary, while suitable for certain use cases, lacks the extensibility and customization options offered by Keycloak.</p>
-<p>In summary, Keycloak emerges as the ideal IAM solution for enterprise SaaS startups, offering a perfect balance of cost-effectiveness, customizability, and feature-rich functionality. By embracing Keycloak, startups can elevate their security posture, enhance user experiences, and drive sustainable growth in today's competitive market landscape.</p>
-<p>As you embark on your journey to revolutionize the world of Enterprise SaaS, let Keycloak and Phase Two be your trusted ally in conquering the challenges of identity and access management. Unlock the full potential of your startup with Keycloak and pave the way for a future of innovation and success.</p>
-<p>Get in touch at <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a> to learn more.</p>]]></content:encoded>
             <author>support@phasetwo.io (Phase Two)</author>
             <category>keycloak</category>
             <category>phase_two</category>
