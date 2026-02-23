@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkphasetwo_docs=globalThis.webpackChunkphasetwo_docs||[]).push([[86252],{16126(s,e,a){a.r(e),a.d(e,{default:()=>c});a(30758);var t=a(45382),i=a(86070);function c(){return(0,i.jsx)(t.A,{title:"Security",description:"",children:(0,i.jsx)("main",{className:"hosting-page"})})}}}]);
