@@ -4,10 +4,84 @@
         <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
         <link>https://phasetwo.io/blog/</link>
         <description>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</description>
-        <lastBuildDate>Wed, 04 Feb 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 24 Mar 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Replacing Keycloak's Infinispan Caches with Redis/Valkey (Keycloak DevDay 2026)]]></title>
+            <link>https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/</link>
+            <guid>https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/</guid>
+            <pubDate>Tue, 24 Mar 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[A practical overview of our work to replace Keycloak distributed Infinispan caches with Redis/Valkey, including architecture, implementation patterns, and benchmark outcomes.]]></description>
+            <content:encoded><![CDATA[<p>At Keycloak DevDay 2026, we shared our work on replacing Keycloak's distributed <a href="https://infinispan.org/" target="_blank" rel="noopener noreferrer" class="">Infinispan</a> caches with <a href="https://redis.io/" target="_blank" rel="noopener noreferrer" class="">Redis</a>/<a href="https://valkey.io/" target="_blank" rel="noopener noreferrer" class="">Valkey</a>.</p>
+<p>For the full technical deep dive, we will release slides when the talk is published on Youtube.</p>
+<p>This post focuses on the core technical content from the presentation and summarizes what we built, what we learned, and what comes next.</p>
+<h2 class="anchor anchorTargetStickyNavbar_ukyt" id="why-we-took-this-on">Why We Took This On<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#why-we-took-this-on" class="hash-link" aria-label="Direct link to Why We Took This On" title="Direct link to Why We Took This On" translate="no">​</a></h2>
+<p>The recurring operator pain points were clear: restart complexity, JGroups/Infinispan operational friction, and upgrade risk in high-availability environments.</p>
+<p>Our goals for the proof-of-concept were practical:</p>
+<ol>
+<li class="">Functional parity with Keycloak's distributed cache behavior.</li>
+<li class="">At least 50% of embedded Infinispan performance.</li>
+<li class="">Fast startup (sub-5s per pod) with reliable behavior.</li>
+<li class="">Seamless upgrades and horizontal scaling without rebalance pain.</li>
+<li class="">Extension-based implementation on current Keycloak, without forking.</li>
+</ol>
+<p>We also set explicit <strong>non-goals</strong>, including replacing local Infinispan caches, integrating/migrating persistent sessions, supporting every Redis topology, and solving multi-region concerns in v1.</p>
+<h2 class="anchor anchorTargetStickyNavbar_ukyt" id="what-we-implemented-high-level">What We Implemented (High Level)<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#what-we-implemented-high-level" class="hash-link" aria-label="Direct link to What We Implemented (High Level)" title="Direct link to What We Implemented (High Level)" translate="no">​</a></h2>
+<p>We implemented a new <a href="https://www.keycloak.org/docs-api/latest/javadocs/org/keycloak/storage/DatastoreProvider.html" target="_blank" rel="noopener noreferrer" class=""><code>DatastoreProvider</code></a>-based approach to replace distributed caches while leaving the rest of Keycloak behavior intact.</p>
+<p>At a high level:</p>
+<ol>
+<li class="">Stored entities as Redis hashes (session and related objects).</li>
+<li class="">Added secondary indexes with Redis sets for fast lookup paths (for example, user-to-sessions, client-to-sessions).</li>
+<li class="">Built a changelog-based transaction implementation of <a href="https://www.keycloak.org/docs-api/latest/javadocs/org/keycloak/models/KeycloakTransaction.html" target="_blank" rel="noopener noreferrer" class=""><code>KeycloakTransaction</code></a> to batch and minimize writes at the appropriate stage of the Keycloak request lifecycle.</li>
+<li class="">Used Redis <code>MULTI/EXEC</code> for batched commit behavior.</li>
+<li class="">Implemented Lua-based CAS behavior for single-round-trip atomic updates.</li>
+<li class="">Replaced the use of the replicated work cache, used for local cache invalidation, with a Redis PUBSUB-backed <code>ClusterProvider</code>.</li>
+<li class="">Exposed Redis client and command metrics in Keycloak's Prometheus endpoint (<code>vendor_jedis_*</code>).</li>
+</ol>
+<p>For detailed APIs, object mapping rules, and transaction semantics, the slide deck has the full implementation flow and diagrams.</p>
+<h2 class="anchor anchorTargetStickyNavbar_ukyt" id="notable-engineering-details">Notable Engineering Details<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#notable-engineering-details" class="hash-link" aria-label="Direct link to Notable Engineering Details" title="Direct link to Notable Engineering Details" translate="no">​</a></h2>
+<p>A few areas mattered most in practice:</p>
+<ol>
+<li class=""><strong>Atomicity model:</strong> Lua CAS operations reduced contention and retry complexity versus <code>WATCH</code>-based optimistic workflows.</li>
+<li class=""><strong>Expiration correctness:</strong> TTL handling required careful validation to avoid stale references (for example, refresh token edge cases).</li>
+<li class=""><strong>Behavior parity:</strong> Reproducing nuanced Infinispan behavior (especially around offline session flows and invalidation semantics) required close reading of existing Keycloak internals.</li>
+<li class=""><strong>Index discipline:</strong> Clean separation between hash storage and set-based secondary indexes kept lookups efficient and made invalidation predictable.</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_ukyt" id="benchmarks-and-outcomes">Benchmarks and Outcomes<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#benchmarks-and-outcomes" class="hash-link" aria-label="Direct link to Benchmarks and Outcomes" title="Direct link to Benchmarks and Outcomes" translate="no">​</a></h2>
+<p>In our benchmark setup, the Redis implementation met and exceeded the original performance target. The result was parity or better across the tested flow, while also meeting the startup-speed and extension/no-fork constraints. We used the Keycloak provided <a href="https://github.com/keycloak/keycloak-benchmark" target="_blank" rel="noopener noreferrer" class="">keycloak-benchmark</a> project to execute performance tests against a 3 node cluster using Redis caching, and compared the results to a standard Keycloak setup on the same number of nodes, using embedded Infinispan.</p>
+<p>This approach hit the proof-of-concept goals, with room for additional optimization and broader validation.</p>
+<div><table class="table w-full border-collapse bg-white/10 text-sm"><thead class="bg-white/10"><tr><th class="px-4 py-3 text-left font-semibold text-white"><p>Benchmark</p></th><th class="px-4 py-3 text-right font-semibold text-white"><p>Infinispan (99th pct)</p></th><th class="px-4 py-3 text-right font-semibold text-white"><p>Redis (99th pct)</p></th><th class="px-4 py-3 text-right font-semibold text-white">Delta</th></tr></thead><tbody class="divide-y divide-white/15"><tr><td class="px-4 py-3 text-white">All Requests</td><td class="px-4 py-3 text-right text-gray-200">67</td><td class="px-4 py-3 text-right text-gray-200">47</td><td class="px-4 py-3 text-right"><span class="font-semibold text-green-400">29.9%</span></td></tr><tr><td class="px-4 py-3 text-white">Browser to Log In Endpoint</td><td class="px-4 py-3 text-right text-gray-200">71</td><td class="px-4 py-3 text-right text-gray-200">86</td><td class="px-4 py-3 text-right"><span class="font-semibold text-red-400">-21.1%</span></td></tr><tr><td class="px-4 py-3 text-white"><p>Browser posts correct credentials</p></td><td class="px-4 py-3 text-right text-gray-200">83</td><td class="px-4 py-3 text-right text-gray-200">57</td><td class="px-4 py-3 text-right"><span class="font-semibold text-green-400">31.3%</span></td></tr><tr><td class="px-4 py-3 text-white">Exchange Code</td><td class="px-4 py-3 text-right text-gray-200">22</td><td class="px-4 py-3 text-right text-gray-200">10</td><td class="px-4 py-3 text-right"><span class="font-semibold text-green-400">54.5%</span></td></tr><tr><td class="px-4 py-3 text-white">RefreshToken</td><td class="px-4 py-3 text-right text-gray-200">36</td><td class="px-4 py-3 text-right text-gray-200">12</td><td class="px-4 py-3 text-right"><span class="font-semibold text-green-400">66.7%</span></td></tr><tr><td class="px-4 py-3 text-white">Browser logout</td><td class="px-4 py-3 text-right text-gray-200">43</td><td class="px-4 py-3 text-right text-gray-200">9</td><td class="px-4 py-3 text-right"><span class="font-semibold text-green-400">79.1%</span></td></tr></tbody></table></div>
+<p><em>Note: lower 99th percentile values are better. The "Browser to Log In Endpoint" row is the one regression shown in the original chart.</em></p>
+<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="benchmark-screenshots">Benchmark screenshots<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#benchmark-screenshots" class="hash-link" aria-label="Direct link to Benchmark screenshots" title="Direct link to Benchmark screenshots" translate="no">​</a></h3>
+<p>Redis benchmark test results:</p>
+<p><img decoding="async" loading="lazy" alt="Redis benchmark test results" src="https://phasetwo.io/assets/images/redis-test-results-cd826d293dfa9febc7ea3e989facc73b.png" width="2692" height="592" class="img_S0mN"></p>
+<p>Infinispan benchmark test results:</p>
+<p><img decoding="async" loading="lazy" alt="Infinispan benchmark test results" src="https://phasetwo.io/assets/images/infinispan-test-results-5af855541eda5217206c39ce9c04864d.png" width="2710" height="590" class="img_S0mN"></p>
+<h2 class="anchor anchorTargetStickyNavbar_ukyt" id="timeline-and-context">Timeline and Context<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#timeline-and-context" class="hash-link" aria-label="Direct link to Timeline and Context" title="Direct link to Timeline and Context" translate="no">​</a></h2>
+<p>This work started in <strong>September 2025</strong>.</p>
+<p>A successful implementation would not have been possible without years of prior work in Keycloak internals, extension development, and production operations. Existing knowledge around map-store patterns, DatastoreProvider internals, transaction behavior, and real-world customer requirements was the foundation that made this tractable.</p>
+<h2 class="anchor anchorTargetStickyNavbar_ukyt" id="whats-next">What's Next<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#whats-next" class="hash-link" aria-label="Direct link to What's Next" title="Direct link to What's Next" translate="no">​</a></h2>
+<p>Near-term next steps include broader performance validation across workloads, clearer packaging/licensing for source and images, and additional multi-region validation/documentation.</p>
+<p>We also plan to release a full image soon at <a href="https://quay.io/repository/phasetwo/keycloak-redis" target="_blank" rel="noopener noreferrer" class="">quay.io/repository/phasetwo/keycloak-redis</a>, so stay tuned for more.</p>
+<p>If you want all the implementation specifics, design tradeoffs, and diagrams, please stay tuned for the release of the slides and videos of our Keycloak DevDay presentation.</p>
+<hr>
+<p>Want to go deeper?</p>
+<ol>
+<li class="">Reach out to our team: <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a></li>
+<li class="">Try our hosting and extensions: <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a></li>
+<li class="">Contact us for additional implementation details and architecture guidance: <a href="https://phasetwo.io/contact" target="_blank" rel="noopener noreferrer" class="">https://phasetwo.io/contact</a></li>
+</ol>]]></content:encoded>
+            <author>support@phasetwo.io (Phase Two)</author>
+            <category>phase_two</category>
+            <category>keycloak</category>
+            <category>redis</category>
+            <category>valkey</category>
+            <category>caching</category>
+            <category>performance</category>
+            <category>extensions</category>
+        </item>
         <item>
             <title><![CDATA[Cluster Observability and Logs]]></title>
             <link>https://phasetwo.io/blog/cluster-observability-and-logs/</link>
@@ -1134,70 +1208,6 @@ The Service Provider refers to the application that the user seeks to access. On
             <category>sso</category>
             <category>idp-initiated</category>
             <category>guide</category>
-        </item>
-        <item>
-            <title><![CDATA[Managed Keycloak Hosting - Picking a Provider]]></title>
-            <link>https://phasetwo.io/blog/managed-keycloak-hosting/</link>
-            <guid>https://phasetwo.io/blog/managed-keycloak-hosting/</guid>
-            <pubDate>Mon, 09 Dec 2024 00:00:00 GMT</pubDate>
-            <description><![CDATA[Picking a provider for Managed Keycloak Hosting should be about more that price, it should be about picking a partner to help you and your app succeed.]]></description>
-            <content:encoded><![CDATA[<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="why-consider-phase-two-for-your-managed-keycloak-provider">Why consider Phase Two for your Managed Keycloak Provider<a href="https://phasetwo.io/blog/managed-keycloak-hosting/#why-consider-phase-two-for-your-managed-keycloak-provider" class="hash-link" aria-label="Direct link to Why consider Phase Two for your Managed Keycloak Provider" title="Direct link to Why consider Phase Two for your Managed Keycloak Provider" translate="no">​</a></h3>
-<p>When it comes to identity and access management, Keycloak has established itself as the go-to open-source solution for authentication, authorization, and user management. However, successfully integrating and maintaining Keycloak requires more than just hosting—it requires expertise. That’s where the difference between Phase Two and other hosting providers becomes clear.</p>
-<p>In this post, we’ll explore why Phase Two should be in strong consideration for your Managed Keycloak provider, especially when compared to providers like CloudIAM, Elest.io, and Servana, who focus solely on hosting the standard build of Keycloak.</p>
-<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="the-managed-keycloak-landscape">The Managed Keycloak Landscape<a href="https://phasetwo.io/blog/managed-keycloak-hosting/#the-managed-keycloak-landscape" class="hash-link" aria-label="Direct link to The Managed Keycloak Landscape" title="Direct link to The Managed Keycloak Landscape" translate="no">​</a></h3>
-<p>The demand for hosted Keycloak solutions has given rise to providers like <a href="https://www.cloud-iam.com/" target="_blank" rel="noopener noreferrer" class="">Cloud IAM</a>, <a href="https://elest.io/open-source/keycloak" target="_blank" rel="noopener noreferrer" class="">Elest.io</a>, and <a href="https://servanamanaged.com/products/managed-keycloak-service/" target="_blank" rel="noopener noreferrer" class="">Servana</a>. These companies offer hosting services for the standard version of Keycloak, typically focusing only on infrastructure and uptime.</p>
-<p>However, while these providers excel in devops, they lack the specialized Keycloak development expertise to go beyond hosting. This is where their limitations become apparent, as businesses often require customization, extensibility, and advanced support for their identity systems.</p>
-<p>At Phase Two we started as Keycloak experts first. A large portion of our business is focused on <a class="" href="https://phasetwo.io/support/">Support</a> of large Enterprises and helping them be successful with complex Keycloak deployments.</p>
-<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="why-phase-two-stands-out">Why Phase Two Stands Out<a href="https://phasetwo.io/blog/managed-keycloak-hosting/#why-phase-two-stands-out" class="hash-link" aria-label="Direct link to Why Phase Two Stands Out" title="Direct link to Why Phase Two Stands Out" translate="no">​</a></h3>
-<p>At Phase Two, we do more than host Keycloak—we help you get the most out of it. Here’s how we differentiate ourselves:</p>
-<ol>
-<li class=""><strong>Keycloak Development Expertise and Community Maintainers</strong></li>
-</ol>
-<p>Unlike generic hosting providers, Phase Two is a team of Keycloak <a href="https://phasetwo.io/blog/keycloak-extensions-presentation/" target="_blank" rel="noopener noreferrer" class="">experts</a>. We actively develop advanced features and extensions that enhance Keycloak’s capabilities. For instance, our <a class="" href="https://phasetwo.io/product/organizations/">Organizations Extension</a> allows <a class="" href="https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations/">multi-tenant</a> support out of the box, a feature not available in the standard Keycloak build.</p>
-<p>This level of expertise ensures that your Keycloak deployment isn’t just functional, it’s optimized and future-proofed for your unique needs.</p>
-<p>In addition, while these providers may suggest you can customize something, the reality is once you enter the realm of needing to add an extension for migration, organizations, theming or more, you will need more control.</p>
-<p>We are active contributors to the Keycloak Project for bugs and features.</p>
-<ol start="2">
-<li class=""><strong>Beyond Hosting – Full-Service Management</strong></li>
-</ol>
-<p>Phase Two provides comprehensive management of your Keycloak deployment. From custom configurations, region deployments, to integration with your existing systems, we tailor every deployment to fit your requirements.</p>
-<p>With Phase Two, you’re not just getting a host, you’re gaining a partner who actively ensures your identity solution is robust, scalable, and secure.</p>
-<p>On the other end of the email are real people, if you have a problem and reach out, we're there to quickly respond.</p>
-<ol start="3">
-<li class=""><strong>Focus on Extensibility</strong></li>
-</ol>
-<p>Many businesses need to extend Keycloak to meet specific requirements, such as custom authentication flows or integrations with third-party systems. At Phase Two, we specialize in making Keycloak extensible, helping you unlock its full potential.</p>
-<p>In contrast, standard hosting providers can only offer “out-of-the-box” Keycloak functionality, leaving you to navigate complex customizations alone.</p>
-<p>For instance, we are the original implementers and continued maintainers of <a class="" href="https://phasetwo.io/blog/keycloak-on-cockroachdb/">CockroachDB build</a>, which is a fantastic database for distributed SQL.</p>
-<ol start="4">
-<li class=""><strong>Enterprise-Grade Support and Reliability</strong></li>
-</ol>
-<p>We understand that uptime is critical, but we also know that businesses need proactive support. At Phase Two, we provide:</p>
-<ul>
-<li class="">Continuous monitoring and optimization.</li>
-<li class="">Regular security patches and updates.</li>
-<li class="">Expert guidance to handle complex challenges.</li>
-<li class="">Guidance for logging and eventing to a SIEM of your choice.</li>
-</ul>
-<p>With Phase Two, we ensure your infrastructure is not only operational but also resilient and efficient.</p>
-<ol start="5">
-<li class=""><strong>Managed Upgrades and Compatibility</strong></li>
-</ol>
-<p>Keycloak updates can introduce breaking changes, especially for custom deployments. Phase Two takes the headache out of upgrades, ensuring that your deployment remains stable and compatible.</p>
-<p>This seamless upgrade process is something you won’t find with standard-hosting solutions, but you'll find that you'll need rather quickly. We coordinate with your team to make sure you're ready and help verify upgrades.</p>
-<p>If downtime is required (some previous version required this), we work to keep this down to minutes and make sure you're app is back up fast.</p>
-<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="choosing-a-partner-that-understands-your-needs">Choosing a Partner That Understands Your Needs<a href="https://phasetwo.io/blog/managed-keycloak-hosting/#choosing-a-partner-that-understands-your-needs" class="hash-link" aria-label="Direct link to Choosing a Partner That Understands Your Needs" title="Direct link to Choosing a Partner That Understands Your Needs" translate="no">​</a></h3>
-<p>Managed Keycloak isn’t just about hosting, it’s about delivering a solution that scales with your business, adapts to your evolving needs, and remains secure in the face of new challenges.</p>
-<p>While other providers offer the basics, Phase Two combines hosting with unmatched Keycloak development expertise, enterprise-grade support, and a commitment to innovation. The result? A managed Keycloak solution that’s tailor-made for your success.</p>
-<h3 class="anchor anchorTargetStickyNavbar_ukyt" id="ready-to-elevate-your-keycloak-deployment">Ready to Elevate Your Keycloak Deployment?<a href="https://phasetwo.io/blog/managed-keycloak-hosting/#ready-to-elevate-your-keycloak-deployment" class="hash-link" aria-label="Direct link to Ready to Elevate Your Keycloak Deployment?" title="Direct link to Ready to Elevate Your Keycloak Deployment?" translate="no">​</a></h3>
-<p>If you’re looking for a Managed Keycloak provider that goes beyond hosting, Phase Two is here to help. Explore our Managed Keycloak Hosting or Enterprise Support to learn more.</p>
-<p>Schedule a consultation today or get in touch at <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a> to learn how we can transform your identity solution.</p>]]></content:encoded>
-            <author>support@phasetwo.io (Phase Two)</author>
-            <category>keycloak</category>
-            <category>phase_two</category>
-            <category>startup</category>
-            <category>customization</category>
-            <category>extension</category>
         </item>
     </channel>
 </rss>
