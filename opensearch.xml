@@ -4,7 +4,7 @@
   <ShortName>Managed Keycloak Hosting and Enterprise Keycloak Support</ShortName>
   <Description>Search Managed Keycloak Hosting and Enterprise Keycloak Support</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16" type="image/x-icon">https://phasetwo.io/img/favicon.ico</Image>
+  <Image width="16" height="16" type="image/x-icon">https://phasetwo.io/img/favicon.svg</Image>
   <Url type="text/html" method="get" template="https://phasetwo.io/search?q={searchTerms}"/>
   <Url type="application/opensearchdescription+xml" rel="self" template="https://phasetwo.io/opensearch.xml" />
   <moz:SearchForm>https://phasetwo.io/</moz:SearchForm>

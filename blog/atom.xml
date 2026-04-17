@@ -6,7 +6,7 @@
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</subtitle>
-    <icon>https://phasetwo.io/img/favicon.ico</icon>
+    <icon>https://phasetwo.io/img/favicon.svg</icon>
     <entry>
         <title type="html"><![CDATA[Phase Two Achieves ISO/IEC 27001 Certification]]></title>
         <id>https://phasetwo.io/blog/iso-27001-certification/</id>
