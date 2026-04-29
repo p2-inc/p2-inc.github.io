@@ -2,11 +2,130 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
-    <updated>2026-04-13T00:00:00.000Z</updated>
+    <updated>2026-04-27T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.svg</icon>
+    <entry>
+        <title type="html"><![CDATA[A New Keycloak Theme Experience: Login, Admin, Account, and Email]]></title>
+        <id>https://phasetwo.io/blog/new-keycloak-themes/</id>
+        <link href="https://phasetwo.io/blog/new-keycloak-themes/"/>
+        <updated>2026-04-27T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[We rebuilt our Keycloak themes from the ground up using Keycloakify and shadcn/ui—delivering a modern login experience, a richer admin console, a polished account portal, and fully branded emails, all configurable at runtime without redeployment.]]></summary>
+        <content type="html"><![CDATA[<p>Keycloak theming has always been a pain point. The default themes that come with Keycloak leave a lot to be desired stylistically and cannot be customized easily. We have maintained our own set of disparate custom themes for the login, email and admin consoles but that has led to a maintenance nightmare and a disjointed user experience.</p>
+<p>We've completely rebuilt our bundled Keycloak themes. What used to live as a tangle of custom pages inside a forked Keycloak repository is now a first-class <a href="https://www.keycloakify.dev/" target="_blank" rel="noopener noreferrer" class="">Keycloakify</a>-based React application that ships four themes: <strong>login</strong>, <strong>admin</strong>, <strong>account</strong>, and <strong>email</strong>. The result is faster to maintain, far more capable, and dramatically better out of the box for the organizations using Phase Two today.</p>
+<p>Starting now, <strong>all Phase Two containers ship with this theme bundled</strong>. Any realm you create through the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dashboard</a> automatically gets the new login, admin, account, and email themes active—no configuration required. The first time a user hits your login page or receives an email from your realm, it already looks good.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="why-we-did-it">Why We Did It<a href="https://phasetwo.io/blog/new-keycloak-themes/#why-we-did-it" class="hash-link" aria-label="Direct link to Why We Did It" title="Direct link to Why We Did It" translate="no">​</a></h2>
+<p>The old setup worked, but it accumulated debt fast. We maintained a fork of the Keycloak repository with admin UI customizations living on branches named things like <code>26.3.0_orgs_adminui</code>. Every Keycloak release meant rebasing those changes, resolving conflicts across thousands of lines of upstream JavaScript, and hoping nothing subtle broke. Testing required spinning up a full Keycloak image just to verify a button label.</p>
+<p>Beyond the maintenance burden, the old approach had strong limits on what we could do. The login theme was limited by what you could do with PatternFly (RedHat's design framework). The email theme was limited to just overrides but you couldn't easily brand it. The admin console tweaks were limited to what we could fit into the existing UI without breaking things. And we had not even touched the account theme, which meant users had a completely different experience once they logged in. Lastly, when users jumped from our dashboard into the Keycloak admin console, the experience was jarring because it didn't reflect the product they had just been using.</p>
+<p>We wanted:</p>
+<ul>
+<li class=""><strong>Maintainability</strong> that didn't require tracking every Keycloak release by hand</li>
+<li class=""><strong>Runtime configurability</strong> so customers can change logos and colors easily without needing to redeploy or write custom themes</li>
+<li class=""><strong>A richer admin experience</strong> for managing organizations, members, roles, and styles</li>
+<li class=""><strong>A modern, polished look</strong> that doesn't feel like enterprise software from 2015</li>
+<li class=""><strong>A proper dashboard</strong> for navigating what Phase Two adds on top of Keycloak</li>
+<li class=""><strong>Modern fonts, layouts, and components</strong> that look good. Something about the RedHat fonts didn't seem to have the polish that most modern products have</li>
+</ul>
+<p>A combination of Keycloakify and Phase Two's large extension capabilities made it possible to build this without needing to fork Keycloak or maintain custom JARs with static templates.</p>
+<p>If you want to start trying it now, grab our latest image from <a href="https://quay.io/repository/phasetwo/phasetwo-keycloak" target="_blank" rel="noopener noreferrer" class="">Quay.io</a> or try it out on the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dashboard</a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="the-stack">The Stack<a href="https://phasetwo.io/blog/new-keycloak-themes/#the-stack" class="hash-link" aria-label="Direct link to The Stack" title="Direct link to The Stack" translate="no">​</a></h2>
+<p>The new theme, called <code>phasetwo-ui</code>, is a React application built with:</p>
+<ul>
+<li class=""><strong>Keycloakify 11</strong> — bridges React components to Keycloak's theme SPI, handles JAR packaging automatically</li>
+<li class=""><strong>shadcn/ui + Tailwind CSS 4</strong> — modern, composable component library for the login and account themes</li>
+<li class=""><strong>PatternFly 5</strong> — used in the admin and account console to avoid a complete rewrite of those complex interfaces while still allowing us to inject our own styles and components</li>
+<li class=""><strong>Vite</strong> — fast builds and hot module replacement during development</li>
+<li class=""><strong>Storybook</strong> — isolated component development and visual testing</li>
+<li class=""><strong>Playwright</strong> — end-to-end tests that exercise the admin UI against a real Keycloak instance</li>
+</ul>
+<p>The Java side extends the Keycloak SPI to handle runtime theme loading, dynamic CSS generation, Mustache template rendering, and a configurable email sender. All of it ships as a single JAR dropped into the Keycloak <code>providers/</code> directory.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="login-theme">Login Theme<a href="https://phasetwo.io/blog/new-keycloak-themes/#login-theme" class="hash-link" aria-label="Direct link to Login Theme" title="Direct link to Login Theme" translate="no">​</a></h2>
+<p>Out of the box, Keycloak's default login pages are functional but bare. The new <code>phasetwo-ui</code> login theme replaces them entirely with something that looks like a product, not a framework demo. It's a two-column layout with the branding panel on the right on desktop and a mobile-optimized single-column view on smaller screens. It supports all 21+ standard Keycloak login flows: standard authentication, registration, password reset, TOTP setup, WebAuthn enrollment, account deletion, email verification, identity provider linking, OAuth consent, and error handling.</p>
+<p>For new Phase Two realms, this is now the default. Your users will see this from day one.</p>
+<p><img decoding="async" loading="lazy" alt="Login Theme" src="https://phasetwo.io/assets/images/login-520f3113e3ce0a5e2d5a6f7012c81408.png" width="3112" height="1712" class="img_IkO0"></p>
+<p>The bigger story is runtime configurability. Every visual element of the login page is controlled by realm attributes—no redeploy required:</p>
+<ul>
+<li class=""><strong>Logo</strong> — set a URL and it shows up immediately</li>
+<li class=""><strong>Favicon and app icon</strong> — same approach, including PWA-ready app icons</li>
+<li class=""><strong>Primary, secondary, and background colors</strong> — picked in the admin UI, reflected instantly in login</li>
+<li class=""><strong>Custom CSS</strong> — inject arbitrary overrides without touching templates</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="Login Theme Customized" src="https://phasetwo.io/assets/images/login-theme-customized-51c0a7c60797e719f40ad295811d0547.png" width="3898" height="1678" class="img_IkO0"></p>
+<p>These attributes are served through a dynamic <code>/realms/&lt;realm&gt;/assets/css/login.css</code> endpoint that the Java SPI generates on the fly, mapping realm attributes to the right CSS variables.</p>
+<p>Dark mode is supported. Language switching is built in. Fallback logos handle the case where a custom logo URL fails to load.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="admin-theme">Admin Theme<a href="https://phasetwo.io/blog/new-keycloak-themes/#admin-theme" class="hash-link" aria-label="Direct link to Admin Theme" title="Direct link to Admin Theme" translate="no">​</a></h2>
+<p>This is where the most work went, some visual but a lot of it underlying plumbing. The admin theme extends Keycloak's native admin console with a dedicated <strong>Phase Two</strong> panel that surfaces everything our extensions add.</p>
+<p><img decoding="async" loading="lazy" alt="Admin Theme" src="https://phasetwo.io/assets/images/admin-theme-c15ee3752ea7444e9771c11f42ab1ade.png" width="3046" height="1818" class="img_IkO0"></p>
+<h3 class="anchor anchorTargetStickyNavbar_aWb6" id="organizations">Organizations<a href="https://phasetwo.io/blog/new-keycloak-themes/#organizations" class="hash-link" aria-label="Direct link to Organizations" title="Direct link to Organizations" translate="no">​</a></h3>
+<p>The organizations section is a full CRUD interface for everything the <a href="https://github.com/p2-inc/phasetwo-keycloak" target="_blank" rel="noopener noreferrer" class="">Keycloak Organizations extension</a> provides:</p>
+<ul>
+<li class=""><strong>Organization list</strong> with creation and deletion</li>
+<li class=""><strong>Organization details</strong> — name, description, display name, attributes</li>
+<li class=""><strong>Members</strong> — add, remove, view member details and organization-scoped attributes</li>
+<li class=""><strong>Roles</strong> — create and manage roles that are scoped to a specific organization</li>
+<li class=""><strong>Identity Providers</strong> — assign IdPs to organizations and configure sync modes</li>
+<li class=""><strong>Domains</strong> — domain-based routing configuration</li>
+<li class=""><strong>Invitations</strong> — send and manage membership invitations by email</li>
+<li class=""><strong>Settings</strong> — enabled/disabled state and other org-level configuration</li>
+</ul>
+<p>The API calls are fully typed against our OpenAPI schema, so the UI and the API stay in sync automatically.</p>
+<h3 class="anchor anchorTargetStickyNavbar_aWb6" id="custom-styles">Custom Styles<a href="https://phasetwo.io/blog/new-keycloak-themes/#custom-styles" class="hash-link" aria-label="Direct link to Custom Styles" title="Direct link to Custom Styles" translate="no">​</a></h3>
+<p>The styles panel gives realm administrators direct control over branding without writing any code. It has four tabs:</p>
+<ol>
+<li class=""><strong>General</strong> — upload URLs for logo, favicon, and app icon with live image previews</li>
+<li class=""><strong>Login</strong> — color pickers for primary, secondary, and background colors plus a CSS editor for arbitrary overrides</li>
+<li class=""><strong>Email</strong> — customize email template branding including footer text</li>
+<li class=""><strong>Portal</strong> — portal-specific styling controls for the Admin Portal, a self-serve application for end users to manage their account and Organization memberships without needing access to the full Keycloak admin console</li>
+</ol>
+<p>Everything saves directly to realm attributes. The login page picks up changes immediately because the CSS endpoint reads those attributes on every request.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="account-theme">Account Theme<a href="https://phasetwo.io/blog/new-keycloak-themes/#account-theme" class="hash-link" aria-label="Direct link to Account Theme" title="Direct link to Account Theme" translate="no">​</a></h2>
+<p>The account theme wraps Keycloak's standard account management UI in the same visual language as the login and admin themes. Users get a consistent branded experience whether they're logging in, managing their sessions, or updating their profile. A session expiration warning overlay prevents users from losing unsaved changes mid-session.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="email-theme">Email Theme<a href="https://phasetwo.io/blog/new-keycloak-themes/#email-theme" class="hash-link" aria-label="Direct link to Email Theme" title="Direct link to Email Theme" translate="no">​</a></h2>
+<p>The default Keycloak email templates are plain text in a minimal HTML shell. They get the job done, but they don't reflect well on the product they're sending from. Our new email theme replaces that with a professional, fully branded layout—clean typography, your logo embedded directly in the message, a structured content area with appropriate padding and shadow, and a configurable footer. All coupled with an in-page preview experience. Emails from your realm will look like they came from a real product from day one.</p>
+<p>For realms created through the Phase Two Dashboard, this is now the default. No setup required.</p>
+<p><img decoding="async" loading="lazy" alt="Email Theme" src="https://phasetwo.io/assets/images/email-theme-configuration-2b4f8ff91b44e39c35c7aebfe6819d2c.png" width="2656" height="2080" class="img_IkO0"></p>
+<p>Beyond the out-of-the-box look, we addressed the deeper problem: email was arguably the most rigid part of the old setup. Static Freemarker templates meant any copy or branding change required a build and deploy. We replaced that with two mechanisms.</p>
+<p><strong>Attribute-based template overrides</strong> — any <code>.ftl</code> template can be overridden by setting a realm attribute with the key <code>_providerConfig.theme.email.templates.&lt;template-name.ftl&gt;</code>. Message strings work the same way via <code>_providerConfig.theme.email.messages.&lt;message-key&gt;</code>. No redeploy, no file system access required.</p>
+<p><strong>Mustache template support</strong> — we ship an alternative <code>EmailTemplateProvider</code> implementation that renders Mustache templates in addition to Freemarker. This opens up a simpler, more readable template syntax and lets customers supply their own templates through the admin UI without needing to understand Freemarker's quirks.</p>
+<p>The email layout is configurable without touching templates: set footer text lines and a logo URL from the <strong>Phase Two → Styles → Email</strong> panel in the admin console and they reflect immediately.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="the-dashboard">The Dashboard<a href="https://phasetwo.io/blog/new-keycloak-themes/#the-dashboard" class="hash-link" aria-label="Direct link to The Dashboard" title="Direct link to The Dashboard" translate="no">​</a></h2>
+<p>One of the additions we're most excited about is the Phase Two Dashboard—a dedicated view in the admin console that gives realm administrators a high-level picture of their deployment at a glance. Organizations, members, and activity stats surface immediately without having to drill into individual sections. It's the kind of overview that makes Keycloak feel less like a configuration interface and more like a product. We have started basic here, but will continue to expand the dashboard with more insights and actionable items over time.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="easier-to-maintain">Easier to Maintain<a href="https://phasetwo.io/blog/new-keycloak-themes/#easier-to-maintain" class="hash-link" aria-label="Direct link to Easier to Maintain" title="Direct link to Easier to Maintain" translate="no">​</a></h2>
+<p>The practical benefit for us is that upgrading Keycloak no longer means rebasing thousands of lines of forked admin UI JavaScript. Keycloakify handles the bridge between our React components and the Keycloak theme SPI. When Keycloak's admin UI packages update, we update our Keycloakify dependencies. Our customizations live in well-defined extension points, not in modified copies of upstream files.</p>
+<p>We also get proper tooling for the first time: Storybook for developing components in isolation, Playwright tests that exercise the admin UI against a real Keycloak instance, and a <code>docker compose up</code> local environment that lets any developer work on the theme without needing deep Keycloak internals knowledge.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="how-to-get-it">How to Get It<a href="https://phasetwo.io/blog/new-keycloak-themes/#how-to-get-it" class="hash-link" aria-label="Direct link to How to Get It" title="Direct link to How to Get It" translate="no">​</a></h2>
+<p><strong>Phase Two managed service</strong> — it's already there. All containers now ship with the <code>phasetwo-ui</code> theme bundled. New realms created through the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dashboard</a> have it active automatically. Existing realms can switch by setting <code>phasetwo-ui</code> as the theme for login, admin, account, and email in realm settings, then configuring branding from the <strong>Phase Two → Styles</strong> panel.</p>
+<p><strong>Self-hosted with the Phase Two image</strong> — the theme is included in the <a href="https://quay.io/repository/phasetwo/phasetwo-keycloak" target="_blank" rel="noopener noreferrer" class="">Phase Two Keycloak image</a>. Pull the latest image and select <code>phasetwo-ui</code> in your realm theme settings.</p>
+<p><strong>Self-hosted with your own Keycloak</strong> — build and install from the open source <a href="https://github.com/p2-inc/keycloak-themes" target="_blank" rel="noopener noreferrer" class="">keycloak-themes</a> repository:</p>
+<div class="language-bash codeBlockContainer_Oi4F theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_qHom"><pre tabindex="0" class="prism-code language-bash codeBlock_Gpgy thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_mDH0"><span class="token-line" style="color:#bfc7d5"><span class="token plain">mvn clean install -DskipTests</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">cp target/keycloak-themes-*.jar /path/to/keycloak/providers/</span><br></span></code></pre></div></div>
+<p>Restart Keycloak and select <code>phasetwo-ui</code> for login, admin, account, and email in your realm configuration.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="looking-forward">Looking Forward<a href="https://phasetwo.io/blog/new-keycloak-themes/#looking-forward" class="hash-link" aria-label="Direct link to Looking Forward" title="Direct link to Looking Forward" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_aWb6" id="visual-editor-for-login-and-email">Visual editor for login and email<a href="https://phasetwo.io/blog/new-keycloak-themes/#visual-editor-for-login-and-email" class="hash-link" aria-label="Direct link to Visual editor for login and email" title="Direct link to Visual editor for login and email" translate="no">​</a></h3>
+<p>The styles panel today gives you color pickers, a logo field, and a CSS editor. That covers a lot, but we want to go further. We're building a visual editor directly into the Phase Two Dashboard that lets you make fine-grained design changes to your login and email themes—adjusting layout, spacing, typography, background images, and component styles through a live preview interface rather than writing CSS by hand.</p>
+<p>The goal isn't to replace a fully bespoke login experience. Some brands need total control, and the custom CSS path will always be there for that. But for the vast majority of teams, getting 95% of the way there without a designer or a build pipeline is exactly what's needed. Your login page should feel like it belongs to your product, and we think that should be achievable in an afternoon, not a sprint.</p>
+<h3 class="anchor anchorTargetStickyNavbar_aWb6" id="more-capability-in-the-admin-and-account-uis">More capability in the Admin and Account UIs<a href="https://phasetwo.io/blog/new-keycloak-themes/#more-capability-in-the-admin-and-account-uis" class="hash-link" aria-label="Direct link to More capability in the Admin and Account UIs" title="Direct link to More capability in the Admin and Account UIs" translate="no">​</a></h3>
+<p>We're continuing to expand what the admin and account UIs can do. On the admin side, more of our extension capabilities will surface directly in the Phase Two panel as we add features—so you're managing everything through the console rather than through API calls or raw attribute editing.</p>
+<p>On the account side, we're reworking several views to feel more like a modern product interface. One early change is moving the account list views from a table layout to a tile-based interface—easier to scan, more room for useful metadata, more familiar UX, and a look that fits better alongside the rest of the theme.</p>
+<p>For email themes, we're adding more template variables and making it easier to customize the content and layout of emails without needing to write custom templates.</p>
+<p>If you have feedback or run into anything, open an issue on <a href="https://github.com/p2-inc/keycloak-themes" target="_blank" rel="noopener noreferrer" class="">GitHub</a> or <a href="https://phasetwo.io/contact" target="_blank" rel="noopener noreferrer" class="">drop us a line</a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="need-help-customizing-your-keycloak-experience">Need help customizing your Keycloak experience?<a href="https://phasetwo.io/blog/new-keycloak-themes/#need-help-customizing-your-keycloak-experience" class="hash-link" aria-label="Direct link to Need help customizing your Keycloak experience?" title="Direct link to Need help customizing your Keycloak experience?" translate="no">​</a></h2>
+<p>Whether you're trying to match your brand exactly, integrate a custom identity flow, or just figure out where to start—we're happy to help. <a href="https://phasetwo.io/contact" target="_blank" rel="noopener noreferrer" class="">Reach out to us</a> and we'll point you in the right direction.</p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="themes" term="themes"/>
+        <category label="open_source" term="open_source"/>
+        <category label="admin-ui" term="admin-ui"/>
+        <category label="keycloakify" term="keycloakify"/>
+        <category label="organizations" term="organizations"/>
+        <category label="branding" term="branding"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Instant MCP authorization using Keycloak]]></title>
         <id>https://phasetwo.io/blog/instant-mcp-authorization-keycloak/</id>
@@ -38,6 +157,10 @@
 <div class="language-text codeBlockContainer_Oi4F theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_qHom"><pre tabindex="0" class="prism-code language-text codeBlock_Gpgy thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_mDH0"><span class="token-line" style="color:#bfc7d5"><span class="token plain">http://localhost:8000/mcp</span><br></span></code></pre></div></div>
 <p>VS Code will connect to that URL, discover the MCP server's protected-resource metadata, discover Keycloak as the authorization server, dynamically register itself, send you through the browser login flow, and then call the tools with an access token.</p>
 <p>That is the key mental model: the MCP server is the protected resource, and Keycloak is the authorization server.</p>
+<p>A high-level diagram of the topology looks like this:</p>
+<p><img decoding="async" loading="lazy" alt="MCP Keycloak Topology" src="https://phasetwo.io/assets/images/dataflow-topology-260c20ed19273edc256901c1c12c04b9.png" width="2758" height="1376" class="img_IkO0"></p>
+<p>with data flowing through it like this:</p>
+<p><img decoding="async" loading="lazy" alt="MCP Keycloak Dataflow Sequence" src="https://phasetwo.io/assets/images/dataflow-sequence-24be5b0ff9b6ab97ad0923f5e284c423.png" width="2764" height="1804" class="img_IkO0"></p>
 <h2 class="anchor anchorTargetStickyNavbar_aWb6" id="what-you-need-installed">What you need installed<a href="https://phasetwo.io/blog/instant-mcp-authorization-keycloak/#what-you-need-installed" class="hash-link" aria-label="Direct link to What you need installed" title="Direct link to What you need installed" translate="no">​</a></h2>
 <p>Install these first:</p>
 <ul>
@@ -253,6 +376,7 @@
 <li class="">Anonymous Trusted Hosts policy is removed</li>
 </ul>
 <p>If those are true, you have a clean local setup for a Keycloak-protected MCP server that VS Code can discover, register against, and use.</p>
+<p><img decoding="async" loading="lazy" alt="MCP Keycloak Dataflow" src="https://phasetwo.io/assets/images/dataflow-bb6b6541403751224ddd6744e6bf5877.png" width="3333" height="4374" class="img_IkO0"></p>
 <h2 class="anchor anchorTargetStickyNavbar_aWb6" id="why-phase-two-is-the-easiest-way-to-run-this-for-real">Why Phase Two is the easiest way to run this for real<a href="https://phasetwo.io/blog/instant-mcp-authorization-keycloak/#why-phase-two-is-the-easiest-way-to-run-this-for-real" class="hash-link" aria-label="Direct link to Why Phase Two is the easiest way to run this for real" title="Direct link to Why Phase Two is the easiest way to run this for real" translate="no">​</a></h2>
 <p>If you like this pattern but do not want to spend time standing up and operating Keycloak, Phase Two's hosted Keycloak offering is the fastest way to get there. You get a managed realm, a production-ready control plane, and a much shorter path from prototype to deployed MCP authorization server.</p>
 <p>You can start with a free realm in the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dashboard</a> for testing, and when you are ready for a hosted setup with support, upgrades, and operational help, Phase Two's managed Keycloak offering is the easiest way to run an MCP authorization server without owning the infrastructure yourself.</p>]]></content>
@@ -1235,111 +1359,5 @@ own domain, you can increase user confidence and reduce the likelihood of phishi
         <category label="open_source" term="open_source"/>
         <category label="web_application_security" term="web_application_security"/>
         <category label="security" term="security"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Webauthn and Passkeys with Keycloak]]></title>
-        <id>https://phasetwo.io/blog/webauthn-keycloak/</id>
-        <link href="https://phasetwo.io/blog/webauthn-keycloak/"/>
-        <updated>2025-04-17T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Passwords are on their way out. From phishing to password reuse, they've become one of the weakest links in modern authentication. The solution? Passkeys—a phishing-resistant, user-friendly, and increasingly supported replacement for traditional passwords.]]></summary>
-        <content type="html"><![CDATA[<p>Passwords are on their way out. From phishing to password reuse, they've become one of the weakest links in modern authentication. The solution? <strong>Passkeys</strong>—a phishing-resistant, user-friendly, and increasingly supported replacement for traditional passwords.</p>
-<p>In this post, we’ll break down what passkeys are, how they work, which platforms support them, how they relate to WebAuthn, and how you can integrate them into your Keycloak authentication flows. Finally, we’ll explore some of the real-world considerations and challenges.</p>
-<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="what-are-passkeys">What Are Passkeys?<a href="https://phasetwo.io/blog/webauthn-keycloak/#what-are-passkeys" class="hash-link" aria-label="Direct link to What Are Passkeys?" title="Direct link to What Are Passkeys?" translate="no">​</a></h2>
-<p><strong>Passkeys</strong> are a modern alternative to passwords. Built on public-key cryptography, passkeys replace the traditional "something you know" (your password) with "something you have" (your device) and "something you are" (biometrics like a fingerprint or face scan).</p>
-<p>Unlike passwords, passkeys:</p>
-<ul>
-<li class="">Are resistant to phishing and brute-force attacks</li>
-<li class="">Can’t be reused across sites</li>
-<li class="">Don’t need to be remembered</li>
-<li class="">Are stored securely on your device or in a password manager that supports syncing</li>
-</ul>
-<p>They offer the security of hardware security keys (like YubiKey) but with the convenience of Face ID or Windows Hello.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="how-do-passkeys-work">How Do Passkeys Work?<a href="https://phasetwo.io/blog/webauthn-keycloak/#how-do-passkeys-work" class="hash-link" aria-label="Direct link to How Do Passkeys Work?" title="Direct link to How Do Passkeys Work?" translate="no">​</a></h2>
-<p>Passkeys use <strong>public-private key pairs</strong> (<a href="https://en.wikipedia.org/wiki/Public-key_cryptography" target="_blank" rel="noopener noreferrer" class="">link</a>). Here’s how a typical passkey login works:</p>
-<ol>
-<li class="">A website (relying party) sends a challenge to the user's browser.</li>
-<li class="">The user’s device uses a previously stored private key (protected by a biometric or PIN) to sign the challenge.</li>
-<li class="">The browser returns the signed challenge to the website.</li>
-<li class="">The website uses the stored public key to verify the response and complete authentication.</li>
-</ol>
-<p>No secrets are ever sent over the wire. This eliminates common password-based vulnerabilities.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="where-are-passkeys-supported">Where Are Passkeys Supported?<a href="https://phasetwo.io/blog/webauthn-keycloak/#where-are-passkeys-supported" class="hash-link" aria-label="Direct link to Where Are Passkeys Supported?" title="Direct link to Where Are Passkeys Supported?" translate="no">​</a></h2>
-<p>Passkeys are no longer a concept of the future—they're here, and support is growing fast. To get a quick idea, here are some of the existing systems that offer support.</p>
-<table><thead><tr><th>Platform</th><th>Passkey Support</th></tr></thead><tbody><tr><td><strong>Apple</strong></td><td>Face ID / Touch ID via iCloud Keychain (macOS, iOS)</td></tr><tr><td><strong>Google</strong></td><td>Android and Chrome support passkeys via Google Password Manager</td></tr><tr><td><strong>Microsoft</strong></td><td>Windows Hello and Edge support WebAuthn-based passkeys</td></tr><tr><td><strong>Password Managers</strong></td><td>1Password and Dashlane have launched passkey support</td></tr><tr><td><strong>Browsers</strong></td><td>Chrome, Safari, Edge, and Firefox (with varying levels of polish)</td></tr></tbody></table>
-<p>Cross-platform syncing is also becoming easier thanks to initiatives like <strong>FIDO2</strong> and <strong>passkey.ro</strong>.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="whats-the-relationship-between-passkeys-and-webauthn">What’s the Relationship Between Passkeys and WebAuthn?<a href="https://phasetwo.io/blog/webauthn-keycloak/#whats-the-relationship-between-passkeys-and-webauthn" class="hash-link" aria-label="Direct link to What’s the Relationship Between Passkeys and WebAuthn?" title="Direct link to What’s the Relationship Between Passkeys and WebAuthn?" translate="no">​</a></h2>
-<p><strong>WebAuthn</strong> (Web Authentication API) is the W3C standard that enables passwordless login in web applications. Passkeys are a <strong>user-friendly implementation of WebAuthn credentials</strong>, often synced across devices via a cloud provider (like iCloud or Google Password Manager).</p>
-<p>WebAuthn supports two main registration types:</p>
-<ul>
-<li class=""><strong>Roaming authenticators</strong> like hardware keys (YubiKey)</li>
-<li class=""><strong>Platform authenticators</strong> like biometrics on a phone or laptop (e.g., Touch ID, Windows Hello)</li>
-</ul>
-<p><strong>Passkeys</strong> use platform authenticators and often add cross-device syncing on top. So while WebAuthn is the standard, passkeys are the experience users interact with.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="adding-passkeys-to-keycloak">Adding Passkeys to Keycloak<a href="https://phasetwo.io/blog/webauthn-keycloak/#adding-passkeys-to-keycloak" class="hash-link" aria-label="Direct link to Adding Passkeys to Keycloak" title="Direct link to Adding Passkeys to Keycloak" translate="no">​</a></h2>
-<p><strong>Keycloak supports WebAuthn natively</strong>, meaning you can offer passkeys as a sign-in method today—no plugins or external tools required.</p>
-<h3 class="anchor anchorTargetStickyNavbar_aWb6" id="setup-steps">Setup Steps<a href="https://phasetwo.io/blog/webauthn-keycloak/#setup-steps" class="hash-link" aria-label="Direct link to Setup Steps" title="Direct link to Setup Steps" translate="no">​</a></h3>
-<p>Test this next section using Phase Two's <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Free Deployment</a>.</p>
-<ol>
-<li class=""><strong>Enable user registration</strong> in your realm settings.</li>
-<li class="">Under <strong>Authentication → Required Actions</strong>, enable:<!-- -->
-<ul>
-<li class=""><code>WebAuthn Register</code></li>
-<li class=""><code>WebAuthn Register Passwordless</code></li>
-</ul>
-</li>
-<li class="">Create a custom browser login flow:<!-- -->
-<ul>
-<li class="">Duplicate the built-in browser flow.</li>
-<li class="">Remove the <code>Username Password Form</code> step. (optional if you don't want this as an option)</li>
-<li class="">Add a <code>Username Form</code> and the <code>WebAuthn Passwordless Authenticator</code> step.</li>
-<li class="">Set the WebAuthn step to <code>Required</code>.</li>
-</ul>
-</li>
-<li class="">Bind this new flow as your realm's <strong>browser flow</strong>.</li>
-</ol>
-<p>With this flow, users will log in using passkeys—no passwords, just their fingerprint, face, or device confirmation.</p>
-<blockquote>
-<p>✅ <strong>Pro tip:</strong> You can also offer passkeys as a second factor or as an upgrade path after initial password login.</p>
-</blockquote>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="challenges-and-considerations">Challenges and Considerations<a href="https://phasetwo.io/blog/webauthn-keycloak/#challenges-and-considerations" class="hash-link" aria-label="Direct link to Challenges and Considerations" title="Direct link to Challenges and Considerations" translate="no">​</a></h2>
-<p>Implementing passkeys is powerful, but not without complexity. A few things to keep in mind:</p>
-<h3 class="anchor anchorTargetStickyNavbar_aWb6" id="device-recovery">Device Recovery<a href="https://phasetwo.io/blog/webauthn-keycloak/#device-recovery" class="hash-link" aria-label="Direct link to Device Recovery" title="Direct link to Device Recovery" translate="no">​</a></h3>
-<p>If a user loses their device or wipes their phone, their passkey is lost unless it’s synced to the cloud (e.g., iCloud, Google). Ensure fallback options exist—like email OTP or re-registration.</p>
-<h3 class="anchor anchorTargetStickyNavbar_aWb6" id="cross-platform-compatibility">Cross-Platform Compatibility<a href="https://phasetwo.io/blog/webauthn-keycloak/#cross-platform-compatibility" class="hash-link" aria-label="Direct link to Cross-Platform Compatibility" title="Direct link to Cross-Platform Compatibility" translate="no">​</a></h3>
-<p>Passkeys behave differently across OSes and browsers. For example, Windows Hello may not sync with a MacBook’s Touch ID. Testing across platforms is key.</p>
-<h3 class="anchor anchorTargetStickyNavbar_aWb6" id="user-education">User Education<a href="https://phasetwo.io/blog/webauthn-keycloak/#user-education" class="hash-link" aria-label="Direct link to User Education" title="Direct link to User Education" translate="no">​</a></h3>
-<p>Passkeys are unfamiliar to many users. Provide clear onboarding, and consider hybrid flows that gradually move users from password-based logins to passkeys.</p>
-<h3 class="anchor anchorTargetStickyNavbar_aWb6" id="deployment-architecture">Deployment Architecture<a href="https://phasetwo.io/blog/webauthn-keycloak/#deployment-architecture" class="hash-link" aria-label="Direct link to Deployment Architecture" title="Direct link to Deployment Architecture" translate="no">​</a></h3>
-<p>If your Keycloak deployment involves multiple realms or external IDPs, you'll need to ensure your WebAuthn configuration is consistent across them.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_aWb6" id="why-phase-two">Why Phase Two?<a href="https://phasetwo.io/blog/webauthn-keycloak/#why-phase-two" class="hash-link" aria-label="Direct link to Why Phase Two?" title="Direct link to Why Phase Two?" translate="no">​</a></h2>
-<p>At <strong>Phase Two</strong>, we offer more than just Keycloak hosting—we help teams <strong>architect for modern identity</strong>.</p>
-<p>Need help rolling out passkeys and passwordless login in your apps? We can help you:</p>
-<ul>
-<li class="">Customize your Keycloak flows for WebAuthn</li>
-<li class="">Audit your security settings and fallback options</li>
-<li class="">Ensure your deployment scales with your users</li>
-<li class="">Keep your Keycloak up-to-date with the latest passkey support</li>
-</ul>
-<p>Let’s build a secure, passwordless future—together.</p>
-<ul>
-<li class="">📩 <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">Reach out to the team →</a></li>
-<li class="">👉 <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Get Started with Free Managed Keycloak</a></li>
-</ul>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="phase_two" term="phase_two"/>
-        <category label="open_source" term="open_source"/>
-        <category label="webauthn" term="webauthn"/>
-        <category label="passkeys" term="passkeys"/>
-        <category label="authentication" term="authentication"/>
     </entry>
 </feed>
