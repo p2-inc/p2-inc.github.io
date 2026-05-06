@@ -189,7 +189,9 @@
 <h2 class="anchor anchorTargetStickyNavbar_aWb6" id="step-1-create-the-mcp-server">Step 1: Create the MCP server<a href="https://phasetwo.io/blog/instant-mcp-authorization-keycloak/#step-1-create-the-mcp-server" class="hash-link" aria-label="Direct link to Step 1: Create the MCP server" title="Direct link to Step 1: Create the MCP server" translate="no">​</a></h2>
 <p>Download the complete example server here:</p>
 <ul>
-<li class=""><a href="https://phasetwo.io/assets/files/keycloak-mcp-server-7c5c3de33a9cef4789387cc4103e44ca.py/" target="_blank" class="">server.py</a></li>
+<li class="">
+<a href="https://phasetwo.io/blog/mcp_authorization_keycloak/keycloak-mcp-server.py">server.py</a>
+</li>
 </ul>
 <p>This server:</p>
 <ul>
@@ -232,7 +234,9 @@
 <p>That exact URL must match the issuer your Python server validates.</p>
 <p>If you want a faster setup than clicking through each screen manually, you can also import the example realm configuration:</p>
 <ul>
-<li class=""><a href="https://phasetwo.io/assets/files/keycloak-realm-export-1981dce8e3f390fd23dd7217ff272f81.json/" target="_blank" class="">realm-export.json</a></li>
+<li class="">
+<a href="https://phasetwo.io/blog/mcp_authorization_keycloak/keycloak-realm-export.json">realm-export.json</a>
+</li>
 </ul>
 <p>If you are using a hosted realm from Phase Two instead of local Keycloak, use the hosted realm's issuer URL everywhere the tutorial currently shows <code>http://localhost:8080/realms/mcp-demo</code>.</p>
 <h2 class="anchor anchorTargetStickyNavbar_aWb6" id="step-5-create-the-mcprun-client-scope">Step 5: Create the <code>mcp:run</code> client scope<a href="https://phasetwo.io/blog/instant-mcp-authorization-keycloak/#step-5-create-the-mcprun-client-scope" class="hash-link" aria-label="Direct link to step-5-create-the-mcprun-client-scope" title="Direct link to step-5-create-the-mcprun-client-scope" translate="no">​</a></h2>
@@ -282,7 +286,9 @@
 <h2 class="anchor anchorTargetStickyNavbar_aWb6" id="step-8-configure-vs-code">Step 8: Configure VS Code<a href="https://phasetwo.io/blog/instant-mcp-authorization-keycloak/#step-8-configure-vs-code" class="hash-link" aria-label="Direct link to Step 8: Configure VS Code" title="Direct link to Step 8: Configure VS Code" translate="no">​</a></h2>
 <p>Create <code>.vscode/mcp.json</code>, or download the example file:</p>
 <ul>
-<li class=""><a href="https://phasetwo.io/assets/files/keycloak-mcp-8eabfc373ec7ae499c66e70667d22cd9.json/" target="_blank" class="">mcp.json</a></li>
+<li class="">
+<a href="https://phasetwo.io/blog/mcp_authorization_keycloak/keycloak-mcp.json">mcp.json</a>
+</li>
 </ul>
 <p>The contents should look like:</p>
 <div class="language-json codeBlockContainer_Oi4F theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_qHom"><pre tabindex="0" class="prism-code language-json codeBlock_Gpgy thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_mDH0"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token property">"servers"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token property">"calculator-local"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token property">"type"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">"http"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token property">"url"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">"http://localhost:8000/mcp"</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre></div></div>
