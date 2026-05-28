@@ -2,11 +2,61 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
-    <updated>2026-04-27T00:00:00.000Z</updated>
+    <updated>2026-05-27T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.svg</icon>
+    <entry>
+        <title type="html"><![CDATA[Experimental SCIM 2.0 provisioning for Organizations]]></title>
+        <id>https://phasetwo.io/blog/orgs-scim-experimental/</id>
+        <link href="https://phasetwo.io/blog/orgs-scim-experimental/"/>
+        <updated>2026-05-27T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Per-organization SCIM 2.0 endpoints for Keycloak, built on Metatavu's keycloak-scim-server. Experimental, but already in production use.]]></summary>
+        <content type="html"><![CDATA[<p>We're shipping experimental SCIM 2.0 provisioning for the Phase Two <a href="https://github.com/p2-inc/keycloak-orgs" target="_blank" rel="noopener noreferrer" class="">Organizations extension</a>. Each organization in a realm can now act as its own SCIM 2.0 service provider, so an upstream IdP like Okta or Entra ID can push users into a specific tenant rather than into the realm as a whole.</p>
+<p>This is the piece of the multi-tenant story that Keycloak's stock SCIM support doesn't address today, and it's been a heavily requested item from customers running Organizations in production.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="how-this-differs-from-keycloaks-experimental-scim">How this differs from Keycloak's experimental SCIM<a href="https://phasetwo.io/blog/orgs-scim-experimental/#how-this-differs-from-keycloaks-experimental-scim" class="hash-link" aria-label="Direct link to How this differs from Keycloak's experimental SCIM" title="Direct link to How this differs from Keycloak's experimental SCIM" translate="no">​</a></h2>
+<p>Keycloak shipped its own experimental SCIM 2.0 capability in version <code>26.6</code>, and it's worth being clear about how the two relate, because the names overlap but the scopes don't:</p>
+<ul>
+<li class=""><strong>Keycloak's SCIM is realm-level.</strong> An external IdP provisions users into the realm. There is one SCIM endpoint per realm and one population of users. That model is fine when a realm represents a single customer or a single workforce — it's the classic Keycloak deployment shape.</li>
+<li class=""><strong>Our SCIM is organization-level.</strong> An external IdP provisions users into a specific organization within a realm. There is one SCIM endpoint <em>per organization</em>, and each one has its own authentication configuration, its own optional IdP federation link, and its own member graph. The realm can host thousands of organizations, each backed by a different upstream identity system, without those populations bleeding into each other.</li>
+</ul>
+<p>If you're running a B2B SaaS where each customer is an Organization, the realm-level model isn't what you want — you'd be asking every customer's IT department to provision into a shared pool. The per-organization model is the natural fit: each customer's IdP gets its own SCIM URL, its own credentials, and provisions only into its own tenant.</p>
+<p>Both are experimental. They're not in competition — they're solving different problems at different layers — and over time we expect the realm-level and organization-level capabilities to coexist in the same Keycloak deployment.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="whats-in-the-release">What's in the release<a href="https://phasetwo.io/blog/orgs-scim-experimental/#whats-in-the-release" class="hash-link" aria-label="Direct link to What's in the release" title="Direct link to What's in the release" translate="no">​</a></h2>
+<p>The capability ships disabled by default and is gated by a realm-level flag. Once enabled, each organization gets:</p>
+<ul>
+<li class="">A SCIM 2.0 endpoint at <code>/realms/{realm}/scim/v2/organizations/{orgId}/</code> exposing the standard SCIM resources (<code>/ServiceProviderConfig</code>, <code>/ResourceTypes</code>, <code>/Schemas</code>, <code>/Users</code>, <code>/Groups</code>).</li>
+<li class="">A <strong>SCIM</strong> tab in the organization detail page of the admin UI for configuring authentication and provisioning behavior.</li>
+<li class="">A REST configuration API at <code>/realms/{realm}/orgs/{orgId}/scim</code> for the same operations.</li>
+<li class="">Four authentication modes for inbound provisioning calls: <code>KEYCLOAK</code> (Bearer access token), <code>EXTERNAL_JWT</code> (validated against an upstream issuer + JWKS), <code>EXTERNAL_SECRET</code> (shared bearer secret), and <code>EXTERNAL_BASIC</code> (HTTP Basic). Cleartext secrets and passwords are hashed with Argon2id before persistence.</li>
+<li class="">Optional federation to the organization's configured identity provider, so provisioned users can immediately sign in via the org's existing SSO.</li>
+</ul>
+<p>The full surface is documented in <a href="https://github.com/p2-inc/keycloak-orgs/blob/main/docs/scim.md" target="_blank" rel="noopener noreferrer" class=""><code>docs/scim.md</code></a> in the keycloak-orgs repo.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-experimental-means-here">What "experimental" means here<a href="https://phasetwo.io/blog/orgs-scim-experimental/#what-experimental-means-here" class="hash-link" aria-label="Direct link to What &quot;experimental&quot; means here" title="Direct link to What &quot;experimental&quot; means here" translate="no">​</a></h3>
+<p>The API shape, the configuration schema, and the realm-level enablement flag may change in a backwards-incompatible way before we mark it stable. If you take a dependency, pin to a specific version of <code>keycloak-orgs</code> and read the changelog before upgrading.</p>
+<p>That caveat isn't theoretical — we're still iterating on the authentication mode set, the configuration shape for credential rotation, and the exact semantics around the IdP linkage. We'd rather get those right than freeze them prematurely.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="credit-where-its-due-metatavus-keycloak-scim-server">Credit where it's due: Metatavu's keycloak-scim-server<a href="https://phasetwo.io/blog/orgs-scim-experimental/#credit-where-its-due-metatavus-keycloak-scim-server" class="hash-link" aria-label="Direct link to Credit where it's due: Metatavu's keycloak-scim-server" title="Direct link to Credit where it's due: Metatavu's keycloak-scim-server" translate="no">​</a></h2>
+<p>The SCIM 2.0 server implementation underneath this is <a href="https://github.com/Metatavu/keycloak-scim-server" target="_blank" rel="noopener noreferrer" class="">Metatavu's <code>keycloak-scim-server</code></a> — an open-source SCIM provider that handles the protocol-level work of speaking SCIM 2.0 to upstream IdPs. We've been building on top of it, contributing back, and maintaining a fork tuned for the per-organization model.</p>
+<p>Metatavu's project is itself under active development, and so is our use of it. The two efforts are happening in parallel: Metatavu is iterating on the core SCIM server, and we're iterating on the organization-aware layer that sits on top. Neither codebase is "done."</p>
+<p>What both projects do have, despite the experimental label, is <strong>active production users today</strong>. Metatavu has been running their SCIM server in real deployments, and Phase Two customers are already using the per-organization variant against real upstream IdPs. The "experimental" tag reflects the rate of change in the API surface, not the maturity of the underlying provisioning logic.</p>
+<p>If you're evaluating this for a production rollout, the realistic posture is: it works, it's being used, and you should expect to update your integration when the configuration shape evolves. Pin versions and follow the changelog.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="getting-started">Getting started<a href="https://phasetwo.io/blog/orgs-scim-experimental/#getting-started" class="hash-link" aria-label="Direct link to Getting started" title="Direct link to Getting started" translate="no">​</a></h2>
+<p>If you're already running Phase Two's Keycloak extensions, upgrade to the latest <code>keycloak-orgs</code>, enable the realm-level <code>scimEnabled</code> flag, and the SCIM tab will appear on each organization. The <a href="https://github.com/p2-inc/keycloak-orgs/blob/main/docs/scim.md" target="_blank" rel="noopener noreferrer" class="">SCIM docs</a> walk through the realm flag, the per-organization configuration, and each of the four authentication modes.</p>
+<p>If you want to skip the self-host setup, you can try this on a free realm in the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dashboard</a> — the same Organization SCIM capability is available there.</p>
+<p>Feedback, bug reports, and use-case stories are all welcome on the <a href="https://github.com/p2-inc/keycloak-orgs/issues" target="_blank" rel="noopener noreferrer" class="">keycloak-orgs issue tracker</a> or directly to <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>. The faster we hear from real integrations, the faster we get this to stable.</p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="organizations" term="organizations"/>
+        <category label="scim" term="scim"/>
+        <category label="provisioning" term="provisioning"/>
+        <category label="open_source" term="open_source"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[A New Keycloak Theme Experience: Login, Admin, Account, and Email]]></title>
         <id>https://phasetwo.io/blog/new-keycloak-themes/</id>
@@ -1255,117 +1305,5 @@ own domain, you can increase user confidence and reduce the likelihood of phishi
         <category label="multi_tenancy" term="multi_tenancy"/>
         <category label="organizations" term="organizations"/>
         <category label="keycloak" term="keycloak"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Web Application Security with Your Keycloak Deployment]]></title>
-        <id>https://phasetwo.io/blog/waf-keycloak/</id>
-        <link href="https://phasetwo.io/blog/waf-keycloak/"/>
-        <updated>2025-04-18T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[As more companies adopt Keycloak for enterprise identity and access management, security is no longer just a back-end concern. One of the most frequent questions we hear at Phase Two is:]]></summary>
-        <content type="html"><![CDATA[<p>As more companies adopt Keycloak for enterprise identity and access management, security is no longer just a back-end concern. One of the most frequent questions we hear at Phase Two is:</p>
-<p><strong>"Should I put a Web Application Firewall (WAF) in front of Keycloak?"</strong></p>
-<p>The short answer? <strong>It depends</strong>—but it's a smart question to ask.</p>
-<p>In this post, we'll break down what Keycloak provides out of the box, explore common attack vectors (especially around authentication endpoints), and help you evaluate whether you need to add an external firewall or WAF to your deployment.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-security-does-keycloak-provide">What Security Does Keycloak Provide?<a href="https://phasetwo.io/blog/waf-keycloak/#what-security-does-keycloak-provide" class="hash-link" aria-label="Direct link to What Security Does Keycloak Provide?" title="Direct link to What Security Does Keycloak Provide?" translate="no">​</a></h2>
-<p>Keycloak includes several built-in protections, especially around <strong>login abuse detection</strong>:</p>
-<ul>
-<li class=""><strong>Brute Force Detection</strong>: Limit login attempts per user/IP combination</li>
-<li class=""><strong>Event Logging</strong>: Track login attempts, errors, and success/failure trends</li>
-<li class=""><strong>Account Lockout</strong>: Lock users after repeated failures</li>
-<li class=""><strong>Rate Limiting</strong> (indirect via proxies): Supports integration with reverse proxies/load balancers</li>
-<li class=""><strong>Session Expiry Controls</strong>: Limits token lifespan and session reuse</li>
-</ul>
-<p>These help protect against basic abuse patterns like credential stuffing and dictionary attacks—but they aren’t designed to stop <strong>network-level threats</strong> like DDoS or complex bot traffic.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="which-keycloak-endpoints-get-targeted">Which Keycloak Endpoints Get Targeted?<a href="https://phasetwo.io/blog/waf-keycloak/#which-keycloak-endpoints-get-targeted" class="hash-link" aria-label="Direct link to Which Keycloak Endpoints Get Targeted?" title="Direct link to Which Keycloak Endpoints Get Targeted?" translate="no">​</a></h2>
-<p>The most vulnerable part of a Keycloak deployment is also its most exposed: the <strong>login page</strong>.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="commonly-targeted-endpoints">Commonly targeted endpoints:<a href="https://phasetwo.io/blog/waf-keycloak/#commonly-targeted-endpoints" class="hash-link" aria-label="Direct link to Commonly targeted endpoints:" title="Direct link to Commonly targeted endpoints:" translate="no">​</a></h3>
-<ul>
-<li class=""><code>/realms/{realm}/protocol/openid-connect/auth</code></li>
-<li class=""><code>/realms/{realm}/protocol/openid-connect/token</code></li>
-<li class=""><code>/realms/{realm}/account/</code></li>
-<li class=""><code>/realms/{realm}/login-actions/authenticate</code></li>
-<li class="">Password reset and registration endpoints</li>
-</ul>
-<p>These routes are exposed by design. If your login page is available to users around the world, it’s available to bots and attackers too.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="so-when-should-you-consider-a-waf">So, When Should You Consider a WAF?<a href="https://phasetwo.io/blog/waf-keycloak/#so-when-should-you-consider-a-waf" class="hash-link" aria-label="Direct link to So, When Should You Consider a WAF?" title="Direct link to So, When Should You Consider a WAF?" translate="no">​</a></h2>
-<p>A WAF can protect your Keycloak deployment from a wide range of threats that Keycloak itself is not built to handle, such as:</p>
-<ul>
-<li class=""><strong>DDoS attacks</strong> targeting login endpoints</li>
-<li class=""><strong>Bot-driven enumeration attacks</strong> (e.g., slow username probing)</li>
-<li class=""><strong>IP spoofing or rotation attempts</strong></li>
-<li class=""><strong>Malformed request injection or protocol abuse</strong></li>
-</ul>
-<p>A WAF provides <strong>layer 7 security</strong>, filtering traffic based on behavior, headers, and known attack patterns.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="you-might-consider-a-waf-if">You might consider a WAF if:<a href="https://phasetwo.io/blog/waf-keycloak/#you-might-consider-a-waf-if" class="hash-link" aria-label="Direct link to You might consider a WAF if:" title="Direct link to You might consider a WAF if:" translate="no">​</a></h3>
-<ul>
-<li class="">You expose Keycloak login pages publicly to thousands/millions of users</li>
-<li class="">You run multi-tenant or CIAM deployments</li>
-<li class="">You’ve experienced repeated attack attempts (or near misses)</li>
-<li class="">You need deeper visibility and mitigation for L7 (application-level) traffic</li>
-<li class="">You want geo-blocking, bot detection, or rate limiting with fine control</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="real-world-example-what-a-ddos-can-look-like">Real-World Example: What a DDoS Can Look Like<a href="https://phasetwo.io/blog/waf-keycloak/#real-world-example-what-a-ddos-can-look-like" class="hash-link" aria-label="Direct link to Real-World Example: What a DDoS Can Look Like" title="Direct link to Real-World Example: What a DDoS Can Look Like" translate="no">​</a></h2>
-<p>A team running Keycloak recently shared their experience dealing with a <strong>multi-phase login enumeration DDoS attack</strong>:</p>
-<ul>
-<li class="">Attackers gradually increased pressure, beginning with low-rate enumeration</li>
-<li class="">A misconfiguration allowed for excessive open connections that exhausted resources</li>
-<li class="">Over time, they escalated to thousands of login requests per minute</li>
-<li class="">Sophisticated use of IP rotation made IP bans ineffective</li>
-</ul>
-<p>Even though no data was breached, the attack overwhelmed infrastructure and required layered mitigation—<strong>including a WAF</strong> to filter malicious patterns without affecting legitimate traffic.</p>
-<p>Phase Two has helped customers build resilient defenses to ensure they're ready <em>before</em> attackes like this happens.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="how-to-architect-defenses-around-keycloak">How to Architect Defenses Around Keycloak<a href="https://phasetwo.io/blog/waf-keycloak/#how-to-architect-defenses-around-keycloak" class="hash-link" aria-label="Direct link to How to Architect Defenses Around Keycloak" title="Direct link to How to Architect Defenses Around Keycloak" translate="no">​</a></h2>
-<p>Whether or not you use a WAF, we recommend the following layered defense strategy. Using some or all of these can help.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="keycloak-brute-force--session-policies">Keycloak Brute Force &amp; Session Policies<a href="https://phasetwo.io/blog/waf-keycloak/#keycloak-brute-force--session-policies" class="hash-link" aria-label="Direct link to Keycloak Brute Force &amp; Session Policies" title="Direct link to Keycloak Brute Force &amp; Session Policies" translate="no">​</a></h3>
-<p>Enable built-in brute force detection, set aggressive session expiration limits, and disable unused endpoints like user registration.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="waf-optional-but-recommended">WAF (Optional but Recommended)<a href="https://phasetwo.io/blog/waf-keycloak/#waf-optional-but-recommended" class="hash-link" aria-label="Direct link to WAF (Optional but Recommended)" title="Direct link to WAF (Optional but Recommended)" translate="no">​</a></h3>
-<p>Use a WAF like Cloudflare, AWS WAF, or Fastly to block known bad actors and patterns. Look for features like:</p>
-<ul>
-<li class="">Rate limiting by path (e.g., <code>/auth</code>)</li>
-<li class="">Bot management</li>
-<li class="">CAPTCHA or JS challenge enforcement</li>
-<li class="">Real-time threat feeds</li>
-</ul>
-<p>As part of Phase Two's <a class="" href="https://phasetwo.io/hosting/">Enterprise hosting</a> we provide the ability to integrate the WAF of your choosing along with your infrastructure.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="monitoring--anomaly-detection">Monitoring &amp; Anomaly Detection<a href="https://phasetwo.io/blog/waf-keycloak/#monitoring--anomaly-detection" class="hash-link" aria-label="Direct link to Monitoring &amp; Anomaly Detection" title="Direct link to Monitoring &amp; Anomaly Detection" translate="no">​</a></h3>
-<p>Log traffic and authentication events. Set up alerts for spikes in failures, long-lived sessions, or abnormal IP geographies. Phase Two's built-in <a class="" href="https://phasetwo.io/hosting/">monitoring</a> is already pre-configured to note changes in traffic and abnormal patterns.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="reverse-proxy">Reverse Proxy<a href="https://phasetwo.io/blog/waf-keycloak/#reverse-proxy" class="hash-link" aria-label="Direct link to Reverse Proxy" title="Direct link to Reverse Proxy" translate="no">​</a></h3>
-<p>Use NGINX or Envoy in front of Keycloak to terminate TLS, cache static assets, and enforce basic rate limits.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="so-do-you-need-a-waf">So, Do You Need a WAF?<a href="https://phasetwo.io/blog/waf-keycloak/#so-do-you-need-a-waf" class="hash-link" aria-label="Direct link to So, Do You Need a WAF?" title="Direct link to So, Do You Need a WAF?" translate="no">​</a></h2>
-<p>If you're running Keycloak inside a secure corporate network and exposing login only to employees, <strong>maybe not</strong>.</p>
-<p>But if you're serving external users—especially at scale—the answer leans strongly toward <strong>yes</strong>.</p>
-<p>Even the most robust IAM systems can be overwhelmed by network-level threats they weren’t built to handle. A WAF isn’t a silver bullet—but it’s a strong, smart addition to a well-architected identity stack. Defense-in-depth is truly the only option for full network security of any web property.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="how-phase-two-helps">How Phase Two Helps<a href="https://phasetwo.io/blog/waf-keycloak/#how-phase-two-helps" class="hash-link" aria-label="Direct link to How Phase Two Helps" title="Direct link to How Phase Two Helps" translate="no">​</a></h2>
-<p>At <strong>Phase Two</strong>, we specialize in managing and securing Keycloak at scale. Our hosted platform includes:</p>
-<ul>
-<li class="">Hardened Keycloak configurations</li>
-<li class="">Pre-integrated reverse proxy protections</li>
-<li class="">Best-practice DDoS and abuse mitigation</li>
-<li class="">Optional WAF integrations</li>
-<li class="">24/7 observability and response tooling</li>
-</ul>
-<p>We help teams design IAM infrastructure that’s not just compliant—but resilient.</p>
-<hr>
-<p><strong>Want to talk WAFs, login security, or DDoS mitigation?</strong></p>
-<ul>
-<li class="">📩 <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">Reach out to the team →</a></li>
-<li class="">👉 <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Get Started with Free Managed Keycloak</a></li>
-</ul>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="phase_two" term="phase_two"/>
-        <category label="open_source" term="open_source"/>
-        <category label="web_application_security" term="web_application_security"/>
-        <category label="security" term="security"/>
     </entry>
 </feed>
