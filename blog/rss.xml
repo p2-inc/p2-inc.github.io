@@ -25,6 +25,7 @@
 <p>If you're running a B2B SaaS where each customer is an Organization, the realm-level model isn't what you want — you'd be asking every customer's IT department to provision into a shared pool. The per-organization model is the natural fit: each customer's IdP gets its own SCIM URL, its own credentials, and provisions only into its own tenant.</p>
 <p>Both are experimental. They're not in competition — they're solving different problems at different layers — and over time we expect the realm-level and organization-level capabilities to coexist in the same Keycloak deployment.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="whats-in-the-release">What's in the release<a href="https://phasetwo.io/blog/orgs-scim-experimental/#whats-in-the-release" class="hash-link" aria-label="Direct link to What's in the release" title="Direct link to What's in the release" translate="no">​</a></h2>
+<p><img decoding="async" loading="lazy" alt="Organization SCIM Admin UI" src="https://phasetwo.io/assets/images/2026-05-27-orgs-scim-ui-4e424e712500eada55888947fdbe413f.png" width="2996" height="1694" class="img_R7yg"></p>
 <p>The capability ships disabled by default and is gated by a realm-level flag. Once enabled, each organization gets:</p>
 <ul>
 <li class="">A SCIM 2.0 endpoint at <code>/realms/{realm}/scim/v2/organizations/{orgId}/</code> exposing the standard SCIM resources (<code>/ServiceProviderConfig</code>, <code>/ResourceTypes</code>, <code>/Schemas</code>, <code>/Users</code>, <code>/Groups</code>).</li>

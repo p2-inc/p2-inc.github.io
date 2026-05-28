@@ -28,7 +28,7 @@
 <script src="https://www.termsfeed.com/public/cookie-consent/4.1.0/cookie-consent.js" charset="UTF-8" defer="defer"></script>
 <script src="https://www.googletagmanager.com/gtag/js?id=UA-160183620-1" async data-cookie-consent="tracking"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer="defer"></script><link rel="stylesheet" href="/assets/css/styles.fe9b2ee7.css">
-<script src="/assets/js/runtime~main.fc2b9d76.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.0e3fb59e.js" defer="defer"></script>
 <script src="/assets/js/main.08c49222.js" defer="defer"></script>
 </head>
 <body>
@@ -46,6 +46,7 @@
 <p>If you&#x27;re running a B2B SaaS where each customer is an Organization, the realm-level model isn&#x27;t what you want — you&#x27;d be asking every customer&#x27;s IT department to provision into a shared pool. The per-organization model is the natural fit: each customer&#x27;s IdP gets its own SCIM URL, its own credentials, and provisions only into its own tenant.</p>
 <p>Both are experimental. They&#x27;re not in competition — they&#x27;re solving different problems at different layers — and over time we expect the realm-level and organization-level capabilities to coexist in the same Keycloak deployment.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="whats-in-the-release">What&#x27;s in the release<a href="#whats-in-the-release" class="hash-link" aria-label="Direct link to What&#x27;s in the release" title="Direct link to What&#x27;s in the release" translate="no">​</a></h2>
+<p><img decoding="async" loading="lazy" alt="Organization SCIM Admin UI" src="/assets/images/2026-05-27-orgs-scim-ui-4e424e712500eada55888947fdbe413f.png" width="2996" height="1694" class="img_R7yg"></p>
 <p>The capability ships disabled by default and is gated by a realm-level flag. Once enabled, each organization gets:</p>
 <ul>
 <li class="">A SCIM 2.0 endpoint at <code>/realms/{realm}/scim/v2/organizations/{orgId}/</code> exposing the standard SCIM resources (<code>/ServiceProviderConfig</code>, <code>/ResourceTypes</code>, <code>/Schemas</code>, <code>/Users</code>, <code>/Groups</code>).</li>
