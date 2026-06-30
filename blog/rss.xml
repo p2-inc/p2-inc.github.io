@@ -4,10 +4,75 @@
         <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
         <link>https://phasetwo.io/blog/</link>
         <description>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</description>
-        <lastBuildDate>Fri, 29 May 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 30 Jun 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Introducing the Starter Cluster Tier — Phase Two Keycloak from $149/month]]></title>
+            <link>https://phasetwo.io/blog/starter-tier-launch/</link>
+            <guid>https://phasetwo.io/blog/starter-tier-launch/</guid>
+            <pubDate>Tue, 30 Jun 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[A new dedicated-cluster tier for teams moving from evaluation to a production-ready Phase Two Keycloak deployment. $149/month, 30-day free trial, all the features of our dedicated clusters. Also covering the wind-down of our free shared-realm offering.]]></description>
+            <content:encoded><![CDATA[<p>Today we're launching a new way to run Phase Two: the <strong>Starter</strong> cluster tier, available at <strong>$149 per month</strong>. Starter bundles the same feature set as our existing dedicated clusters into a plan that's accessible for teams getting their use case off the ground or running development environments with lower SLA needs. It also includes a <strong>30-day free trial</strong>, so you can validate your setup before committing.</p>
+<p><a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Log into the dashboard</a> and click <strong>Create Cluster</strong> to pick the new tier and provision yours.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-you-get">What you get<a href="https://phasetwo.io/blog/starter-tier-launch/#what-you-get" class="hash-link" aria-label="Direct link to What you get" title="Direct link to What you get" translate="no">​</a></h2>
+<p>A Starter cluster is a real dedicated Phase Two Keycloak cluster — not a shared realm carved out of someone else's resources. That means:</p>
+<ul>
+<li class=""><strong>Your own dedicated compute, network, and storage.</strong> No noisy neighbors, no shared connection limits, no contention for cache.</li>
+<li class=""><strong>The full Phase Two enhanced Keycloak distribution</strong> — <a href="https://phasetwo.io/product/organizations/" target="_blank" rel="noopener noreferrer" class="">Organizations</a>, <a href="https://phasetwo.io/product/magic-link/" target="_blank" rel="noopener noreferrer" class="">Magic Links</a>, <a href="https://phasetwo.io/product/webhooks/" target="_blank" rel="noopener noreferrer" class="">Webhooks</a>, the <a href="https://phasetwo.io/product/sso/#idp-wizard" target="_blank" rel="noopener noreferrer" class="">IdP Wizard</a>, and the rest of our <a href="https://github.com/p2-inc" target="_blank" rel="noopener noreferrer" class="">open-source extension library</a> bundled in.</li>
+<li class=""><strong>Custom domains</strong> (CNAME) for your login portals.</li>
+<li class=""><strong>Cluster observability</strong> — uptime, logs, and usage metrics surfaced through the <a class="" href="https://phasetwo.io/blog/dashboard-launch/">new dashboard</a>.</li>
+<li class=""><strong>The same managed CockroachDB tier</strong> powering our larger plans, in partnership with <a href="https://www.cockroachlabs.com/" target="_blank" rel="noopener noreferrer" class="">Cockroach Labs</a>.</li>
+<li class=""><strong>All the regions we support</strong> — pick whichever is closest to your users.</li>
+</ul>
+<p>Starter is built to be genuinely capable, with resource limits set where most early-stage teams actually need them — enough headroom for real production workloads and development environments. When you need more, our existing higher-capacity cluster offerings are ready for you. They've proven themselves capable for many teams pushing serious throughput, with a larger resource envelope and a matching SLA — and you can scale straight up from Starter into them without re-provisioning.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="who-its-for">Who it's for<a href="https://phasetwo.io/blog/starter-tier-launch/#who-its-for" class="hash-link" aria-label="Direct link to Who it's for" title="Direct link to Who it's for" translate="no">​</a></h2>
+<p>We built Starter for two specific shapes of team:</p>
+<ol>
+<li class=""><strong>Teams ready to move past evaluation.</strong> You've validated Phase Two on a free realm, you're getting close to a real launch, and you want to put your auth on its own infrastructure with a predictable monthly price.</li>
+<li class=""><strong>Dev and staging environments.</strong> You're already running a dedicated cluster in production and want a matching environment that doesn't double your bill. Starter is intentionally priced so a team can comfortably run a cluster-per-environment without thinking twice.</li>
+</ol>
+<p>If your use case is large or mission-critical from day one, our <a class="" href="https://phasetwo.io/pricing/">higher-capacity clusters</a> remain the right choice. Starter is the on-ramp, not the destination — and clusters scale up from Starter into the larger tiers without a re-provision.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="try-it-for-30-days-free">Try it for 30 days, free<a href="https://phasetwo.io/blog/starter-tier-launch/#try-it-for-30-days-free" class="hash-link" aria-label="Direct link to Try it for 30 days, free" title="Direct link to Try it for 30 days, free" translate="no">​</a></h2>
+<p>Every new Starter cluster includes a <strong>30-day free trial</strong>. That's enough time to wire your application up against a real cluster, run integration tests, validate SSO connections, and decide whether it fits the way you work. If you're still validating at day 30, talk to us — we'd rather give you the runway than rush you.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="how-to-provision-one">How to provision one<a href="https://phasetwo.io/blog/starter-tier-launch/#how-to-provision-one" class="hash-link" aria-label="Direct link to How to provision one" title="Direct link to How to provision one" translate="no">​</a></h2>
+<ol>
+<li class=""><a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Open the dashboard</a>.</li>
+<li class="">Click <strong>Create Cluster</strong>.</li>
+<li class="">Pick <strong>Starter</strong> as the tier.</li>
+<li class="">Choose your region.</li>
+<li class="">Watch it provision (most clusters are live within 30 minutes).</li>
+</ol>
+<p>Detailed setup walkthroughs live in the <a class="" href="https://phasetwo.io/docs/self-service/dedicated-clusters/">Cluster docs</a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-this-means-for-our-free-shared-realms">What this means for our free shared realms<a href="https://phasetwo.io/blog/starter-tier-launch/#what-this-means-for-our-free-shared-realms" class="hash-link" aria-label="Direct link to What this means for our free shared realms" title="Direct link to What this means for our free shared realms" translate="no">​</a></h2>
+<p>Alongside the Starter launch, <strong>we are discontinuing our free, shared-realm offering</strong>. Free realms have served us well — they've onboarded thousands of teams over the years and given us a clear picture of how people validate Phase Two — but they've also become harder to operate sustainably as our paying-customer footprint has grown.</p>
+<p>The Starter tier (with its 30-day trial) is now the path from "I want to try this" to "I'm running it in production." We think it's a clearer journey, and it gives us a single class of infrastructure we can invest in deeply rather than splitting effort between shared and dedicated systems.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="migration-timeline">Migration timeline<a href="https://phasetwo.io/blog/starter-tier-launch/#migration-timeline" class="hash-link" aria-label="Direct link to Migration timeline" title="Direct link to Migration timeline" translate="no">​</a></h3>
+<p>If you currently have active realms on our free, shared infrastructure:</p>
+<ul>
+<li class=""><strong>You have 30 days from today (2026-06-30) — through 2026-07-30 — to upgrade and migrate your realms</strong> if you want to preserve them.</li>
+<li class="">After 2026-07-30, the shared infrastructure will be shut down and its data permanently deleted.</li>
+</ul>
+<p>To migrate, create a Starter (or larger) cluster from the dashboard, export your realm config from the shared instance, and import it into your new cluster. If you'd like a hand with the steps, our team is happy to walk through it with you.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="were-here-to-help">We're here to help<a href="https://phasetwo.io/blog/starter-tier-launch/#were-here-to-help" class="hash-link" aria-label="Direct link to We're here to help" title="Direct link to We're here to help" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>Technical or migration questions</strong> — email <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</li>
+<li class=""><strong>Pricing, upgrade paths, or help picking the right tier</strong> — email <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a>.</li>
+</ul>
+<p>Whichever way you contact us, the actual humans who built and operate the infrastructure are the ones writing back.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="thank-you">Thank you<a href="https://phasetwo.io/blog/starter-tier-launch/#thank-you" class="hash-link" aria-label="Direct link to Thank you" title="Direct link to Thank you" translate="no">​</a></h2>
+<p>If you've used Phase Two — free shared realm or dedicated cluster — you're part of the reason we're able to launch this tier today. We're grateful you picked us for your Keycloak hosting, and we're going to keep working to make the platform more reliable, more affordable, and more useful for what you're building.</p>
+<p>If we've helped, we'd love a <a href="https://github.com/p2-inc" target="_blank" rel="noopener noreferrer" class="">⭐ on GitHub</a> or a follow on <a href="https://www.linkedin.com/company/phase-two-tech" target="_blank" rel="noopener noreferrer" class="">LinkedIn</a>. It genuinely matters.</p>
+<p>— The Phase Two Team</p>]]></content:encoded>
+            <author>support@phasetwo.io (Phase Two)</author>
+            <category>release</category>
+            <category>starter</category>
+            <category>pricing</category>
+            <category>keycloak</category>
+            <category>phase_two</category>
+            <category>dedicated</category>
+        </item>
         <item>
             <title><![CDATA[Migrating from WorkOS to Keycloak: A Practical Walkthrough]]></title>
             <link>https://phasetwo.io/blog/workos-keycloak-migration/</link>
@@ -1170,40 +1235,6 @@ own domain, you can increase user confidence and reduce the likelihood of phishi
             <category>open_source</category>
             <category>dashboard</category>
             <category>manage</category>
-        </item>
-        <item>
-            <title><![CDATA[Phase Two Achieves SOC 2 Type 1 Compliance]]></title>
-            <link>https://phasetwo.io/blog/soc-2-type-1-compliance/</link>
-            <guid>https://phasetwo.io/blog/soc-2-type-1-compliance/</guid>
-            <pubDate>Thu, 19 Jun 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[We are excited to announce that Phase Two has achieved SOC 2 Type 1 compliance! This milestone demonstrates our ongoing commitment to security, availability, and the protection of our customers’ data.]]></description>
-            <content:encoded><![CDATA[<p>We are excited to announce that Phase Two has achieved SOC 2 Type 1 compliance! This milestone demonstrates our ongoing commitment to security, availability, and the protection of our customers’ data.</p>
-<p>Learn more at <a href="https://trust.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">trust.phasetwo.io</a>.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-is-soc-2-type-1-compliance">What is SOC 2 Type 1 Compliance?<a href="https://phasetwo.io/blog/soc-2-type-1-compliance/#what-is-soc-2-type-1-compliance" class="hash-link" aria-label="Direct link to What is SOC 2 Type 1 Compliance?" title="Direct link to What is SOC 2 Type 1 Compliance?" translate="no">​</a></h2>
-<p>SOC 2 (System and Organization Controls 2) is an industry-standard framework for managing and securing customer data based on five trust service criteria: security, availability, processing integrity, confidentiality, and privacy. Type 1 compliance verifies that we have the right controls and processes in place as of a specific date.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="why-is-soc-2-compliance-important">Why is SOC 2 Compliance Important?<a href="https://phasetwo.io/blog/soc-2-type-1-compliance/#why-is-soc-2-compliance-important" class="hash-link" aria-label="Direct link to Why is SOC 2 Compliance Important?" title="Direct link to Why is SOC 2 Compliance Important?" translate="no">​</a></h2>
-<ul>
-<li class=""><strong>Independent Validation:</strong> SOC 2 compliance provides third-party assurance that our security practices meet rigorous industry standards.</li>
-<li class=""><strong>Customer Trust:</strong> Our customers can be confident that their data is handled securely and responsibly.</li>
-<li class=""><strong>Risk Mitigation:</strong> Strong controls help reduce the risk of data breaches and operational disruptions.</li>
-<li class=""><strong>Competitive Advantage:</strong> SOC 2 compliance sets us apart as a trusted provider in the identity and access management space.</li>
-</ul>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="whats-next">What’s Next?<a href="https://phasetwo.io/blog/soc-2-type-1-compliance/#whats-next" class="hash-link" aria-label="Direct link to What’s Next?" title="Direct link to What’s Next?" translate="no">​</a></h2>
-<p>We are already working toward SOC 2 Type 2 compliance, which evaluates the operational effectiveness of our controls over time. We expect to achieve Type 2 compliance within the next 90 days (mandatory audit period).</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-does-this-mean-for-our-customers">What Does This Mean for Our Customers?<a href="https://phasetwo.io/blog/soc-2-type-1-compliance/#what-does-this-mean-for-our-customers" class="hash-link" aria-label="Direct link to What Does This Mean for Our Customers?" title="Direct link to What Does This Mean for Our Customers?" translate="no">​</a></h2>
-<ul>
-<li class=""><strong>Peace of Mind:</strong> You can trust that your data is protected by robust, independently-audited controls.</li>
-<li class=""><strong>Transparency:</strong> We are committed to maintaining high standards and keeping you informed about our security posture.</li>
-<li class=""><strong>Continuous Improvement:</strong> Achieving and maintaining SOC 2 compliance is part of our ongoing dedication to security and operational excellence.</li>
-</ul>
-<p>Phase Two's <a class="" href="https://phasetwo.io/hosting/">hosting</a> product has continued to attract customers in many different industries from Healthcare, CDN and Security, Grocers, and more. As part of our commitment to growth, SOC 2 is a big step in being able to adhere to standards that are evaluated by third parties.</p>
-<p>Thank you for trusting Phase Two with your business. We look forward to continuing to serve you with the highest standards of security and reliability.</p>
-<p>If you would like to know more about our services and products, please email ✉️ <a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a>.</p>]]></content:encoded>
-            <author>support@phasetwo.io (Phase Two)</author>
-            <category>phase_two</category>
-            <category>security</category>
-            <category>hosting</category>
-            <category>soc-2</category>
         </item>
     </channel>
 </rss>
