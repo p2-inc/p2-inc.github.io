@@ -77,6 +77,61 @@
         <category label="dedicated" term="dedicated"/>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Observability for Keycloak, with Zero Setup]]></title>
+        <id>https://phasetwo.io/blog/observability-launch/</id>
+        <link href="https://phasetwo.io/blog/observability-launch/"/>
+        <updated>2026-06-22T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Phase Two Observability is here. View requests, event data, and live logs for your dedicated Keycloak cluster with zero setup — built right into the dashboard.]]></summary>
+        <content type="html"><![CDATA[<p>Today we're launching <strong>Observability</strong> for dedicated Keycloak clusters — built directly into the Phase Two dashboard with <strong>zero setup</strong>. Requests, event data, and live logs are all there the moment your cluster is running. No agents to install, no log shippers to configure, no Prometheus, Grafana, or Loki stack to stand up and maintain.</p>
+<p>This is the feature we're most excited about this year, because of what it changes about getting Keycloak into production. Standing up the observability layer around a Keycloak cluster — metrics pipelines, log aggregation, dashboards, alerting — is the kind of work that normally takes a devops team <strong>weeks to months</strong>. With Phase Two, it's already done. Getting up and running on a fully observable Keycloak cluster is now a matter of <strong>minutes</strong>.</p>
+<div class="theme-admonition theme-admonition-info admonition_Y66Y alert alert--info"><div class="admonitionHeading_Feou"><span class="admonitionIcon_RBEH"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_oUgd"><p><strong>Available for Dedicated Clusters</strong>
+Observability is included with all Phase Two <strong>dedicated cluster</strong> plans. Open the <strong>Metrics</strong> or <strong>Logs</strong> section on your cluster in the <a href="https://dash.phasetwo.io/clusters" target="_blank" rel="noopener noreferrer" class="">self-service dashboard</a> to get started.</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="see-your-whole-system-at-a-glance">See your whole system at a glance<a href="https://phasetwo.io/blog/observability-launch/#see-your-whole-system-at-a-glance" class="hash-link" aria-label="Direct link to See your whole system at a glance" title="Direct link to See your whole system at a glance" translate="no">​</a></h2>
+<p>Start with the big picture: <em>understanding what your cluster is doing</em>, at a glance, without building a single chart yourself.</p>
+<p><strong>Event Metrics</strong> chart Keycloak authentication and admin activity over any time range: user events by type, successful and failed logins, active users per day, new registrations, password resets, MFA enrollment, and login-error reasons.</p>
+<figure><img src="https://phasetwo.io/docs/observability/user-events.png" alt="Event Metrics — user events by type charted over time"><figcaption>Event Metrics: authentication and admin activity, derived from Keycloak events.</figcaption></figure>
+<p><strong>Request Metrics</strong> chart the HTTP traffic and performance of the cluster: requests by endpoint type and status class, error rate, cache hit ratio, latency and TTFB percentiles (p50 / p95 / p99), bytes served, top endpoints, and top user agents.</p>
+<figure><img src="https://phasetwo.io/docs/observability/requests.png" alt="Request Metrics — requests by endpoint type charted over time"><figcaption>Request Metrics: HTTP traffic, errors, caching, and latency for the cluster.</figcaption></figure>
+<p>Spot an anomaly in a chart, then drop straight into the logs to find the exact requests and events behind it. The metrics tell you <em>something changed</em>; the logs tell you <em>exactly what</em>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="debugging-that-takes-minutes-not-days">Debugging that takes minutes, not days<a href="https://phasetwo.io/blog/observability-launch/#debugging-that-takes-minutes-not-days" class="hash-link" aria-label="Direct link to Debugging that takes minutes, not days" title="Direct link to Debugging that takes minutes, not days" translate="no">​</a></h2>
+<p>When something goes wrong with an authentication flow — a login that fails intermittently, a theme that won't load, a token error that only some users hit — the slowest part has always been <em>seeing what actually happened</em>. Traditionally that meant SSH-ing into nodes, grepping through container logs, or waiting for someone with cluster access to pull the right files.</p>
+<p>Phase Two Observability collapses that loop. Open the <strong>Logs</strong> section, filter to the realm and time window, and watch the relevant lines stream in live.</p>
+<figure><img src="https://phasetwo.io/docs/dashboard/cluster-observability-stream-logs-2.png" alt="Phase Two Dash — live Cluster Logs streaming with filters for time range, realm, level, and search"><figcaption>Stream and inspect cluster logs live — filter by time range, realm, and level, then click any line for the full structured payload.</figcaption></figure>
+<p>The streaming view gives you everything you need to chase down an issue without leaving the browser:</p>
+<ul>
+<li class=""><strong>Live streaming</strong> with auto-refresh, so new lines appear as they happen</li>
+<li class=""><strong>Realm and level filters</strong> (<code>INFO</code>, <code>WARN</code>, <code>ERROR</code>, <code>DEBUG</code>, <code>TRACE</code>, <code>FATAL</code>)</li>
+<li class=""><strong>LogQL-style search</strong> — <code>|=</code> to match, <code>!=</code> to exclude, <code>|~</code> for regex. For example, <code>|= "LOGIN_ERROR" != "admin-cli"</code> finds login failures while filtering out a known source, and <code>|= "NullPointerException"</code> surfaces Java exception lines instantly.</li>
+<li class=""><strong>Click into any line</strong> to open the full payload, logger name, and stack trace</li>
+</ul>
+<p>What used to be a multi-hour, multi-person investigation becomes a few clicks.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="whats-included">What's included<a href="https://phasetwo.io/blog/observability-launch/#whats-included" class="hash-link" aria-label="Direct link to What's included" title="Direct link to What's included" translate="no">​</a></h2>
+<p>Observability is split into two sections in the dashboard, both fully time-range and realm filterable, with all timestamps in <strong>UTC</strong>:</p>
+<ul>
+<li class=""><strong>Metrics</strong> — <a href="https://phasetwo.io/docs/self-service/metrics/#event-metrics" target="_blank" rel="noopener noreferrer" class="">Event Metrics</a> and <a href="https://phasetwo.io/docs/self-service/metrics/#request-metrics" target="_blank" rel="noopener noreferrer" class="">Request Metrics</a>: aggregated, charted views of authentication activity and HTTP traffic.</li>
+<li class=""><strong>Logs</strong> — <a href="https://phasetwo.io/docs/self-service/logs/#cluster-logs" target="_blank" rel="noopener noreferrer" class="">Cluster Logs</a> (live streaming), <a href="https://phasetwo.io/docs/self-service/logs/#event-logs" target="_blank" rel="noopener noreferrer" class="">Event Logs</a>, <a href="https://phasetwo.io/docs/self-service/logs/#request-logs" target="_blank" rel="noopener noreferrer" class="">Request Logs</a>, and <a href="https://phasetwo.io/docs/self-service/logs/#download-logs" target="_blank" rel="noopener noreferrer" class="">Download Logs</a> for retained files you can pull for offline review, auditing, or support cases.</li>
+</ul>
+<p>This is the full realization of the observability work we <a href="https://phasetwo.io/blog/cluster-observability-and-logs/" target="_blank" rel="noopener noreferrer" class="">previewed back in February</a>, which started with log downloads. Live streaming, structured event and request views, and the metrics charts are all here now.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="why-this-matters">Why this matters<a href="https://phasetwo.io/blog/observability-launch/#why-this-matters" class="hash-link" aria-label="Direct link to Why this matters" title="Direct link to Why this matters" translate="no">​</a></h2>
+<p>Running Keycloak yourself means running everything around it too — and the observability stack is one of the heaviest parts of that "everything." Phase Two gives you that layer for free, built in, from the moment your cluster comes up. Your team spends its time shipping authentication features and resolving issues, not building and babysitting monitoring infrastructure.</p>
+<p>Zero setup. Requests, events, and logs in one place. Debugging in minutes. A production-ready, observable Keycloak cluster in the time it takes to read this post.</p>
+<hr>
+<p>Ready to try it? Log in to the <a href="https://dash.phasetwo.io/clusters" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and open the <strong>Metrics</strong> and <strong>Logs</strong> sections on your cluster. Learn more in the <a href="https://phasetwo.io/docs/self-service/observability/" target="_blank" rel="noopener noreferrer" class="">Observability documentation</a>. Questions? Reach us at <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content>
+        <author>
+            <name>Phase Two</name>
+            <email>support@phasetwo.io</email>
+            <uri>https://github.com/p2-inc</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="hosting" term="hosting"/>
+        <category label="self-service" term="self-service"/>
+        <category label="observability" term="observability"/>
+        <category label="metrics" term="metrics"/>
+        <category label="logs" term="logs"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="dedicated-clusters" term="dedicated-clusters"/>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Migrating from WorkOS to Keycloak: A Practical Walkthrough]]></title>
         <id>https://phasetwo.io/blog/workos-keycloak-migration/</id>
         <link href="https://phasetwo.io/blog/workos-keycloak-migration/"/>
@@ -1273,46 +1328,5 @@ own domain, you can increase user confidence and reduce the likelihood of phishi
         <category label="admin_events" term="admin_events"/>
         <category label="database" term="database"/>
         <category label="performance" term="performance"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Phase Two Launches New Dashboard for Keycloak Resource Management]]></title>
-        <id>https://phasetwo.io/blog/dashboard-launch/</id>
-        <link href="https://phasetwo.io/blog/dashboard-launch/"/>
-        <updated>2025-07-24T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[As of today, we’re thrilled to announce the launch of the new Phase Two Dashboard — a fully redesigned application for managing your Keycloak resources. This update goes far beyond a fresh coat of paint. We've rebuilt the experience from the ground up, introducing new capabilities, streamlined workflows, and deep infrastructure enhancements based directly on customer feedback. We've learned that the version of Keycloak we provide, enhanced by the Phase Two library of extensions, solves for the 95% Saas use-case and this release will allow our users to better take advantage of those features. Some features are available today and others will be made available in the next few weeks.]]></summary>
-        <content type="html"><![CDATA[<p>As of today, we’re thrilled to announce the launch of the <strong>new Phase Two Dashboard</strong> — a fully redesigned application for managing your Keycloak resources. This update goes far beyond a fresh coat of paint. We've rebuilt the experience from the ground up, introducing new capabilities, streamlined workflows, and deep infrastructure enhancements based directly on customer feedback. We've learned that the version of Keycloak we provide, enhanced by the Phase Two library of <a href="https://github.com/p2-inc" target="_blank" rel="noopener noreferrer" class="">extensions</a>, solves for the 95% Saas use-case and this release will allow our users to better take advantage of those features. Some features are available today and others will be made available in the next few weeks.</p>
-<p>👉 <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Try it now</a></p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="a-ground-up-redesign">A Ground-Up Redesign<a href="https://phasetwo.io/blog/dashboard-launch/#a-ground-up-redesign" class="hash-link" aria-label="Direct link to A Ground-Up Redesign" title="Direct link to A Ground-Up Redesign" translate="no">​</a></h2>
-<p>This isn’t just a UI refresh — it's a completely <strong>rearchitected application</strong>. We’ve rethought every aspect of how users interact with Phase Two services to make managing Keycloak more intuitive, responsive, and capable. Whether you’re deploying your first realm, spinning up your first cluster or scaling to serve thousands of users, the new dashboard is built to support you and your needs.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="shaped-by-real-world-use-cases">Shaped by Real-World Use Cases<a href="https://phasetwo.io/blog/dashboard-launch/#shaped-by-real-world-use-cases" class="hash-link" aria-label="Direct link to Shaped by Real-World Use Cases" title="Direct link to Shaped by Real-World Use Cases" translate="no">​</a></h2>
-<p>The first version of our dashboard got the job done, but it was intentionally minimal. Since then, we’ve worked closely with our customers to understand what matters most. From enterprise SSO setups to custom themes and extensions — this release is a direct result of your input.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="a-powerful-new-ui">A Powerful New UI<a href="https://phasetwo.io/blog/dashboard-launch/#a-powerful-new-ui" class="hash-link" aria-label="Direct link to A Powerful New UI" title="Direct link to A Powerful New UI" translate="no">​</a></h2>
-<p>We’ve introduced a new, modern interface that’s faster, easier to navigate, and more scalable for the workflows you rely on. The redesigned UI improves visibility into your deployments and streamlines common tasks like adding users, managing themes, and scaling infrastructure.</p>
-<p>Plus with this new UI, Dark mode is now a reality.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="custom-themes-and-extensions-now-self-serve">Custom Themes and Extensions: Now Self-Serve<a href="https://phasetwo.io/blog/dashboard-launch/#custom-themes-and-extensions-now-self-serve" class="hash-link" aria-label="Direct link to Custom Themes and Extensions: Now Self-Serve" title="Direct link to Custom Themes and Extensions: Now Self-Serve" translate="no">​</a></h2>
-<p>Launching soon, you will be able to <strong>upload and deploy custom Keycloak themes and extensions</strong> directly from the dashboard — no support ticket required. This makes it faster than ever to personalize your deployment or roll out new functionality.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="built-in-observability-and-monitoring">Built-In Observability and Monitoring<a href="https://phasetwo.io/blog/dashboard-launch/#built-in-observability-and-monitoring" class="hash-link" aria-label="Direct link to Built-In Observability and Monitoring" title="Direct link to Built-In Observability and Monitoring" translate="no">​</a></h2>
-<p>We’ve expanded observability features to give you deeper insights into your deployments. Track uptime, see logs, and monitor usage directly from your dashboard to ensure smooth, reliable performance. We'll be rolling out access to this over the next couple of weeks.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="custom-domains-cnames">Custom Domains (CNAMEs)<a href="https://phasetwo.io/blog/dashboard-launch/#custom-domains-cnames" class="hash-link" aria-label="Direct link to Custom Domains (CNAMEs)" title="Direct link to Custom Domains (CNAMEs)" translate="no">​</a></h2>
-<p>You can now <strong>add and manage your own custom domains</strong> right in the UI. Whether you're branding a login portal or separating environments, it’s never been easier to configure.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="integrated-team-management">Integrated Team Management<a href="https://phasetwo.io/blog/dashboard-launch/#integrated-team-management" class="hash-link" aria-label="Direct link to Integrated Team Management" title="Direct link to Integrated Team Management" translate="no">​</a></h2>
-<p>Invite teammates, configure roles, and connect your identity provider — all within the dashboard. Full SSO support is available for securing team access with your existing auth infrastructure.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="cluster-creation-across-regions-and-tiers">Cluster Creation Across Regions and Tiers<a href="https://phasetwo.io/blog/dashboard-launch/#cluster-creation-across-regions-and-tiers" class="hash-link" aria-label="Direct link to Cluster Creation Across Regions and Tiers" title="Direct link to Cluster Creation Across Regions and Tiers" translate="no">​</a></h2>
-<p>Create Keycloak clusters with support for different performance and availability tiers. Whether you're running a dev sandbox or a production-grade deployment, the dashboard provides you with the tools you need to do so.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="built-for-the-future">Built for the Future<a href="https://phasetwo.io/blog/dashboard-launch/#built-for-the-future" class="hash-link" aria-label="Direct link to Built for the Future" title="Direct link to Built for the Future" translate="no">​</a></h2>
-<p>This release lays the foundation for rapid iteration. We’ve made it easier than ever to add new features, so expect regular updates as we continue to grow and improve the platform.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="wed-love-your-feedback">We'd Love Your Feedback<a href="https://phasetwo.io/blog/dashboard-launch/#wed-love-your-feedback" class="hash-link" aria-label="Direct link to We'd Love Your Feedback" title="Direct link to We'd Love Your Feedback" translate="no">​</a></h2>
-<p>Your input got us here, and it’s what will keep making this platform better. Let us know what’s working and what’s not by emailing us at <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>
-<hr>
-<p><strong>Explore the new dashboard → <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">dash.phasetwo.io</a></strong></p>]]></content>
-        <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
-        </author>
-        <category label="phase_two" term="phase_two"/>
-        <category label="open_source" term="open_source"/>
-        <category label="dashboard" term="dashboard"/>
-        <category label="manage" term="manage"/>
     </entry>
 </feed>
