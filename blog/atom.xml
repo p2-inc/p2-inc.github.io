@@ -95,9 +95,8 @@
 <li class="">👉 <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Get Started with Free Managed Keycloak</a></li>
 </ul>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>GR Patil</name>
+            <uri>https://github.com/xgp</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="keycloak" term="keycloak"/>
@@ -164,9 +163,8 @@
 <p>If we've helped, we'd love a <a href="https://github.com/p2-inc" target="_blank" rel="noopener noreferrer" class="">⭐ on GitHub</a> or a follow on <a href="https://www.linkedin.com/company/phase-two-tech" target="_blank" rel="noopener noreferrer" class="">LinkedIn</a>. It genuinely matters.</p>
 <p>— The Phase Two Team</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>GR Patil</name>
+            <uri>https://github.com/xgp</uri>
         </author>
         <category label="release" term="release"/>
         <category label="starter" term="starter"/>
@@ -217,9 +215,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <hr>
 <p>Ready to try it? Log in to the <a href="https://dash.phasetwo.io/clusters" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and open the <strong>Metrics</strong> and <strong>Logs</strong> sections on your cluster. Learn more in the <a href="https://phasetwo.io/docs/self-service/observability/" target="_blank" rel="noopener noreferrer" class="">Observability documentation</a>. Questions? Reach us at <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="hosting" term="hosting"/>
@@ -297,9 +294,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <p>The migrator we just walked through is, in that sense, the smallest part of the story. It's the bridge that lets a team that originally chose WorkOS for time-to-market cross over to a platform that doesn't tax that decision forever.</p>
 <p>If you've got a WorkOS migration on your roadmap and would like a hand, <a href="https://phasetwo.io/contact/" target="_blank" rel="noopener noreferrer" class="">reach out</a> — we've now done this end-to-end on a real WorkOS Sandbox tenant and the tooling is open source. We'd be happy to walk you through it.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>GR Patil</name>
+            <uri>https://github.com/xgp</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="keycloak" term="keycloak"/>
@@ -350,9 +346,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <p>If you want to skip the self-host setup, you can try this on a Starter cluster in the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dashboard</a>, free for 30 days — the same Organization SCIM capability is available there.</p>
 <p>Feedback, bug reports, and use-case stories are all welcome on the <a href="https://github.com/p2-inc/keycloak-orgs/issues" target="_blank" rel="noopener noreferrer" class="">keycloak-orgs issue tracker</a> or directly to <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>. The faster we hear from real integrations, the faster we get this to stable.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>GR Patil</name>
+            <uri>https://github.com/xgp</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="keycloak" term="keycloak"/>
@@ -467,9 +462,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="need-help-customizing-your-keycloak-experience">Need help customizing your Keycloak experience?<a href="https://phasetwo.io/blog/new-keycloak-themes/#need-help-customizing-your-keycloak-experience" class="hash-link" aria-label="Direct link to Need help customizing your Keycloak experience?" title="Direct link to Need help customizing your Keycloak experience?" translate="no">​</a></h2>
 <p>Whether you're trying to match your brand exactly, integrate a custom identity flow, or just figure out where to start—we're happy to help. <a href="https://phasetwo.io/contact" target="_blank" rel="noopener noreferrer" class="">Reach out to us</a> and we'll point you in the right direction.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="keycloak" term="keycloak"/>
@@ -741,9 +735,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <p>If you like this pattern but do not want to spend time standing up and operating Keycloak, Phase Two's hosted Keycloak offering is the fastest way to get there. You get a managed realm, a production-ready control plane, and a much shorter path from prototype to deployed MCP authorization server.</p>
 <p>You can start with a Starter cluster in the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dashboard</a> — free for 30 days — for testing, and when you are ready for a hosted setup with support, upgrades, and operational help, Phase Two's managed Keycloak offering is the easiest way to run an MCP authorization server without owning the infrastructure yourself.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>GR Patil</name>
+            <uri>https://github.com/xgp</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="keycloak" term="keycloak"/>
@@ -786,9 +779,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <p>Phase Two’s <strong><a class="" href="https://phasetwo.io/hosting/">hosting</a></strong> product continues to support organizations across healthcare, security, retail, public sector, and more. Milestones like ISO/IEC 27001 certification help us meet the expectations of customers who need strong identity infrastructure backed by strong operational discipline.</p>
 <p>Thank you for trusting Phase Two with your business. If you would like to learn more, please visit <strong><a href="https://trust.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">trust.phasetwo.io</a></strong> or email <strong><a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a></strong>.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="security" term="security"/>
@@ -863,9 +855,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <li class="">Contact us for additional implementation details and architecture guidance: <a href="https://phasetwo.io/contact" target="_blank" rel="noopener noreferrer" class="">https://phasetwo.io/contact</a></li>
 </ol>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="keycloak" term="keycloak"/>
@@ -887,9 +878,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <p>Learn more in the <a href="https://phasetwo.io/docs/self-service/observability/" target="_blank" rel="noopener noreferrer" class="">Observability and Logs documentation</a>.</p>
 <p>Ready to try it? Log in to the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and view logs for your cluster. This feature is included with all <strong>dedicated cluster plans</strong>. Questions? Reach us at <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="hosting" term="hosting"/>
@@ -911,9 +901,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <p>You can read the full post on the Cockroach Labs blog here:
 <a href="https://www.cockroachlabs.com/blog/deploying-keycloak-on-cockroachdb-with-phase-two/" target="_blank" rel="noopener noreferrer" class=""><strong>Deploying Keycloak on CockroachDB with Phase Two: A Complete Guide</strong></a></p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="hosting" term="hosting"/>
@@ -942,9 +931,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <hr>
 <p>Want to learn more or have feedback? Log in to the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and try adding your IP restriction now. This feature is included with all <strong>dedicated cluster plans</strong>. For any questions or concerns, please reach out to <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="hosting" term="hosting"/>
@@ -968,9 +956,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <hr>
 <p>Want to learn more or have feedback? Log in to the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and try adding your first environment variable. This feature is included with all <strong>dedicated cluster plans</strong>. For any questions or concerns, please reach out to <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="hosting" term="hosting"/>
@@ -986,9 +973,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
         <content type="html"><![CDATA[<p>Phase Two has recently <a href="https://auth.it/blog/welcome" target="_blank" rel="noopener noreferrer" class="">launched</a> <a href="https://auth.it/" target="_blank" rel="noopener noreferrer" class="">Auth.it</a>, a modern authentication platform built for developers who want the power of Keycloak with the simplicity, polish, and developer experience of modern identity providers like WorkOS, Stytch, and Clerk — all at a fraction of the cost.</p>
 <p>Last Friday, Niko Köbler (aka "Mr. Keycloak"), invited us to demonstrate Auth.it and explain how we built it on his livestream, <a href="https://www.n-k.de/2025/12/kfc-keycloak-friday-chat-xmas-edition-authit-phase-two.html" target="_blank" rel="noopener noreferrer" class="">Keycloak Friday Chat</a>. If you're interested in an overview of the new platform, and would like to know the details of how it was implemented as a set of Keycloak extensions, please <a href="https://www.youtube.com/watch?v=a2thzEs35ws" target="_blank" rel="noopener noreferrer" class="">watch the recording of the livestream</a>.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>GR Patil</name>
+            <uri>https://github.com/xgp</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="hosting" term="hosting"/>
@@ -1082,9 +1068,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <hr>
 <p>Want to learn more? Log in to the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and try uploading your first resource today. This feature is included with all <strong>dedicated cluster plans</strong>. For questions, reach out to <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="hosting" term="hosting"/>
@@ -1136,9 +1121,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <hr>
 <p>Want to learn more? Log in to the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and try uploading your first resource today. This feature is included with all <strong>dedicated cluster plans</strong>. For any questions or concerns, please reach out to <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="hosting" term="hosting"/>
@@ -1192,9 +1176,8 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
 <p><strong>Need the report or have questions?</strong> Contact <strong><a href="mailto:sales@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">sales@phasetwo.io</a></strong> or visit <strong><a href="https://trust.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">trust.phasetwo.io</a></strong>.</p>
 </blockquote>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="security" term="security"/>
@@ -1223,9 +1206,8 @@ own domain, you can increase user confidence and reduce the likelihood of phishi
 <h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="whats-next">What's next?<a href="https://phasetwo.io/blog/custom-domains/#whats-next" class="hash-link" aria-label="Direct link to What's next?" title="Direct link to What's next?" translate="no">​</a></h2>
 <p>Phase Two has many exciting features planned for the future. Stay tuned for more updates and improvements to our platform.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="keycloak" term="keycloak"/>
@@ -1278,9 +1260,8 @@ own domain, you can increase user confidence and reduce the likelihood of phishi
 <h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="summary">Summary<a href="https://phasetwo.io/blog/shadcn-keycloak-theme/#summary" class="hash-link" aria-label="Direct link to Summary" title="Direct link to Summary" translate="no">​</a></h2>
 <p>We look forward to seeing how the community uses this starter to build custom themes for Keycloak. If you have any questions or feedback, please feel free to file an issue on the <a href="https://github.com/p2-inc/keycloakify-starter-shadcn" target="_blank" rel="noopener noreferrer" class="">GitHub repository</a> or <a class="" href="https://phasetwo.io/contact/">reach out</a>.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="keycloak" term="keycloak"/>
@@ -1349,9 +1330,8 @@ own domain, you can increase user confidence and reduce the likelihood of phishi
 <h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="does-phase-two-offer-support-for-running-keycloak-on-cockroachdb">Does Phase Two offer support for running Keycloak on CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#does-phase-two-offer-support-for-running-keycloak-on-cockroachdb" class="hash-link" aria-label="Direct link to Does Phase Two offer support for running Keycloak on CockroachDB?" title="Direct link to Does Phase Two offer support for running Keycloak on CockroachDB?" translate="no">​</a></h3>
 <p>Yes. As official CockroachDB partners, Phase Two offers enterprise-grade support, consulting, and managed services for Keycloak + CockroachDB.</p>]]></content>
         <author>
-            <name>Phase Two</name>
-            <email>support@phasetwo.io</email>
-            <uri>https://github.com/p2-inc</uri>
+            <name>Jeff Patzer</name>
+            <uri>https://github.com/pnzrr</uri>
         </author>
         <category label="phase_two" term="phase_two"/>
         <category label="keycloak" term="keycloak"/>
