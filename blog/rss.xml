@@ -114,7 +114,8 @@ usually why — and the fix is a narrower URI, not a workaround.</p>
 <hr>
 <p>Running Keycloak in production means owning these details across every environment and every
 upgrade. <a class="" href="https://phasetwo.io/hosting/dedicated-clusters/">Phase Two</a> runs managed Keycloak so you don't have to
-— including the upgrades that change wildcard behaviour.</p>]]></content:encoded>
+— including the upgrades that change wildcard behaviour. Or work through the
+<a class="" href="https://phasetwo.io/tutorials/">Keycloak tutorials</a> if you'd rather learn it yourself.</p>]]></content:encoded>
             <category>keycloak</category>
             <category>troubleshooting</category>
             <category>oidc</category>
