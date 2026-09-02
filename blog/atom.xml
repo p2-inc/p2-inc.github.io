@@ -2,11 +2,128 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
-    <updated>2026-07-06T00:00:00.000Z</updated>
+    <updated>2026-09-02T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.svg</icon>
+    <entry>
+        <title type="html"><![CDATA[Keycloak "Invalid parameter: redirect_uri" — Every Cause and Fix]]></title>
+        <id>https://phasetwo.io/blog/keycloak-invalid-redirect-uri/</id>
+        <link href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/"/>
+        <updated>2026-09-02T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Why Keycloak rejects your redirect_uri, with a tested matching table for Keycloak 26 — including the query-string rule that breaks most OAuth callbacks.]]></summary>
+        <content type="html"><![CDATA[<p>You clicked "Log in", Keycloak showed you <strong>"We are sorry… Invalid parameter: redirect_uri"</strong>,
+and no amount of staring at the admin console explains why.</p>
+<p>The short answer: the <code>redirect_uri</code> your application sent does not match, <strong>character for
+character after wildcard expansion</strong>, any entry in that client's <em>Valid redirect URIs</em>. The
+long answer is that Keycloak's matching rules are stricter and stranger than almost everyone
+assumes — in particular, <strong>it will reject any <code>redirect_uri</code> containing a query string, no
+matter what you registered</strong>.</p>
+<p>Everything below was tested against Keycloak 26.7.3.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="first-stop-guessing-read-the-server-log">First: stop guessing, read the server log<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#first-stop-guessing-read-the-server-log" class="hash-link" aria-label="Direct link to First: stop guessing, read the server log" title="Direct link to First: stop guessing, read the server log" translate="no">​</a></h2>
+<p>The browser deliberately shows you nothing useful. Keycloak will not echo the rejected URI
+back to the page, because doing so would make it an open redirector and a phishing tool.</p>
+<p>The server log has no such constraint, and it tells you exactly what was sent:</p>
+<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">WARN [org.keycloak.events] type="LOGIN_ERROR", realmName="demo", clientId="c-multi",</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  error="invalid_redirect_uri", redirect_uri="http://localhost:3000/cb?tenant=acme"</span><br></div></code></pre></div></div>
+<div class="language-bash codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-bash codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">docker logs &lt;container&gt; 2&gt;&amp;1 | grep invalid_redirect_uri</span><br></div></code></pre></div></div>
+<p>Put the <code>redirect_uri="..."</code> value next to your registered list and the mismatch is usually
+obvious in about five seconds. <strong>This one step solves most cases</strong>, and almost nobody knows
+the log line exists.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-matching-rules-tested">The matching rules, tested<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#the-matching-rules-tested" class="hash-link" aria-label="Direct link to The matching rules, tested" title="Direct link to The matching rules, tested" translate="no">​</a></h2>
+<p>Here is what Keycloak 26.7.3 actually does. Every row was run against a live server.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="exact-registration--httplocalhost3000callback">Exact registration — <code>http://localhost:3000/callback</code><a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#exact-registration--httplocalhost3000callback" class="hash-link" aria-label="Direct link to exact-registration--httplocalhost3000callback" title="Direct link to exact-registration--httplocalhost3000callback" translate="no">​</a></h3>
+<table><thead><tr><th>Sent <code>redirect_uri</code></th><th>Result</th></tr></thead><tbody><tr><td><code>http://localhost:3000/callback</code></td><td>✅ accepted</td></tr><tr><td><code>http://localhost:3000/callback/</code></td><td>❌ rejected — trailing slash</td></tr><tr><td><code>http://localhost:3000/Callback</code></td><td>❌ rejected — path is case-sensitive</td></tr><tr><td><code>http://localhost:3000/callback?x=1</code></td><td>❌ rejected — query string</td></tr><tr><td><code>http://localhost:3000/callback#frag</code></td><td>❌ rejected</td></tr><tr><td><code>http://localhost:3000/other</code></td><td>❌ rejected</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="wildcard-registration--httplocalhost3000">Wildcard registration — <code>http://localhost:3000/*</code><a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#wildcard-registration--httplocalhost3000" class="hash-link" aria-label="Direct link to wildcard-registration--httplocalhost3000" title="Direct link to wildcard-registration--httplocalhost3000" translate="no">​</a></h3>
+<table><thead><tr><th>Sent <code>redirect_uri</code></th><th>Result</th></tr></thead><tbody><tr><td><code>http://localhost:3000/callback</code></td><td>✅ accepted</td></tr><tr><td><code>http://localhost:3000/</code></td><td>✅ accepted</td></tr><tr><td><code>http://localhost:3000</code></td><td>✅ accepted</td></tr><tr><td><code>http://localhost:3000/a/b/c</code></td><td>✅ accepted — <code>*</code> crosses path segments</td></tr><tr><td><code>http://localhost:3000/cb?code=1</code></td><td>❌ <strong>rejected — query string</strong></td></tr><tr><td><code>https://localhost:3000/callback</code></td><td>❌ rejected — scheme must match</td></tr><tr><td><code>http://localhost:3001/callback</code></td><td>❌ rejected — port must match</td></tr><tr><td><code>http://evil.com/?x=http://localhost:3000/</code></td><td>❌ rejected</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="trailing-slashes-are-significant-in-both-directions">Trailing slashes are significant in <em>both</em> directions<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#trailing-slashes-are-significant-in-both-directions" class="hash-link" aria-label="Direct link to trailing-slashes-are-significant-in-both-directions" title="Direct link to trailing-slashes-are-significant-in-both-directions" translate="no">​</a></h3>
+<table><thead><tr><th>Registered</th><th>Sent</th><th>Result</th></tr></thead><tbody><tr><td><code>http://localhost:3000</code></td><td><code>http://localhost:3000</code></td><td>✅</td></tr><tr><td><code>http://localhost:3000</code></td><td><code>http://localhost:3000/</code></td><td>❌</td></tr><tr><td><code>http://localhost:3000/</code></td><td><code>http://localhost:3000</code></td><td>❌</td></tr><tr><td><code>http://localhost:3000/</code></td><td><code>http://localhost:3000/</code></td><td>✅</td></tr></tbody></table>
+<p><code>http://localhost:3000</code> and <code>http://localhost:3000/</code> are <strong>different registrations</strong>. If you
+don't know which one your library sends, register both.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="-is-a-substring-wildcard-not-a-path-wildcard"><code>*</code> is a substring wildcard, not a path wildcard<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#-is-a-substring-wildcard-not-a-path-wildcard" class="hash-link" aria-label="Direct link to -is-a-substring-wildcard-not-a-path-wildcard" title="Direct link to -is-a-substring-wildcard-not-a-path-wildcard" translate="no">​</a></h3>
+<p>Registered <code>http://localhost:3000/cb*</code>:</p>
+<table><thead><tr><th>Sent</th><th>Result</th></tr></thead><tbody><tr><td><code>http://localhost:3000/cb</code></td><td>✅</td></tr><tr><td><code>http://localhost:3000/cbXYZ</code></td><td>✅ — matches mid-segment</td></tr><tr><td><code>http://localhost:3000/cb/deep</code></td><td>✅ — crosses the <code>/</code> boundary</td></tr><tr><td><code>http://localhost:3000/cb?code=1</code></td><td>❌ — still blocked by the query rule</td></tr></tbody></table>
+<p>And registered <code>http://localhost:3000/a/*</code> accepts <code>http://localhost:3000/a</code> — the wildcard
+is generous at the prefix boundary but stops dead at a <code>?</code>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-query-string-rule-which-catches-nearly-everyone">The query-string rule, which catches nearly everyone<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#the-query-string-rule-which-catches-nearly-everyone" class="hash-link" aria-label="Direct link to The query-string rule, which catches nearly everyone" title="Direct link to The query-string rule, which catches nearly everyone" translate="no">​</a></h2>
+<p><strong>Keycloak 26.7.3 rejects any <code>redirect_uri</code> containing a <code>?</code>, regardless of the registered
+pattern.</strong> We tried to register our way around it and could not:</p>
+<table><thead><tr><th>Registered</th><th>Sent</th><th>Result</th></tr></thead><tbody><tr><td><code>http://localhost:3000/*</code></td><td><code>http://localhost:3000/cb?tenant=acme</code></td><td>❌</td></tr><tr><td><code>http://localhost:3000/cb*</code></td><td><code>http://localhost:3000/cb?tenant=acme</code></td><td>❌</td></tr><tr><td><code>http://localhost:3000/cb?*</code></td><td><code>http://localhost:3000/cb?tenant=acme</code></td><td>❌</td></tr></tbody></table>
+<p>If your app is sending its own query parameters on the callback URL — a tenant hint, a
+"return to this page" pointer, a feature flag — <strong>that is your bug</strong>, and no redirect URI
+configuration will fix it.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-to-do-instead">What to do instead<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#what-to-do-instead" class="hash-link" aria-label="Direct link to What to do instead" title="Direct link to What to do instead" translate="no">​</a></h3>
+<p>Use the <code>state</code> parameter. That is what it is for: opaque round-tripped application state,
+returned to you untouched after login, and it doubles as CSRF protection.</p>
+<div class="language-js codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-js codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// ❌ Keycloak will reject this</span><span class="token plain"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">const</span><span class="token plain"> redirectUri </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">"https://app.example.com/cb?returnTo=/reports"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// ✅ Same information, correct mechanism</span><span class="token plain"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">const</span><span class="token plain"> redirectUri </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">"https://app.example.com/cb"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">const</span><span class="token plain"> state </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token function" style="color:rgb(130, 170, 255)">btoa</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token known-class-name class-name" style="color:rgb(255, 203, 107)">JSON</span><span class="token punctuation" style="color:rgb(199, 146, 234)">.</span><span class="token method function property-access" style="color:rgb(130, 170, 255)">stringify</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"> </span><span class="token literal-property property">returnTo</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">"/reports"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token literal-property property">nonce</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> crypto</span><span class="token punctuation" style="color:rgb(199, 146, 234)">.</span><span class="token method function property-access" style="color:rgb(130, 170, 255)">randomUUID</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><br></div></code></pre></div></div>
+<p>Read <code>state</code> back in your callback handler. Every mainstream OIDC library supports this;
+most will manage <code>state</code> for you if you stop fighting them.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-other-causes-most-common-first">The other causes, most common first<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#the-other-causes-most-common-first" class="hash-link" aria-label="Direct link to The other causes, most common first" title="Direct link to The other causes, most common first" translate="no">​</a></h2>
+<p><strong>1. Trailing slash mismatch.</strong> Your library appends <code>/</code>, your registration doesn't have one.
+See the table above. Register both forms.</p>
+<p><strong>2. Wrong port in development.</strong> Vite on 5173, Next on 3000, your registration says the
+other. The port is part of the match.</p>
+<p><strong>3. <code>http</code> vs <code>https</code>.</strong> Terminating TLS at a proxy and forwarding plain HTTP inside makes
+your app build an <code>http://</code> callback while you registered <code>https://</code>. Fix the proxy headers
+(<code>X-Forwarded-Proto</code>) rather than registering the insecure URI.</p>
+<p><strong>4. The client isn't the one you think.</strong> Multiple clients, similar names, and you're
+editing the wrong one — or you're in the wrong realm entirely. The log line names the
+<code>clientId</code>; check it against what your app sends.</p>
+<p><strong>5. Configuration didn't reach the server you're testing.</strong> Realm imported into one instance,
+browser pointed at another. More common than it sounds with Docker Compose.</p>
+<p><strong>6. IdP-initiated or broker flows.</strong> The <code>redirect_uri</code> in play may be constructed by
+Keycloak's broker rather than your app, and needs registering on the <em>client</em> the broker
+finally lands on.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="verify-your-fix-without-a-browser">Verify your fix without a browser<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#verify-your-fix-without-a-browser" class="hash-link" aria-label="Direct link to Verify your fix without a browser" title="Direct link to Verify your fix without a browser" translate="no">​</a></h2>
+<p>Ask the authorization endpoint directly:</p>
+<div class="language-bash codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-bash codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">CLIENT=demo-app</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">REDIRECT=$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  "http://localhost:3000/callback")</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">curl -s "http://localhost:8080/realms/demo/protocol/openid-connect/auth\</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">?client_id=$CLIENT&amp;redirect_uri=$REDIRECT&amp;response_type=code&amp;scope=openid" \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  | grep -q "Invalid parameter" &amp;&amp; echo "REJECTED" || echo "accepted"</span><br></div></code></pre></div></div>
+<p>That is exactly how the tables above were produced. It turns a ten-minute click-and-reload
+loop into a one-second check, and it is trivial to wrap in a loop over every URI your app
+might send.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="stop-it-recurring-register-uris-as-code">Stop it recurring: register URIs as code<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#stop-it-recurring-register-uris-as-code" class="hash-link" aria-label="Direct link to Stop it recurring: register URIs as code" title="Direct link to Stop it recurring: register URIs as code" translate="no">​</a></h2>
+<p>Redirect URIs drift because they are edited by hand in a console, per environment, by
+whoever is unblocking themselves that afternoon. Put them in version control instead:</p>
+<div class="language-bash codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-bash codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">kcadm.sh update clients/$CLIENT_UUID -r demo \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  -s 'redirectUris=["https://app.example.com/callback","https://app.example.com/callback/"]' \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  -s 'webOrigins=["https://app.example.com"]'</span><br></div></code></pre></div></div>
+<p>Or with the Terraform provider, so every environment is derived from one definition rather
+than remembered.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="a-word-on-wildcards-and-security">A word on wildcards and security<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#a-word-on-wildcards-and-security" class="hash-link" aria-label="Direct link to A word on wildcards and security" title="Direct link to A word on wildcards and security" translate="no">​</a></h2>
+<p>It is tempting to end the pain with <code>*</code> or <code>https://app.example.com/*</code> and move on. Resist
+the broad version.</p>
+<p>Redirect URI validation is the control that stops an attacker turning your login endpoint
+into a credential-stealing redirector: they send a victim to a genuine Keycloak login, and
+the authorization code lands on a host they own. Every wildcard you add widens that.</p>
+<p>Practical rules:</p>
+<ul>
+<li class=""><strong>Never</strong> register a bare <code>*</code>, or a wildcard covering a whole host you don't fully control.</li>
+<li class="">Avoid wildcards on anything that serves user-generated content.</li>
+<li class="">Prefer a small list of exact URIs. You usually need two or three, not a pattern.</li>
+<li class="">Wildcards in development are fine. Wildcards in production want a reason.</li>
+</ul>
+<p>Keycloak has tightened wildcard handling over successive releases precisely because loose
+patterns were being exploited. If an upgrade broke a redirect that used to work, that is
+usually why — and the fix is a narrower URI, not a workaround.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-short-version">The short version<a href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/#the-short-version" class="hash-link" aria-label="Direct link to The short version" title="Direct link to The short version" translate="no">​</a></h2>
+<ol>
+<li class="">Read the server log for <code>error="invalid_redirect_uri"</code> — it names the exact URI.</li>
+<li class="">Compare it to the registered list, watching for trailing slashes, port, and scheme.</li>
+<li class="">If it has a <code>?</code>, that's your problem — move the data into <code>state</code>.</li>
+<li class="">Verify with <code>curl</code> against the authorization endpoint, not by clicking.</li>
+<li class="">Register the URIs as code so it doesn't drift back.</li>
+</ol>
+<hr>
+<p>Running Keycloak in production means owning these details across every environment and every
+upgrade. <a class="" href="https://phasetwo.io/hosting/dedicated-clusters/">Phase Two</a> runs managed Keycloak so you don't have to
+— including the upgrades that change wildcard behaviour.</p>]]></content>
+        <author>
+            <name>GR Patil</name>
+            <uri>https://github.com/xgp</uri>
+        </author>
+        <category label="keycloak" term="keycloak"/>
+        <category label="troubleshooting" term="troubleshooting"/>
+        <category label="oidc" term="oidc"/>
+        <category label="clients" term="clients"/>
+        <category label="security" term="security"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[How We Scaled Keycloak Event Storage with Logs, S3, and ClickHouse]]></title>
         <id>https://phasetwo.io/blog/scaling-keycloak-event-storage/</id>
@@ -1268,76 +1385,5 @@ own domain, you can increase user confidence and reduce the likelihood of phishi
         <category label="theme" term="theme"/>
         <category label="shadcn" term="shadcn"/>
         <category label="tailwind" term="tailwind"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Phase Two Recognized as Official CockroachDB Partner]]></title>
-        <id>https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/</id>
-        <link href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/"/>
-        <updated>2025-08-06T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<div]]></summary>
-        <content type="html"><![CDATA[<div style="display:flex;align-items:center;gap:10px;margin-bottom:20px"><img src="https://phasetwo.io/blog/crdb_partnership/crdb.webp" alt="CockroachDB logo" style="box-shadow:none"><span>+</span><img src="https://phasetwo.io/img/logo-phasetwo.png" style="box-shadow:none" alt="Phase Two Logo"></div>
-<p><a href="https://phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two</a> is thrilled to announce that we have been recognized as an <strong>official partner</strong> of <a href="https://www.cockroachlabs.com/partners/locator/" target="_blank" rel="noopener noreferrer" class="">CockroachDB</a>. This partnership marks a significant milestone in our commitment to providing robust, scalable, and high-performance database solutions for our the Keycloak community and our customers.</p>
-<p>Phase Two originally built our <a href="https://github.com/p2-inc?q=crdb&amp;type=all&amp;language=&amp;sort=#our-docker-images" target="_blank" rel="noopener noreferrer" class="">CockroachDB integration</a> for <a href="https://quay.io/repository/phasetwo/keycloak-crdb" target="_blank" rel="noopener noreferrer" class="">Keycloak</a> over two years ago, and since then we have been working closely with the CockroachDB team to ensure that our integration is optimized for performance and reliability. Our customers have seen significant improvements in database performance, scalability, and a overall cost savings by using CockroachDB with Keycloak.</p>
-<p>Our commitment to CockroachDB is built on years of using the <a href="https://www.cockroachlabs.com/" target="_blank" rel="noopener noreferrer" class="">Cockroach Cloud</a> to power all of our dedicated <a href="https://phasetwo.io/product/hosting" target="_blank" rel="noopener noreferrer" class="">hosting</a>.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-is-cockroachdb">What is CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#what-is-cockroachdb" class="hash-link" aria-label="Direct link to What is CockroachDB?" title="Direct link to What is CockroachDB?" translate="no">​</a></h2>
-<p><a href="https://www.cockroachlabs.com/" target="_blank" rel="noopener noreferrer" class="">CockroachDB</a> is a cloud-native, distributed SQL database designed for high availability, scalability, and resilience. It provides a single, unified database platform that can handle large volumes of data across multiple geographic locations while ensuring strong consistency and fault tolerance. CockroachDB is built on a distributed architecture that allows it to scale horizontally, making it an ideal choice for applications that require high performance and reliability. Payments systems, IAM, logistics, user accounts, and more — are powered by CockroachDB. Mission-critical applications rely on CockroachDB to deliver consistent performance and availability, scaling to meet demand and transaction heavy workloads.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="why-keycloak-and-cockroachdb">Why Keycloak and CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#why-keycloak-and-cockroachdb" class="hash-link" aria-label="Direct link to Why Keycloak and CockroachDB?" title="Direct link to Why Keycloak and CockroachDB?" translate="no">​</a></h2>
-<p>Keycloak is a powerful open-source identity and access management solution that provides authentication and authorization services for applications and services. It is designed to be flexible, extensible, and easy to use, making it a popular choice for organizations looking to implement secure user management.</p>
-<p>When combined with CockroachDB, Keycloak benefits from the following:</p>
-<ul>
-<li class=""><strong>Scalability</strong>: CockroachDB's distributed architecture allows Keycloak to scale horizontally, handling large volumes of user data and authentication requests without compromising performance.</li>
-<li class=""><strong>Heavy Transaction Support</strong>: CockroachDB is designed to handle high transaction volumes, making it suitable for Keycloak deployments support millions of users and high-frequency authentication requests.</li>
-<li class=""><strong>High Availability</strong>: CockroachDB's fault-tolerant design ensures that Keycloak remains available even in the event of hardware failures or network issues, providing a reliable user experience.</li>
-<li class=""><strong>Strong Consistency</strong>: CockroachDB's distributed SQL capabilities ensure that Keycloak can maintain strong consistency across multiple nodes, preventing data inconsistencies and ensuring accurate user management.</li>
-<li class=""><strong>Cost Efficiency</strong>: CockroachDB's ability to scale horizontally means that organizations can optimize their infrastructure costs while still meeting the demands of their Keycloak deployments.</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="real-world-latency-performance">Real-World Latency Performance<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#real-world-latency-performance" class="hash-link" aria-label="Direct link to Real-World Latency Performance" title="Direct link to Real-World Latency Performance" translate="no">​</a></h3>
-<p>One of the key performance indicators we monitor in our production environments is query latency — a critical factor for identity systems like Keycloak, where responsiveness directly impacts user experience.</p>
-<p>Over the past month (July 2025), our Keycloak deployments running on CockroachDB have consistently demonstrated impressive latency metrics:</p>
-<ul>
-<li class=""><strong>P99 Latency</strong> (99th percentile) consistently remained <strong>below 10ms</strong>, even during traffic spikes.</li>
-<li class=""><strong>P90 Latency</strong> (90th percentile) hovered well under 5ms across the board.</li>
-<li class=""><strong>Spikes</strong>: Occasional spikes up to 70ms (but usually below 35ms) for P99 and 15ms for P90 were observed lasting 5-60 mins with quick recovery afterward.</li>
-</ul>
-<p>These low-latency metrics are a testament to the <strong>combined performance of CockroachDB’s distributed SQL engine</strong> and our infrastructure tuning, ensuring fast and reliable authentication and authorization at scale.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="phase-twos-commitment-to-cockroachdb">Phase Two's Commitment to CockroachDB<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#phase-twos-commitment-to-cockroachdb" class="hash-link" aria-label="Direct link to Phase Two's Commitment to CockroachDB" title="Direct link to Phase Two's Commitment to CockroachDB" translate="no">​</a></h2>
-<p>As the original builders and continued maintainers of the Keycloak CockroachDB integration, Phase Two is committed to supporting the integration and ensuring that it meets the evolving needs of our customers. Our partnership with CockroachDB is a cementing of that commitment, and we are excited to work together to deliver the best possible experience for our users.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-this-means-for-our-customers">What This Means for Our Customers<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#what-this-means-for-our-customers" class="hash-link" aria-label="Direct link to What This Means for Our Customers" title="Direct link to What This Means for Our Customers" translate="no">​</a></h3>
-<p>For customers already leveraging CockroachDB in their applications, this partnership ensures even deeper integration and support for running Keycloak on the same trusted, resilient database platform. You can expect streamlined operations, improved compatibility, and direct access to expertise from both the Phase Two and CockroachDB teams.</p>
-<p>For those new to CockroachDB or considering it for the first time, our partnership means you can confidently adopt a modern, distributed database solution for your Keycloak deployments. Phase Two will guide you through best practices, migration strategies, and ongoing support to help you realize the benefits of CockroachDB’s scalability, reliability, and performance.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="customer-success-story---grocery-store-chain">Customer Success Story - Grocery Store Chain<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#customer-success-story---grocery-store-chain" class="hash-link" aria-label="Direct link to Customer Success Story - Grocery Store Chain" title="Direct link to Customer Success Story - Grocery Store Chain" translate="no">​</a></h3>
-<blockquote>
-<p>A customer of Phase Two, a <strong>major US grocery store chain</strong>, had zero experience with CockroachDB before partnering with us. They were running on legacy Oracle systems and were looking for a modern, scalable, cloud solution. Leveraging our CRDB integration, we were able to migrate their Ping implementation to Keycloak with CockroachDB, resulting in a major cost reduction and improved performance. Their system is now running smoothly with millions of users and transactions. Those Friday coupon releases are now a breeze!</p>
-</blockquote>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="customer-success-story---global-leader-in-rail-technology">Customer Success Story - Global Leader in Rail Technology<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#customer-success-story---global-leader-in-rail-technology" class="hash-link" aria-label="Direct link to Customer Success Story - Global Leader in Rail Technology" title="Direct link to Customer Success Story - Global Leader in Rail Technology" translate="no">​</a></h3>
-<blockquote>
-<p>A global leader in rail technology partnered with Phase Two to modernize their identity infrastructure. With operations spanning continents and complex security requirements, they needed a scalable and resilient solution. Using our enhanced Keycloak distribution with native CockroachDB support, they migrated from their legacy system to a platform built for high availability and global scale. Today, their identity layer supports users across critical transportation systems—delivering performance, reliability, and peace of mind, even at full throttle.</p>
-</blockquote>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="customer-success-story---global-automobile-and-tire-supplier">Customer Success Story - Global Automobile and Tire Supplier<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#customer-success-story---global-automobile-and-tire-supplier" class="hash-link" aria-label="Direct link to Customer Success Story - Global Automobile and Tire Supplier" title="Direct link to Customer Success Story - Global Automobile and Tire Supplier" translate="no">​</a></h3>
-<blockquote>
-<p>What started as a open-source user of our CRDB integration, a <strong>global automobile and tire supplier</strong>, has now become a key customer of Phase Two. They started with using our CRDB integration for their Keycloak deployments and have since involved Phase Two in their enterprise Keycloak deployments. Working together, Phase Two has helped to optimize and scale their Keycloak + CockroachDB deployments. We have been able to streamline their deployment processes, integrate or upgrade custom SPI's (or migrate to more effective ones), and integrate use of the Phase Two <a class="" href="https://phasetwo.io/product/organizations/">Organization's extension</a> to better manage their Keycloak users within their system. As a result of the CRDB partnership, we were able to optimize specific Keycloak queries and the CRDB dialect to improve performance within both systems, which would not have been possible without the close collaboration with CockroachDB.</p>
-</blockquote>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="ready-to-power-your-keycloak-deployment-with-cockroachdb">Ready to Power Your Keycloak Deployment with CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#ready-to-power-your-keycloak-deployment-with-cockroachdb" class="hash-link" aria-label="Direct link to Ready to Power Your Keycloak Deployment with CockroachDB?" title="Direct link to Ready to Power Your Keycloak Deployment with CockroachDB?" translate="no">​</a></h2>
-<p><a href="https://phasetwo.io/contact" target="_blank" rel="noopener noreferrer" class="">Contact us</a> to learn how Phase Two can help you implement a scalable, resilient, and high-performing identity infrastructure with CockroachDB and Keycloak.</p>
-<p>Or test it out for yourself at <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">dash.phasetwo.io</a> where you can deploy Keycloak with CockroachDB in minutes.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="frequently-asked-questions-faq">Frequently Asked Questions (FAQ)<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#frequently-asked-questions-faq" class="hash-link" aria-label="Direct link to Frequently Asked Questions (FAQ)" title="Direct link to Frequently Asked Questions (FAQ)" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-is-the-advantage-of-using-cockroachdb-with-keycloak">What is the advantage of using CockroachDB with Keycloak?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#what-is-the-advantage-of-using-cockroachdb-with-keycloak" class="hash-link" aria-label="Direct link to What is the advantage of using CockroachDB with Keycloak?" title="Direct link to What is the advantage of using CockroachDB with Keycloak?" translate="no">​</a></h3>
-<p>Using CockroachDB with Keycloak improves horizontal scalability, high availability, and ensures strong consistency for identity data across distributed systems.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="can-i-migrate-an-existing-keycloak-deployment-to-cockroachdb">Can I migrate an existing Keycloak deployment to CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#can-i-migrate-an-existing-keycloak-deployment-to-cockroachdb" class="hash-link" aria-label="Direct link to Can I migrate an existing Keycloak deployment to CockroachDB?" title="Direct link to Can I migrate an existing Keycloak deployment to CockroachDB?" translate="no">​</a></h3>
-<p>Yes. Phase Two provides migration tools and support for transitioning your Keycloak deployment to CockroachDB.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="is-cockroachdb-a-drop-in-replacement-for-postgresql-in-keycloak">Is CockroachDB a drop-in replacement for PostgreSQL in Keycloak?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#is-cockroachdb-a-drop-in-replacement-for-postgresql-in-keycloak" class="hash-link" aria-label="Direct link to Is CockroachDB a drop-in replacement for PostgreSQL in Keycloak?" title="Direct link to Is CockroachDB a drop-in replacement for PostgreSQL in Keycloak?" translate="no">​</a></h3>
-<p>Yes. CockroachDB with Phase Two's integration, it can serve as a drop-in replacement in most Keycloak deployments default PostgreSQL implementation.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="does-phase-two-offer-support-for-running-keycloak-on-cockroachdb">Does Phase Two offer support for running Keycloak on CockroachDB?<a href="https://phasetwo.io/blog/phasetwo-cockroachdb-partnership/#does-phase-two-offer-support-for-running-keycloak-on-cockroachdb" class="hash-link" aria-label="Direct link to Does Phase Two offer support for running Keycloak on CockroachDB?" title="Direct link to Does Phase Two offer support for running Keycloak on CockroachDB?" translate="no">​</a></h3>
-<p>Yes. As official CockroachDB partners, Phase Two offers enterprise-grade support, consulting, and managed services for Keycloak + CockroachDB.</p>]]></content>
-        <author>
-            <name>Jeff Patzer</name>
-            <uri>https://github.com/pnzrr</uri>
-        </author>
-        <category label="phase_two" term="phase_two"/>
-        <category label="keycloak" term="keycloak"/>
-        <category label="cockroachdb" term="cockroachdb"/>
-        <category label="partnership" term="partnership"/>
-        <category label="database" term="database"/>
-        <category label="performance" term="performance"/>
     </entry>
 </feed>
