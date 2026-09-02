@@ -123,6 +123,78 @@ upgrade. <a class="" href="https://phasetwo.io/hosting/dedicated-clusters/">Phas
             <category>security</category>
         </item>
         <item>
+            <title><![CDATA[Atomic authentication flow updates for Keycloak, built with Gusto]]></title>
+            <link>https://phasetwo.io/blog/keycloak-atomic-auth-flows/</link>
+            <guid>https://phasetwo.io/blog/keycloak-atomic-auth-flows/</guid>
+            <pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[A new open-source extension that imports Keycloak authentication flows, configs, and bindings in a single atomic transaction — built in partnership with Gusto and in production for almost a year.]]></description>
+            <content:encoded><![CDATA[<p>We're open-sourcing <a href="https://github.com/p2-inc/keycloak-atomic-auth-flows" target="_blank" rel="noopener noreferrer" class=""><code>keycloak-atomic-auth-flows</code></a>, a Keycloak extension that replaces an entire set of authentication flows, authenticator configs, and their bindings in <strong>one atomic, transactional request</strong>.</p>
+<p>It was built in partnership with <a href="https://gusto.com/" target="_blank" rel="noopener noreferrer" class="">Gusto</a>, who use Keycloak for user authentication and rely on Phase Two for enterprise Keycloak support. It has been running in their production environment for almost a year. The public repository is the extraction of that work into a standalone extension anyone can install.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-problem-there-is-no-transaction-around-a-flow-change">The problem: there is no transaction around a flow change<a href="https://phasetwo.io/blog/keycloak-atomic-auth-flows/#the-problem-there-is-no-transaction-around-a-flow-change" class="hash-link" aria-label="Direct link to The problem: there is no transaction around a flow change" title="Direct link to The problem: there is no transaction around a flow change" translate="no">​</a></h2>
+<p>Authentication flows are the highest-stakes configuration in a Keycloak realm. If a flow is wrong, nobody logs in.</p>
+<p>They are also the configuration that Keycloak gives you the least protection while changing. Both the admin console and the admin REST API mutate flows <strong>incrementally</strong>: adding an execution is one call, setting its requirement is another, reordering is another, creating a subflow and moving executions into it is several more. Each of those calls commits on its own, against a flow that is already bound as the realm's browser flow and already serving live login traffic.</p>
+<p>That leaves a window — sometimes minutes long, if a human is clicking through the console — where the flow that real users are authenticating against is in a state nobody designed. A subflow that exists but is empty. A <code>REQUIRED</code> OTP execution added before its authenticator config. An <code>ALTERNATIVE</code> removed before its replacement was added. Every one of those intermediate states is a live flow, and some of them fail closed.</p>
+<p>The usual workarounds don't close the window either:</p>
+<ul>
+<li class=""><strong>Realm partial import</strong> doesn't cover authentication flows in a way you can use for iterative updates.</li>
+<li class=""><strong>Copy the built-in flow, edit the copy, re-bind</strong> is the right instinct, and it's what careful operators do by hand. But it's a manual, multi-step, admin-console-driven process, and nothing about it is repeatable from a pipeline.</li>
+<li class=""><strong>Full realm export/import</strong> is far too blunt for a flow change and has its own consistency problems.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-the-extension-does">What the extension does<a href="https://phasetwo.io/blog/keycloak-atomic-auth-flows/#what-the-extension-does" class="hash-link" aria-label="Direct link to What the extension does" title="Direct link to What the extension does" translate="no">​</a></h2>
+<p>The extension registers a realm admin REST resource that takes the whole flow tree as a single payload:</p>
+<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">POST /admin/realms/{realm}/authentication-flow/import[?force=true]</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">Content-Type: application/json</span><br></div></code></pre></div></div>
+<p>The body carries everything needed for a complete change in one shot:</p>
+<table><thead><tr><th>Field</th><th>What it sets</th></tr></thead><tbody><tr><td><code>authenticationFlows</code></td><td>The flows to create, including all of their executions and subflows</td></tr><tr><td><code>authenticatorConfig</code></td><td>The authenticator configs the executions reference</td></tr><tr><td><code>browserFlowBinding</code></td><td>The flow to bind as the realm's browser flow</td></tr><tr><td><code>idpFlowBindings</code></td><td>Per-identity-provider first broker login and post broker login flow bindings</td></tr><tr><td><code>clientFlowBinding</code></td><td>Per-client browser and direct grant flow overrides</td></tr></tbody></table>
+<p>Three properties make this safe:</p>
+<p><strong>It's one transaction.</strong> Flows, configs, executions, and every binding are applied inside a single Keycloak transaction. Any failure — a dangling flow reference, a missing identity provider alias, an unknown client — rolls the entire import back. There is no half-applied flow, because there is no intermediate state visible to anyone outside the transaction. The caller needs <code>manage-realm</code>.</p>
+<p><strong>Flows are versioned by content, not mutated.</strong> The server hashes the flows and configs in the payload and prefixes every flow alias with that hash. An import never edits a flow that exists; it creates a new, independently-bindable set of flows and then moves the bindings onto them. The flow that was serving traffic a millisecond ago is untouched and still there.</p>
+<p><strong>It's idempotent.</strong> Because the aliases are derived from the payload's content hash, re-posting an identical tree is detected and rejected with <code>409 Conflict</code> rather than silently creating a duplicate set of flows. Pass <code>force=true</code> to re-apply the bindings over an already-imported tree. A pipeline can run the import on every deploy without accumulating garbage or needing to diff state first.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="testing-and-rolling-back">Testing and rolling back<a href="https://phasetwo.io/blog/keycloak-atomic-auth-flows/#testing-and-rolling-back" class="hash-link" aria-label="Direct link to Testing and rolling back" title="Direct link to Testing and rolling back" translate="no">​</a></h2>
+<p>The content-hash model gives you two things that are genuinely hard with mutable flows.</p>
+<p><strong>Canary a flow before it's the realm's flow.</strong> An import can bind its new flow as a <em>per-client</em> browser or direct grant override instead of the realm browser flow. The new flow is live and fully exercisable against one client — a staging app, an internal client, your own test harness — while every other client in the realm keeps authenticating against the current flow. Promote it by importing the same tree with the realm binding.</p>
+<p><strong>Roll back by re-binding, not by re-editing.</strong> A previous flow version is still present in the realm under its own hash prefix, with its executions and configs intact. Rolling back is re-posting that previous payload with <code>force=true</code>, which re-applies its bindings in one transaction. It's the same operation as rolling forward, it takes as long as one HTTP request, and it doesn't require reconstructing anything by hand in the admin console at 2am.</p>
+<p>The tradeoff is deliberate and worth stating: imports are append-only in spirit, so old flow versions accumulate in the realm. That accumulation <em>is</em> the rollback capability. Pruning old versions is a separate, deliberate act — not something an import does behind your back.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="made-for-configuration-as-code">Made for configuration as code<a href="https://phasetwo.io/blog/keycloak-atomic-auth-flows/#made-for-configuration-as-code" class="hash-link" aria-label="Direct link to Made for configuration as code" title="Direct link to Made for configuration as code" translate="no">​</a></h2>
+<p>Once flow updates are a single idempotent request, flows become an ordinary config-as-code artifact. The repository ships a complete worked toolchain in <a href="https://github.com/p2-inc/keycloak-atomic-auth-flows/tree/main/examples" target="_blank" rel="noopener noreferrer" class=""><code>examples/</code></a> that mirrors how this runs in a real deployment:</p>
+<ol>
+<li class="">
+<p><strong>Describe</strong> the flows in a small Ruby DSL (<code>auth_flows_builder.rb</code>) — the hand-edited source of truth, held in git.</p>
+</li>
+<li class="">
+<p><strong>Build</strong> two generated artifacts from it: <code>auth_flows_tree.json</code>, the exact import payload, and <code>auth_flows_tree.txt</code>, a tree rendering that makes flow changes legible in a pull request diff:</p>
+<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">demo-browser/  ← browserFlow</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">├── [ALTERNATIVE] auth-cookie</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">├── [ALTERNATIVE] identity-provider-redirector</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">└── [ALTERNATIVE] demo-browser-forms/  (subflow)</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">    ├── [REQUIRED] auth-username-password-form</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">    └── [CONDITIONAL] demo-browser-conditional-otp/  (subflow)</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">        ├── [REQUIRED] conditional-user-configured</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">        └── [REQUIRED] auth-otp-form</span><br></div></code></pre></div></div>
+</li>
+<li class="">
+<p><strong>Validate</strong> the payload before it ships. The validator catches dangling subflow, config, and IdP references, orphaned flows, inconsistent executions, and authenticator ids that exceed Keycloak's column length — mistakes that would otherwise only surface at runtime.</p>
+</li>
+<li class="">
+<p><strong>Apply</strong> it with the update script, which posts the payload to the import endpoint. Safe to re-run.</p>
+</li>
+</ol>
+<p>Reviewing an auth flow change becomes reading a diff. Shipping it becomes one request that either fully lands or fully doesn't.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="try-it">Try it<a href="https://phasetwo.io/blog/keycloak-atomic-auth-flows/#try-it" class="hash-link" aria-label="Direct link to Try it" title="Direct link to Try it" translate="no">​</a></h2>
+<p>You need Docker and Ruby — no JDK, no Maven, no Keycloak install:</p>
+<div class="language-bash codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-bash codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">git clone https://github.com/p2-inc/keycloak-atomic-auth-flows.git</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">cd keycloak-atomic-auth-flows</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain"># Keycloak (dev mode) with the extension loaded and a minimal `demo` realm</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">docker compose up --build</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain"># In another shell — import the demo flows via the new endpoint</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">ruby examples/scripts/update_auth_flows.rb</span><br></div></code></pre></div></div>
+<p>Then open the admin console at <code>http://localhost:8080</code> (admin / admin) → realm <strong>demo</strong> → <em>Authentication</em>, and you'll see the imported flows, alias-prefixed with their import hash, bound to the realm and to the demo identity provider. Run the script a second time to watch the <code>409</code>.</p>
+<p>The extension targets <strong>Keycloak 26.5.7</strong>, builds with <strong>JDK 21</strong> and Maven, and is licensed <strong>Apache 2.0</strong>. Integration tests run against a real Keycloak via Testcontainers.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="thanks-to-gusto">Thanks to Gusto<a href="https://phasetwo.io/blog/keycloak-atomic-auth-flows/#thanks-to-gusto" class="hash-link" aria-label="Direct link to Thanks to Gusto" title="Direct link to Thanks to Gusto" translate="no">​</a></h2>
+<p>This extension exists because Gusto needed to change authentication flows on a schedule their business required, with a risk profile their security posture demanded, and the stock tooling couldn't offer either. They funded and co-designed the work, ran it in production, and agreed to open-source it so the rest of the Keycloak community gets the same guarantees. We're grateful for the partnership.</p>
+<hr>
+<p>Want to go deeper?</p>
+<ol>
+<li class="">Read the code and docs: <a href="https://github.com/p2-inc/keycloak-atomic-auth-flows" target="_blank" rel="noopener noreferrer" class="">github.com/p2-inc/keycloak-atomic-auth-flows</a></li>
+<li class="">File issues and feature requests on the <a href="https://github.com/p2-inc/keycloak-atomic-auth-flows/issues" target="_blank" rel="noopener noreferrer" class="">issue tracker</a></li>
+<li class="">Reach out to our team: <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a></li>
+<li class="">Talk to us about enterprise Keycloak support: <a href="https://phasetwo.io/contact" target="_blank" rel="noopener noreferrer" class="">phasetwo.io/contact</a></li>
+</ol>]]></content:encoded>
+            <category>phase_two</category>
+            <category>keycloak</category>
+            <category>authentication</category>
+            <category>authentication_flows</category>
+            <category>config_as_code</category>
+            <category>open_source</category>
+        </item>
+        <item>
             <title><![CDATA[Keycloak 26.7.3 Released: 20 CVEs, No Fix for 26.4–26.6]]></title>
             <link>https://phasetwo.io/blog/keycloak-2673-released/</link>
             <guid>https://phasetwo.io/blog/keycloak-2673-released/</guid>
@@ -1266,34 +1338,6 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
             <category>security</category>
             <category>hosting</category>
             <category>soc-2</category>
-        </item>
-        <item>
-            <title><![CDATA[Custom domains on Phase Two Paid Plans]]></title>
-            <link>https://phasetwo.io/blog/custom-domains/</link>
-            <guid>https://phasetwo.io/blog/custom-domains/</guid>
-            <pubDate>Wed, 03 Sep 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Phase Two is happy to announce that custom domains can now be configured via self-serve right in the Dashboard. This feature is only available on paid plans.]]></description>
-            <content:encoded><![CDATA[<p>Phase Two is happy to announce that custom domains can now be configured via self-serve right in the <a href="https://dash.phasetwo.com/" target="_blank" rel="noopener noreferrer" class="">Dashboard</a>. This feature is only available on paid plans.</p>
-<p>Custom domains are a key piece of branding and trust for your users. By using your own domain, you can ensure that your users see a familiar URL when interacting with your Keycloak instance.</p>
-<p>Read more about how to set up custom domains in our <a class="" href="https://phasetwo.io/docs/self-service/custom-domains/">Custom Domains documentation</a>.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="custom-domains-overview">Custom Domains Overview<a href="https://phasetwo.io/blog/custom-domains/#custom-domains-overview" class="hash-link" aria-label="Direct link to Custom Domains Overview" title="Direct link to Custom Domains Overview" translate="no">​</a></h2>
-<p>Up until this point, custom domains were offered, but had to be setup and managed by Phase Two support. Now, you can configure and manage your own custom domains directly from the Dashboard. This allows for multiple custom domains to be used as required.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="why-use-custom-domains">Why Use Custom Domains?<a href="https://phasetwo.io/blog/custom-domains/#why-use-custom-domains" class="hash-link" aria-label="Direct link to Why Use Custom Domains?" title="Direct link to Why Use Custom Domains?" translate="no">​</a></h2>
-<p>Using a custom domain for your Keycloak instance provides several benefits:</p>
-<ol>
-<li class=""><strong>Branding</strong>: A custom domain allows you to maintain consistent branding across your applications and services. This helps reinforce your brand identity and provides a seamless experience for your users.</li>
-<li class=""><strong>Trust</strong>: Users are more likely to trust a familiar domain. By using your
-own domain, you can increase user confidence and reduce the likelihood of phishing attacks.</li>
-<li class=""><strong>SSL/TLS</strong>: Phase Two provides free SSL/TLS certificates for your custom domains, ensuring that all communications are secure and encrypted.</li>
-</ol>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="whats-next">What's next?<a href="https://phasetwo.io/blog/custom-domains/#whats-next" class="hash-link" aria-label="Direct link to What's next?" title="Direct link to What's next?" translate="no">​</a></h2>
-<p>Phase Two has many exciting features planned for the future. Stay tuned for more updates and improvements to our platform.</p>]]></content:encoded>
-            <category>phase_two</category>
-            <category>keycloak</category>
-            <category>domains</category>
-            <category>ssl</category>
-            <category>certificates</category>
-            <category>custom_domains</category>
         </item>
     </channel>
 </rss>
