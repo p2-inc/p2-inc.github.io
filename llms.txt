@@ -140,6 +140,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 
 ## API reference
 
+- [Phase Two API](https://phasetwo.io/api/): Reference for the Phase Two Keycloak extension APIs — organizations, roles, invitations, identity providers, SCIM, events and attributes. 84 endpoints, with the OpenAPI spec.
 - [Accept invitation for authenticated user](https://phasetwo.io/api/accept-invitation/): Accept invitation for authenticated user.
 - [Add a mapper to identity provider](https://phasetwo.io/api/add-idp-mapper/): Add a mapper to identity provider
 - [Create an invitation to an organization](https://phasetwo.io/api/add-organization-invitation/): Create an invitation to join the specified organization. Requires a user to register with the application (if they don't already have an account) before they can accept the invitation. Acceptance happens during login via a required action.
