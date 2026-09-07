@@ -125,6 +125,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Keycloak Tutorials](https://phasetwo.io/tutorials/): Practical, tested Keycloak tutorials — every one runs on plain open-source Keycloak, with the admin console and CLI steps side by side.
 - [Getting started](https://phasetwo.io/tutorials/category/getting-started/)
 - [Mobile apps](https://phasetwo.io/tutorials/category/mobile-apps/)
+- [Securing applications](https://phasetwo.io/tutorials/category/securing-applications/)
 - [Your First Keycloak Realm, Client, and User](https://phasetwo.io/tutorials/getting-started/first-realm-client-user/): Create a Keycloak realm, register a client, and add a user — in the admin console and with kcadm.sh — plus what each of the three actually means.
 - [Run Keycloak Locally in 5 Minutes](https://phasetwo.io/tutorials/getting-started/run-keycloak-locally/): Start a working Keycloak server on your machine with Docker, Podman, or the zip distribution — plus the dev-mode trap that bites people later.
 - [Get a Keycloak Token and Read Every Claim](https://phasetwo.io/tutorials/getting-started/your-first-token/): Get a token from Keycloak with one curl command, decode it, and learn what every claim in it means — plus the aud trap that makes valid tokens get rejected.
@@ -133,6 +134,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Benefits and Drawbacks of JWTs](https://phasetwo.io/tutorials/jwts/jwt-benefits-drawbacks/): Where JSON Web Tokens are the right architectural choice and where they are not — stateless validation, revocation limits, token size, and the alternatives worth considering.
 - [JWT Security Best Practices](https://phasetwo.io/tutorials/jwts/jwt-security-best-practices/): How to implement JSON Web Tokens securely — signing algorithms, token storage, transmission, validation, expiry and revocation, and the attack vectors each one closes.
 - [Write the App Association Files That Let Mobile Apps Autofill Your Login](https://phasetwo.io/tutorials/mobile-apps/app-association-files/): Build apple-app-site-association and assetlinks.json correctly so iOS and Android will share saved passwords — and later passkeys — between your app and your Keycloak login page.
+- [Validating Keycloak Tokens in Any Backend](https://phasetwo.io/tutorials/securing-applications/validating-tokens/): How to verify a Keycloak access token in your backend — the full check order, JWKS caching, key rotation, and when introspection is the only option that works.
 
 ## Guides
 
