@@ -100,7 +100,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Self-service](https://phasetwo.io/docs/self-service/): The Phase Two self-service dashboard is an application that allows you to manage Realm instances of Phase Two enhanced Keycloak on your dedicated clusters. This tool allows you to easily create new Realms and manage your team's access to them.
 - [Access/Register](https://phasetwo.io/docs/self-service/access/): The first place to go in order to either Login or Register for an account, is the Dashboard (https://dash.phasetwo.io)
 - [Create a Cluster](https://phasetwo.io/docs/self-service/create-a-cluster/): Creating a cluster can be done through our Dash self-service tool, or by contacting Phase Two for assistance.
-- [Custom Domains](https://phasetwo.io/docs/self-service/custom-domains/): Custom domains are available for Premium and Enterprise plans. This allows you to use your own domain name for accessing your Keycloak instance instead of the default *.phasetwo.io domain.
+- [Custom Domains](https://phasetwo.io/docs/self-service/custom-domains/): Custom domains let you use your own domain name to access your Keycloak instance instead of the default *.phasetwo.io domain. They are available on every plan, with the number you can add depending on your tier.
 - [Dashboard Overview](https://phasetwo.io/docs/self-service/dashboard-overview/): The Dashboard is the application for interacting with the Phase Two application. It runs off our APIs meaning you can setup and automate any part of this for your own use-cases.
 - [Dedicated Clusters](https://phasetwo.io/docs/self-service/dedicated-clusters/): Dedicated clusters are available with paid plans. These Clusters use isolated compute, network, and storage resources. Dedicated clusters come in three tiers — Starter, Premium, and Enterprise — which differ in capacity and limits. See Create a Cluster for how to choose a tier.
 - [Egress IP Addresses](https://phasetwo.io/docs/self-service/egress-ip-addresses/): The static outbound IP addresses Phase Two clusters send traffic from, for use in customer firewall and API allowlists.
@@ -124,6 +124,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 
 - [Keycloak Tutorials](https://phasetwo.io/tutorials/): Practical, tested Keycloak tutorials — every one runs on plain open-source Keycloak, with the admin console and CLI steps side by side.
 - [Getting started](https://phasetwo.io/tutorials/category/getting-started/)
+- [Mobile apps](https://phasetwo.io/tutorials/category/mobile-apps/)
 - [Your First Keycloak Realm, Client, and User](https://phasetwo.io/tutorials/getting-started/first-realm-client-user/): Create a Keycloak realm, register a client, and add a user — in the admin console and with kcadm.sh — plus what each of the three actually means.
 - [Run Keycloak Locally in 5 Minutes](https://phasetwo.io/tutorials/getting-started/run-keycloak-locally/): Start a working Keycloak server on your machine with Docker, Podman, or the zip distribution — plus the dev-mode trap that bites people later.
 - [Get a Keycloak Token and Read Every Claim](https://phasetwo.io/tutorials/getting-started/your-first-token/): Get a token from Keycloak with one curl command, decode it, and learn what every claim in it means — plus the aud trap that makes valid tokens get rejected.
@@ -131,6 +132,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Decoding a JWT — Header, Payload, and Signature](https://phasetwo.io/tutorials/jwts/decoding-jwt-structure/): A field-by-field walkthrough of a real JSON Web Token — what each header and payload claim means, how the signature is produced, and how to decode one yourself.
 - [Benefits and Drawbacks of JWTs](https://phasetwo.io/tutorials/jwts/jwt-benefits-drawbacks/): Where JSON Web Tokens are the right architectural choice and where they are not — stateless validation, revocation limits, token size, and the alternatives worth considering.
 - [JWT Security Best Practices](https://phasetwo.io/tutorials/jwts/jwt-security-best-practices/): How to implement JSON Web Tokens securely — signing algorithms, token storage, transmission, validation, expiry and revocation, and the attack vectors each one closes.
+- [Write the App Association Files That Let Mobile Apps Autofill Your Login](https://phasetwo.io/tutorials/mobile-apps/app-association-files/): Build apple-app-site-association and assetlinks.json correctly so iOS and Android will share saved passwords — and later passkeys — between your app and your Keycloak login page.
 
 ## Guides
 
@@ -239,6 +241,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 ## Blog
 
 - [Blog](https://phasetwo.io/blog/): Learn more about how we make Keycloak Hosting and Authentication easy.
+- [Keycloak Custom Domains Can Now Serve App Association Files](https://phasetwo.io/blog/app-association-custom-domains/): Phase Two custom domains can now serve apple-app-site-association, assetlinks.json and a change-password redirect, so mobile apps can autofill saved passwords and share passkeys with a Keycloak login page.
 - [Auth.it featured on Keycloak Friday Chat](https://phasetwo.io/blog/authit-on-kfc/): Phase Two's new hosting platform, Auth.it, was featured on Mr. Keycloak's livestream
 - [Cluster Observability and Logs](https://phasetwo.io/blog/cluster-observability-and-logs/): Phase Two now includes built-in observability for dedicated clusters, starting with log downloads via the self-service dashboard.
 - [Cockroach Labs features Phase Two's Managed Keycloak Hosting](https://phasetwo.io/blog/cockroach-labs-features-phasetwo-managed-keycloak-hosting/): Cockroach Labs highlights Phase Two's managed Keycloak hosting platform in their latest blog post.
