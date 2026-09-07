@@ -383,7 +383,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 ## Other pages
 
 - [Managed Keycloak Hosting and Enterprise Keycloak Support](https://phasetwo.io/access/): Request access to Phase Two B
-- [About Us](https://phasetwo.io/company/about/): Mission
+- [About Phase Two](https://phasetwo.io/company/about/): Phase Two builds and hosts Keycloak. We maintain the open-source extensions that add organizations, SCIM, webhooks and magic links to Keycloak, and we run it in production for companies that would rather not.
 - [Careers at Phase Two](https://phasetwo.io/company/careers/): Open positions
 - [Phase Two Privacy Policy](https://phasetwo.io/company/privacy/): Privacy Policy Last updated: July 05, 2022
 - [Phase Two SaaS Service Agreement](https://phasetwo.io/company/service-agreement/): Service Agreement Last updated: June 6, 2024
