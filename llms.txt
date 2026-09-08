@@ -86,7 +86,6 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Nuxt](https://phasetwo.io/docs/securing-applications/nuxt/): This example uses Nuxt3. There are a couple methods by which you can integrate Keycloak to your Nuxt application. We're going to explore two methods here, one uses keycloak-js and the other leverages oidc-client-ts. The keycloak-js library provides a simple, client-only method, but lacks some of the sophistication provided by the oidc-client library that is heavily supported and more widely used.
 - [React](https://phasetwo.io/docs/securing-applications/react/): Many SPAs use a framework such as React to simplify the creation of interactive experiences. We suggest the use of the open source react-keycloak library to make securing React applications easier.
 - [Remix](https://phasetwo.io/docs/securing-applications/remix/): View a live deployed version.
-- [SpringBoot](https://phasetwo.io/docs/securing-applications/springboot/): Sample SpringBoot application with authentication and authorization.
 - [SvelteKit](https://phasetwo.io/docs/securing-applications/sveltekit/): View a live deployed version.
 - [Vue.js](https://phasetwo.io/docs/securing-applications/vue/): View a live deployed version.
 - [Security](https://phasetwo.io/docs/security/): Keycloak provides a strong set of tools for securely setting up your system. They are not necessarily enabled by default as use cases vary greatly. For that reason, we have provided a set of articles to help you understand how to use these features and our recommendations for best practices.
@@ -134,6 +133,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Benefits and Drawbacks of JWTs](https://phasetwo.io/tutorials/jwts/jwt-benefits-drawbacks/): Where JSON Web Tokens are the right architectural choice and where they are not — stateless validation, revocation limits, token size, and the alternatives worth considering.
 - [JWT Security Best Practices](https://phasetwo.io/tutorials/jwts/jwt-security-best-practices/): How to implement JSON Web Tokens securely — signing algorithms, token storage, transmission, validation, expiry and revocation, and the attack vectors each one closes.
 - [Write the App Association Files That Let Mobile Apps Autofill Your Login](https://phasetwo.io/tutorials/mobile-apps/app-association-files/): Build apple-app-site-association and assetlinks.json correctly so iOS and Android will share saved passwords — and later passkeys — between your app and your Keycloak login page.
+- [Spring Boot Keycloak Authentication: Tested Example](https://phasetwo.io/tutorials/securing-applications/spring-boot/): A tested Spring Boot Keycloak authentication example — resource server config, realm role mapping, audience validation, Docker, and every 401 explained.
 - [Validating Keycloak Tokens in Any Backend](https://phasetwo.io/tutorials/securing-applications/validating-tokens/): How to verify a Keycloak access token in your backend — the full check order, JWKS caching, key rotation, and when introspection is the only option that works.
 
 ## Guides
