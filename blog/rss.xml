@@ -4,10 +4,189 @@
         <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
         <link>https://phasetwo.io/blog/</link>
         <description>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</description>
-        <lastBuildDate>Mon, 07 Sep 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 08 Sep 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Keycloak invalid_grant: the eight things it actually means]]></title>
+            <link>https://phasetwo.io/blog/keycloak-invalid-grant/</link>
+            <guid>https://phasetwo.io/blog/keycloak-invalid-grant/</guid>
+            <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Keycloak's invalid_grant covers eight unrelated failures. A tested map from every error_description string to its real cause, on Keycloak 26.7.3.]]></description>
+            <content:encoded><![CDATA[<p>Keycloak returns <code>invalid_grant</code> for at least eight unrelated failures, and the error code
+itself tells you nothing. The useful field is <code>error_description</code>, which Keycloak fills in
+with a short string that maps almost one-to-one onto a cause:</p>
+<div class="language-json codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-json codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token property">"error"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token string" style="color:rgb(195, 232, 141)">"invalid_grant"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token property">"error_description"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token string" style="color:rgb(195, 232, 141)">"Code not valid"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></div></code></pre></div></div>
+<p><code>invalid_grant</code> is OAuth's designated bucket for "the grant you presented is no good", so
+Keycloak uses it for expired codes, replayed codes, PKCE mismatches, rotated refresh tokens,
+dead sessions, revoked offline tokens, and bad passwords alike. Read the description, find
+it in the table below, stop guessing.</p>
+<p>Everything here was run against <strong>Keycloak 26.7.3</strong> on 2026-09-07, with realm defaults
+except where a test says otherwise.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-whole-map-in-one-table">The whole map, in one table<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#the-whole-map-in-one-table" class="hash-link" aria-label="Direct link to The whole map, in one table" title="Direct link to The whole map, in one table" translate="no">​</a></h2>
+<p>Every string below came out of a live server. <code>error</code> was <code>invalid_grant</code> and the status was
+<code>400</code> for all of them.</p>
+<table><thead><tr><th><code>error_description</code></th><th>Grant type</th><th>What actually happened</th></tr></thead><tbody><tr><td><code>Code not valid</code></td><td><code>authorization_code</code></td><td>Code expired <strong>or</strong> was already redeemed — same message for both</td></tr><tr><td><code>Incorrect redirect_uri</code></td><td><code>authorization_code</code></td><td><code>redirect_uri</code> at the token endpoint differs from the one sent to <code>/auth</code>, or was omitted</td></tr><tr><td><code>Auth error: Found different client_id in clientSession</code></td><td><code>authorization_code</code></td><td>A different client is trying to redeem the code</td></tr><tr><td><code>PKCE code verifier not specified</code></td><td><code>authorization_code</code></td><td>You sent a <code>code_challenge</code> but no <code>code_verifier</code></td></tr><tr><td><code>PKCE verification failed: Invalid code verifier</code></td><td><code>authorization_code</code></td><td>The verifier is malformed — wrong length or wrong character set</td></tr><tr><td><code>PKCE verification failed: Code mismatch</code></td><td><code>authorization_code</code></td><td>The verifier is well-formed but does not hash to the challenge</td></tr><tr><td><code>Maximum allowed refresh token reuse exceeded</code></td><td><code>refresh_token</code></td><td>Rotation is on and you replayed a superseded refresh token</td></tr><tr><td><code>Session doesn't have required client</code></td><td><code>refresh_token</code></td><td>The client session was torn down — usually by a replay a moment earlier</td></tr><tr><td><code>Session not active</code></td><td><code>refresh_token</code></td><td>The user session is gone: logout, or it was administratively removed</td></tr><tr><td><code>Token is not active</code></td><td><code>refresh_token</code></td><td>SSO idle or max lifespan exceeded, or clock skew between nodes</td></tr><tr><td><code>Stale token</code></td><td><code>refresh_token</code></td><td>A not-before policy was pushed after the token was issued</td></tr><tr><td><code>Offline user session not found</code></td><td><code>refresh_token</code></td><td>The offline session was revoked or aged out</td></tr><tr><td><code>Invalid refresh token</code></td><td><code>refresh_token</code></td><td>Not a refresh token at all — an access token or ID token, typically</td></tr><tr><td><code>Invalid refresh token. Token client and authorized client don't match</code></td><td><code>refresh_token</code></td><td>The refresh token belongs to a different client</td></tr><tr><td><code>Invalid user credentials</code></td><td><code>password</code></td><td>Wrong password, unknown user, <strong>or</strong> a brute-force lockout</td></tr><tr><td><code>Account disabled</code></td><td><code>password</code></td><td><code>enabled=false</code> on the user</td></tr><tr><td><code>Account is not fully set up</code></td><td><code>password</code></td><td>A required action is pending — <code>VERIFY_PROFILE</code>, <code>UPDATE_PASSWORD</code>, and friends</td></tr></tbody></table>
+<p>The rest of this post is the eight causes those strings group into, in the order you are
+likely to hit them.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="1-the-code-was-already-redeemed--and-it-just-killed-the-session">1. The code was already redeemed — and it just killed the session<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#1-the-code-was-already-redeemed--and-it-just-killed-the-session" class="hash-link" aria-label="Direct link to 1. The code was already redeemed — and it just killed the session" title="Direct link to 1. The code was already redeemed — and it just killed the session" translate="no">​</a></h2>
+<p>Redeem an authorization code twice and the second attempt fails, which is what you would
+expect. What nobody expects is what happens to the tokens from the <em>first</em>, successful
+exchange:</p>
+<div class="language-bash codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-bash codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain"># 1. exchange the code — succeeds, we keep the refresh token</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">curl -s -X POST "$TOKEN_URL" -d grant_type=authorization_code -d client_id=web \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  -d client_secret=$SECRET -d code=$CODE -d redirect_uri=http://localhost:3000/callback</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain"># 2. exchange the same code again</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">{"error":"invalid_grant","error_description":"Code not valid"}</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain"># 3. now use the refresh token that worked ten seconds ago</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">{"error":"invalid_grant","error_description":"Session doesn't have required client"}</span><br></div></code></pre></div></div>
+<p>Keycloak treats a redeemed code turning up a second time as a stolen code, and detaches the
+client from the user session. The legitimate client — the one that redeemed correctly — is
+logged out as collateral.</p>
+<p>This is why <code>Session doesn't have required client</code> shows up in bug reports as "users get
+randomly logged out". It is almost never random. Something replayed a grant. The usual
+culprits are a React effect firing twice under StrictMode, a callback route that runs on both
+server and client, or a user refreshing the callback page.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="2-the-code-expired">2. The code expired<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#2-the-code-expired" class="hash-link" aria-label="Direct link to 2. The code expired" title="Direct link to 2. The code expired" translate="no">​</a></h2>
+<p>Same message, different cause. Authorization codes live for <code>accessCodeLifespan</code>, which the
+admin console calls <strong>Client login timeout</strong> under Realm settings → Tokens, and which
+<a href="https://www.keycloak.org/docs/latest/server_admin/index.html#_timeouts" target="_blank" rel="noopener noreferrer" class="">the server admin guide</a>
+describes as the maximum time before clients must finish the authorization code flow. It
+ships at <strong>60 seconds</strong>.</p>
+<p>Sixty seconds is generous for a redirect and a back-channel call, and mean if your callback
+handler blocks on something slow — a user lookup against a legacy directory, a cold Lambda,
+a provisioning call. Do the token exchange first, everything else after.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="telling-the-two-apart">Telling the two apart<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#telling-the-two-apart" class="hash-link" aria-label="Direct link to Telling the two apart" title="Direct link to Telling the two apart" translate="no">​</a></h3>
+<p>The response is identical, and so is the server log: both produce
+<code>type="CODE_TO_TOKEN_ERROR", error="invalid_code"</code> with no distinguishing reason. The
+<code>code_id</code> detail is what separates them. Turn on event storage and read the sequence:</p>
+<div class="language-bash codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-bash codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">kcadm.sh update events/config -r demo \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  -s eventsEnabled=true \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  -s 'enabledEventTypes=["LOGIN","CODE_TO_TOKEN","CODE_TO_TOKEN_ERROR"]'</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">kcadm.sh get events -r demo -q max=10</span><br></div></code></pre></div></div>
+<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain"># replayed code — a successful exchange for the same code_id</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">LOGIN                code_id=KP3veSsloJww7HFfIJF_5A4r</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">CODE_TO_TOKEN        code_id=KP3veSsloJww7HFfIJF_5A4r</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">CODE_TO_TOKEN_ERROR  code_id=KP3veSsloJww7HFfIJF_5A4r  error=invalid_code</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain"># expired code — nothing ever redeemed it</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">LOGIN                code_id=oqgn0iFSvrCod8rFFN4jPXmJ</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">CODE_TO_TOKEN_ERROR  code_id=oqgn0iFSvrCod8rFFN4jPXmJ  error=invalid_code</span><br></div></code></pre></div></div>
+<p>A <code>CODE_TO_TOKEN</code> between the <code>LOGIN</code> and the error means replay. No <code>CODE_TO_TOKEN</code> means
+expiry. That single check has settled more of these arguments than any amount of reading
+application logs.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="3-the-redirect_uri-changed-between-the-two-calls">3. The <code>redirect_uri</code> changed between the two calls<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#3-the-redirect_uri-changed-between-the-two-calls" class="hash-link" aria-label="Direct link to 3-the-redirect_uri-changed-between-the-two-calls" title="Direct link to 3-the-redirect_uri-changed-between-the-two-calls" translate="no">​</a></h2>
+<div class="language-json codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-json codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token property">"error"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token string" style="color:rgb(195, 232, 141)">"invalid_grant"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token property">"error_description"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token string" style="color:rgb(195, 232, 141)">"Incorrect redirect_uri"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></div></code></pre></div></div>
+<p>The <code>redirect_uri</code> in the token request must be byte-identical to the one in the
+authorization request. Registering both on the client is not enough — we sent
+<code>http://localhost:3000/callback</code> to <code>/auth</code> and <code>http://localhost:3000/cb2</code> to the token
+endpoint with both registered, and it was rejected. Omitting the parameter entirely gives the
+same error.</p>
+<p>The server log spells it out where the response does not:</p>
+<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">error="invalid_redirect_uri", reason="Parameter 'redirect_uri' did not match originally</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">saved redirect URI used in initial OIDC request. Saved redirectUri:</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">http://localhost:3000/callback, redirectUri parameter: http://localhost:3000/cb2"</span><br></div></code></pre></div></div>
+<p>This is a different failure from the one that stops you at the login screen. If you never got
+a code at all, you want
+<a class="" href="https://phasetwo.io/blog/keycloak-invalid-redirect-uri/">Invalid parameter: redirect_uri</a> instead.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="4-pkce--three-failures-three-distinct-messages">4. PKCE — three failures, three distinct messages<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#4-pkce--three-failures-three-distinct-messages" class="hash-link" aria-label="Direct link to 4. PKCE — three failures, three distinct messages" title="Direct link to 4. PKCE — three failures, three distinct messages" translate="no">​</a></h2>
+<p>Keycloak is unusually helpful here, and the three messages mean genuinely different things.</p>
+<table><thead><tr><th>Message</th><th>Meaning</th></tr></thead><tbody><tr><td><code>PKCE code verifier not specified</code></td><td>The <code>code_verifier</code> parameter is missing from the token request</td></tr><tr><td><code>PKCE verification failed: Invalid code verifier</code></td><td>The verifier does not satisfy RFC 7636 syntax</td></tr><tr><td><code>PKCE verification failed: Code mismatch</code></td><td>The verifier is syntactically fine but hashes to a different challenge</td></tr></tbody></table>
+<p>The syntax rule is a verifier of 43–128 characters from the unreserved set. We confirmed the
+boundary against a live server: a 43-character verifier that is simply wrong returns
+<code>Code mismatch</code>, and the same wrong verifier at 42 characters returns <code>Invalid code verifier</code>.</p>
+<p>That distinction is worth knowing, because it tells you which bug you have. <code>Invalid code verifier</code> means your generator is broken — usually base64 instead of base64url, or truncating
+to 32 characters. <code>Code mismatch</code> means the generator is fine and you lost the verifier
+between the two requests: regenerated it, stored it in a cookie that got dropped on the
+cross-site redirect, or ran the two halves of the flow on different instances of a
+horizontally scaled app.</p>
+<p>A missing <code>code_challenge</code> on the <em>authorization</em> request is not an <code>invalid_grant</code> at all.
+Keycloak fails it earlier, redirecting back with
+<code>error=invalid_request&amp;error_description=Missing+parameter%3A+code_challenge_method</code>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="5-refresh-token-rotation-and-the-concurrency-trap">5. Refresh token rotation and the concurrency trap<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#5-refresh-token-rotation-and-the-concurrency-trap" class="hash-link" aria-label="Direct link to 5. Refresh token rotation and the concurrency trap" title="Direct link to 5. Refresh token rotation and the concurrency trap" translate="no">​</a></h2>
+<p>This one is worth measuring, because the setting that causes it is frequently turned on for
+good reasons by someone who then spends a week debugging the result.</p>
+<p>With <strong>Revoke Refresh Token</strong> (<code>revokeRefreshToken</code>) enabled, each refresh invalidates the
+token you presented. <strong>Refresh Token Max Reuse</strong> (<code>refreshTokenMaxReuse</code>) controls how many
+replays are tolerated, and defaults to <code>0</code> — none. Replay a superseded token and you get:</p>
+<div class="language-json codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-json codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token property">"error"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token string" style="color:rgb(195, 232, 141)">"invalid_grant"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token property">"error_description"</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token string" style="color:rgb(195, 232, 141)">"Maximum allowed refresh token reuse exceeded"</span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></div></code></pre></div></div>
+<p>Now fire three refreshes concurrently with the same token, which is exactly what a browser
+app with three tabs, or a service with a connection pool, does the moment an access token
+expires:</p>
+<table><thead><tr><th>Realm setting</th><th>Result of 3 concurrent refreshes with one token</th></tr></thead><tbody><tr><td><code>revokeRefreshToken=false</code> (shipped default)</td><td>3 × new token issued</td></tr><tr><td><code>revokeRefreshToken=true</code>, <code>refreshTokenMaxReuse=0</code></td><td>1 × new token, 1 × <code>Maximum allowed refresh token reuse exceeded</code>, 1 × <code>Session doesn't have required client</code></td></tr><tr><td><code>revokeRefreshToken=true</code>, <code>refreshTokenMaxReuse=2</code></td><td>3 × new token issued</td></tr></tbody></table>
+<p>Read the middle row carefully. The third request does not merely fail — by the time it
+arrives the reuse has already detached the client session, so the <em>new</em> refresh token
+returned to the first caller is dead too. One racing tab logs the user out of all of them.</p>
+<p>Rotation is a real security control and we are not telling you to leave it off. But if you
+turn it on, either serialise refreshes behind a single-flight lock in every client, or set
+<code>refreshTokenMaxReuse</code> to a small non-zero number and accept a narrow replay window. Turning
+rotation on and changing nothing else is the option that produces support tickets.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="6-the-session-is-gone">6. The session is gone<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#6-the-session-is-gone" class="hash-link" aria-label="Direct link to 6. The session is gone" title="Direct link to 6. The session is gone" translate="no">​</a></h2>
+<p>Four different messages, all meaning "the session behind this refresh token no longer
+exists":</p>
+<ul>
+<li class=""><strong><code>Session not active</code></strong> — someone hit the logout endpoint, or an admin removed the session.</li>
+<li class=""><strong><code>Token is not active</code></strong> — the session passed <code>ssoSessionIdleTimeout</code> (default 30 minutes)
+or <code>ssoSessionMaxLifespan</code> (default 10 hours). We reproduced this by dropping idle timeout
+to 60 seconds and waiting it out.</li>
+<li class=""><strong><code>Stale token</code></strong> — a not-before policy was pushed. Realm settings → Sessions → Revocation,
+or the per-client equivalent, sets a timestamp and every token issued before it dies
+instantly. Easy to forget you clicked it.</li>
+<li class=""><strong><code>Offline user session not found</code></strong> — an offline token whose session was revoked, either
+by the revocation endpoint or by the user removing consent.</li>
+</ul>
+<p><code>Token is not active</code> is also what clock skew looks like. If it appears immediately after
+issuing a token, on a multi-node cluster, on tokens that should have 29 minutes left, check
+that the nodes agree on the time before you touch any Keycloak setting. We did not reproduce
+that case directly — it needs two nodes with genuinely divergent clocks — but the failure
+mode is the same message, and comparing <code>date</code> across nodes rules it in or out in a second.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="7-the-direct-grant-where-the-message-is-deliberately-unhelpful">7. The direct grant, where the message is deliberately unhelpful<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#7-the-direct-grant-where-the-message-is-deliberately-unhelpful" class="hash-link" aria-label="Direct link to 7. The direct grant, where the message is deliberately unhelpful" title="Direct link to 7. The direct grant, where the message is deliberately unhelpful" translate="no">​</a></h2>
+<p>The password grant returns three messages, and one of them is a lie by design:</p>
+<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">wrong password:      {"error":"invalid_grant","error_description":"Invalid user credentials"}</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">unknown user:        {"error":"invalid_grant","error_description":"Invalid user credentials"}</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">disabled user:       {"error":"invalid_grant","error_description":"Account disabled"}</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">required action:     {"error":"invalid_grant","error_description":"Account is not fully set up"}</span><br></div></code></pre></div></div>
+<p><code>Invalid user credentials</code> covers wrong password and non-existent user identically, so the
+endpoint cannot be used to enumerate accounts. It also covers a <strong>brute-force lockout</strong>. With
+<code>bruteForceProtected=true</code> and <code>failureFactor=3</code>, we sent four bad passwords and then the
+correct one:</p>
+<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">attempt 4 (bad):                 {"error_description":"Invalid user credentials"}</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">attempt 5 (CORRECT password):    {"error_description":"Invalid user credentials"}</span><br></div></code></pre></div></div>
+<p>The admin guide is explicit that this masking is intentional, so an attacker cannot tell a
+locked account from a wrong password. Neither can your support team. The server log does
+distinguish them:</p>
+<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">error="invalid_user_credentials"   ← wrong password</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">error="user_temporarily_disabled"  ← locked out</span><br></div></code></pre></div></div>
+<p>And you can check and clear a specific user's lockout state directly:</p>
+<div class="language-bash codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-bash codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">kcadm.sh get attack-detection/brute-force/users/$USER_ID -r demo</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">kcadm.sh delete attack-detection/brute-force/users/$USER_ID -r demo</span><br></div></code></pre></div></div>
+<p><code>Account is not fully set up</code> is the one people misdiagnose most. It means a required action
+is pending — and on a fresh realm, <code>VERIFY_PROFILE</code> fires for any user missing an email,
+first name, or last name. Users created by script or by a migration hit this constantly while
+looking perfectly fine in the console.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="8-that-is-not-this-clients-refresh-token">8. That is not this client's refresh token<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#8-that-is-not-this-clients-refresh-token" class="hash-link" aria-label="Direct link to 8. That is not this client's refresh token" title="Direct link to 8. That is not this client's refresh token" translate="no">​</a></h2>
+<p>Two messages, both meaning the token you presented is not the thing the endpoint wanted:</p>
+<ul>
+<li class=""><strong><code>Invalid refresh token</code></strong> — you sent something that is not a refresh token. Posting an
+access token here is the single most common version, usually a variable mix-up. Decode the
+<code>typ</code> claim; a refresh token says <code>Refresh</code> (or <code>Offline</code>), an access token says <code>Bearer</code>.</li>
+<li class=""><strong><code>Invalid refresh token. Token client and authorized client don't match</code></strong> — the token is
+real but was issued to a different <code>client_id</code>. Common when a gateway and a frontend share
+token storage, or when someone copies a token between environments.</li>
+</ul>
+<p>If you are not sure what you are holding, decode it. Our
+<a class="" href="https://phasetwo.io/tutorials/getting-started/your-first-token/">token walkthrough tutorial</a> covers reading
+every claim, including the ones that make valid tokens get rejected.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="things-that-look-like-invalid_grant-and-are-not">Things that look like <code>invalid_grant</code> and are not<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#things-that-look-like-invalid_grant-and-are-not" class="hash-link" aria-label="Direct link to things-that-look-like-invalid_grant-and-are-not" title="Direct link to things-that-look-like-invalid_grant-and-are-not" translate="no">​</a></h2>
+<p>Worth stating plainly, because the outline for this post originally listed the first one as
+an <code>invalid_grant</code> cause and testing said otherwise:</p>
+<table><thead><tr><th>Failure</th><th>What you actually get</th></tr></thead><tbody><tr><td>Wrong client secret</td><td><code>401</code> + <code>{"error":"unauthorized_client","error_description":"Invalid client or Invalid client credentials"}</code></td></tr><tr><td>Missing <code>code_challenge</code> when PKCE is required</td><td><code>302</code> back to the app with <code>error=invalid_request</code></td></tr><tr><td>Direct access grants disabled on the client</td><td><code>unauthorized_client</code></td></tr></tbody></table>
+<p>If you are looking at <code>unauthorized_client</code> or <code>invalid_client</code>, stop reading this post — the
+problem is client authentication, not the grant.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-short-version">The short version<a href="https://phasetwo.io/blog/keycloak-invalid-grant/#the-short-version" class="hash-link" aria-label="Direct link to The short version" title="Direct link to The short version" translate="no">​</a></h2>
+<ol>
+<li class="">Read <code>error_description</code>, not <code>error</code>. It names the cause.</li>
+<li class=""><code>Code not valid</code> is expired or replayed; check the event log for a <code>CODE_TO_TOKEN</code> with
+the same <code>code_id</code> to tell which.</li>
+<li class=""><code>Session doesn't have required client</code> means something replayed a grant a moment earlier.
+Find the double request; do not raise a timeout.</li>
+<li class="">Three PKCE messages, three different bugs. <code>Invalid code verifier</code> is your generator,
+<code>Code mismatch</code> is your storage.</li>
+<li class="">If you enable refresh token rotation, fix concurrent refreshes at the same time.</li>
+<li class=""><code>Invalid user credentials</code> might be a lockout. Only the server log knows.</li>
+</ol>
+<p>Keep <code>docker logs</code> on the Keycloak container open in a second terminal while you debug any of
+this. The response is deliberately vague; the log is not.</p>
+<hr>
+<p>Most of these are one-line configuration answers once you know which of the eight you are
+looking at — the expensive part is the afternoon spent finding out. If you would rather not
+spend it, Phase Two runs <a class="" href="https://phasetwo.io/hosting/dedicated-clusters/">managed Keycloak</a> with a 30-day
+Starter trial from $149/month, and the session and token settings above already tuned. If you
+are staying self-hosted, the <a class="" href="https://phasetwo.io/tutorials/">Keycloak tutorials</a> and the
+<a class="" href="https://phasetwo.io/docs/securing-applications/">securing applications docs</a> cover the client-side half of this.</p>]]></content:encoded>
+            <category>keycloak</category>
+            <category>troubleshooting</category>
+            <category>oidc</category>
+            <category>oauth2</category>
+            <category>tokens</category>
+        </item>
         <item>
             <title><![CDATA[Keycloak Skills and the Phase Two MCP Server]]></title>
             <link>https://phasetwo.io/blog/keycloak-skills-mcp-launch/</link>
@@ -1328,20 +1507,6 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
             <category>hosting</category>
             <category>open_source</category>
             <category>keycloak</category>
-        </item>
-        <item>
-            <title><![CDATA[Auth.it featured on Keycloak Friday Chat]]></title>
-            <link>https://phasetwo.io/blog/authit-on-kfc/</link>
-            <guid>https://phasetwo.io/blog/authit-on-kfc/</guid>
-            <pubDate>Mon, 15 Dec 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Phase Two's new hosting platform, Auth.it, was featured on Mr. Keycloak's livestream]]></description>
-            <content:encoded><![CDATA[<p>Phase Two has recently <a href="https://auth.it/blog/welcome" target="_blank" rel="noopener noreferrer" class="">launched</a> <a href="https://auth.it/" target="_blank" rel="noopener noreferrer" class="">Auth.it</a>, a modern authentication platform built for developers who want the power of Keycloak with the simplicity, polish, and developer experience of modern identity providers like WorkOS, Stytch, and Clerk — all at a fraction of the cost.</p>
-<p>Last Friday, Niko Köbler (aka "Mr. Keycloak"), invited us to demonstrate Auth.it and explain how we built it on his livestream, <a href="https://www.n-k.de/2025/12/kfc-keycloak-friday-chat-xmas-edition-authit-phase-two.html" target="_blank" rel="noopener noreferrer" class="">Keycloak Friday Chat</a>. If you're interested in an overview of the new platform, and would like to know the details of how it was implemented as a set of Keycloak extensions, please <a href="https://www.youtube.com/watch?v=a2thzEs35ws" target="_blank" rel="noopener noreferrer" class="">watch the recording of the livestream</a>.</p>]]></content:encoded>
-            <category>phase_two</category>
-            <category>hosting</category>
-            <category>open_source</category>
-            <category>keycloak</category>
-            <category>authit</category>
         </item>
     </channel>
 </rss>
