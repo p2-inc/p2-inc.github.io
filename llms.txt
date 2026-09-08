@@ -136,6 +136,10 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Spring Boot Keycloak Authentication: Tested Example](https://phasetwo.io/tutorials/securing-applications/spring-boot/): A tested Spring Boot Keycloak authentication example — resource server config, realm role mapping, audience validation, Docker, and every 401 explained.
 - [Validating Keycloak Tokens in Any Backend](https://phasetwo.io/tutorials/securing-applications/validating-tokens/): How to verify a Keycloak access token in your backend — the full check order, JWKS caching, key rotation, and when introspection is the only option that works.
 
+## Monthly updates
+
+- [Phase Two monthly updates](https://phasetwo.io/updates/): What shipped in Phase Two, what changed in official Keycloak including security fixes, and what we published — one summary a month, archived here.
+
 ## Guides
 
 - [Guides](https://phasetwo.io/guides/): Coming soon!
