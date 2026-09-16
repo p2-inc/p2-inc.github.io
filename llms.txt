@@ -124,6 +124,8 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 ## Keycloak tutorials
 
 - [Keycloak Tutorials](https://phasetwo.io/tutorials/): Practical, tested Keycloak tutorials — every one runs on plain open-source Keycloak, with the admin console and CLI steps side by side.
+- [Set Up TOTP Multi-Factor Authentication in Keycloak](https://phasetwo.io/tutorials/authentication/totp-mfa/): Turn on Keycloak MFA with TOTP for every user, including existing ones — the OTP policy, the two flow changes that actually enforce it, and what silently breaks.
+- [Authentication](https://phasetwo.io/tutorials/category/authentication/)
 - [Getting started](https://phasetwo.io/tutorials/category/getting-started/)
 - [Mobile apps](https://phasetwo.io/tutorials/category/mobile-apps/)
 - [Securing applications](https://phasetwo.io/tutorials/category/securing-applications/)
