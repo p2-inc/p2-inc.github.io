@@ -255,7 +255,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 ## Blog
 
 - [Blog](https://phasetwo.io/blog/): Learn more about how we make Keycloak Hosting and Authentication easy.
-- [Keycloak Custom Domains Can Now Serve App Association Files](https://phasetwo.io/blog/app-association-custom-domains/): Phase Two custom domains can now serve apple-app-site-association, assetlinks.json and a change-password redirect, so mobile apps can autofill saved passwords and share passkeys with a Keycloak login page.
+- [Keycloak Custom Domains Can Now Serve App Association Files](https://phasetwo.io/blog/app-association-custom-domains/): Phase Two custom domains can now serve apple-app-site-association and assetlinks.json, so mobile apps can autofill saved passwords and share passkeys with a Keycloak login page.
 - [Auth.it featured on Keycloak Friday Chat](https://phasetwo.io/blog/authit-on-kfc/): Phase Two's new hosting platform, Auth.it, was featured on Mr. Keycloak's livestream
 - [Cluster Observability and Logs](https://phasetwo.io/blog/cluster-observability-and-logs/): Phase Two now includes built-in observability for dedicated clusters, starting with log downloads via the self-service dashboard.
 - [Cockroach Labs features Phase Two's Managed Keycloak Hosting](https://phasetwo.io/blog/cockroach-labs-features-phasetwo-managed-keycloak-hosting/): Cockroach Labs highlights Phase Two's managed Keycloak hosting platform in their latest blog post.
