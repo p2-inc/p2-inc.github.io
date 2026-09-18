@@ -2,11 +2,162 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
-    <updated>2026-09-16T00:00:00.000Z</updated>
+    <updated>2026-09-18T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.svg</icon>
+    <entry>
+        <title type="html"><![CDATA[Keycloak Clusters as Code: The Phase Two Management API, API Credentials and Terraform Provider]]></title>
+        <id>https://phasetwo.io/blog/phasetwo-management-api/</id>
+        <link href="https://phasetwo.io/blog/phasetwo-management-api/"/>
+        <updated>2026-09-18T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Every action in the Phase Two console is now an API call. 82 endpoints, an API credential you mint yourself, and an experimental Terraform provider generated from the same spec.]]></summary>
+        <content type="html"><![CDATA[<p>Everything you can do in the Phase Two console, you can now do from code.</p>
+<p>Create a dedicated Keycloak cluster. Add a realm to it. Attach a custom domain and watch the
+certificate get issued. Upload a custom provider. Restrict the admin console to your office IP
+range. Pull yesterday's logs.</p>
+<p>Three things shipped together, because none of them is much use alone: the <strong>Management API</strong>, the
+<strong>API credentials</strong> that authenticate to it, and a <strong>Terraform provider</strong> generated from the same
+spec.</p>
+<p>All three are <strong>experimental</strong> for now. The console marks API credentials as such, and the
+Terraform provider is at <code>0.1.0</code>. Point them at test environments rather than production while the
+surface settles.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="why-this-exists">Why this exists<a href="https://phasetwo.io/blog/phasetwo-management-api/#why-this-exists" class="hash-link" aria-label="Direct link to Why this exists" title="Direct link to Why this exists" translate="no">​</a></h2>
+<p>Phase Two runs dedicated Keycloak clusters. Until now, provisioning one meant clicking through the
+console — fine the first time, less fine when you are standing up a realm per customer, rebuilding
+a staging environment weekly, or trying to make a production change with a reviewable audit trail.</p>
+<p>The console was the only interface. Now it is one of three.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-management-api">The Management API<a href="https://phasetwo.io/blog/phasetwo-management-api/#the-management-api" class="hash-link" aria-label="Direct link to The Management API" title="Direct link to The Management API" translate="no">​</a></h2>
+<p>82 endpoints in nine groups. It is the <strong>control plane</strong>: it manages clusters themselves and
+everything attached to them.</p>
+<table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><strong>Clusters</strong></td><td>Create, inspect, delete; regions, name availability, metrics, restart status</td></tr><tr><td><strong>Realms</strong></td><td>Add and remove realms on a cluster; import an existing realm export</td></tr><tr><td><strong>Custom domains</strong></td><td>Attach a hostname, read the DNS records to create, promote to primary</td></tr><tr><td><strong>Extensions</strong></td><td>Upload custom providers and themes, manage per-version builds</td></tr><tr><td><strong>Configuration</strong></td><td>Custom SPI environment variables; admin and realm IP allow/deny lists</td></tr><tr><td><strong>Credentials</strong></td><td>Per-realm admin credentials for driving Keycloak's own API</td></tr><tr><td><strong>Operations</strong></td><td>List and download logs</td></tr><tr><td><strong>Billing</strong></td><td>Subscriptions, payment methods, billing contacts</td></tr></tbody></table>
+<p>What it deliberately does <em>not</em> do is reach inside a realm. There is no endpoint here to create a
+user or a client — those belong to Keycloak's own Admin REST API, and to
+<a href="https://phasetwo.io/api/extensions-api-index" target="_blank" rel="noopener noreferrer" class="">our extensions to it</a>, pointed at your cluster.</p>
+<p>That division is the thing people trip on, so it is worth stating once: <strong>the Management API gets
+you a realm; Keycloak's API configures it.</strong> One creates the box, the other works inside it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="api-credentials">API credentials<a href="https://phasetwo.io/blog/phasetwo-management-api/#api-credentials" class="hash-link" aria-label="Direct link to API credentials" title="Direct link to API credentials" translate="no">​</a></h2>
+<p>An <strong>API secret</strong> is an OIDC client-credentials client scoped to your team. Create one in the
+console under your team's <strong>API Credentials</strong> tab — client ID and secret, and the secret is shown
+exactly once.</p>
+<p>Then the standard exchange:</p>
+<div class="language-bash codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-bash codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">TOKEN=$(curl -s -X POST \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  https://app.phasetwo.io/auth/realms/self/protocol/openid-connect/token \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  -d grant_type=client_credentials \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  -d client_id="$PHASETWO_CLIENT_ID" \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  -d client_secret="$PHASETWO_CLIENT_SECRET" | jq -r .access_token)</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">curl -s https://api.phasetwo.io/v2/clusters -H "Authorization: Bearer $TOKEN" | jq</span><br></div></code></pre></div></div>
+<p>Note the two hostnames. You authenticate against <code>app.phasetwo.io</code> — the console host, which owns
+the token endpoint — and you call <code>api.phasetwo.io</code>. Two different hosts in one script is unusual
+enough to deserve a comment where you write it down.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="least-privilege-is-real-here">Least privilege is real here<a href="https://phasetwo.io/blog/phasetwo-management-api/#least-privilege-is-real-here" class="hash-link" aria-label="Direct link to Least privilege is real here" title="Direct link to Least privilege is real here" translate="no">​</a></h3>
+<p>A secret holds <strong>organization roles</strong>, and the API checks them per operation. A secret created with
+only view roles returns <code>200</code> on reads and <code>403</code> on writes:</p>
+<div class="language-bash codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-bash codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain"># a monitoring job's secret: view roles only</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">curl -s $API/clusters/$ID/metrics -H "Authorization: Bearer $TOKEN"   # 200</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">curl -s -X DELETE $API/clusters/$ID -H "Authorization: Bearer $TOKEN" # 403</span><br></div></code></pre></div></div>
+<p>You can only grant roles you hold yourself, so a secret cannot escalate. Create one per consumer
+rather than one shared credential with everything — revoking a narrow secret then does not break
+four other jobs. Ten per organization.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-terraform-provider">The Terraform provider<a href="https://phasetwo.io/blog/phasetwo-management-api/#the-terraform-provider" class="hash-link" aria-label="Direct link to The Terraform provider" title="Direct link to The Terraform provider" translate="no">​</a></h2>
+<p><strong>Experimental — test environments only.</strong> It is <code>0.1.0</code>: resource and attribute shapes may still
+change in backwards-incompatible ways, and what it manages is real, billable infrastructure.
+Replacing a <code>phasetwo_cluster</code> destroys it and every realm on it, and destroying one keeps billing
+and holds the name until the end of the billing cycle. Pin an exact version while it is at <code>0.x</code>,
+and try it somewhere you do not mind breaking first.</p>
+<p>The same surface, declaratively. <code>internal/client</code> is generated by <code>oapi-codegen</code> from the same
+OpenAPI document that generates the <a href="https://phasetwo.io/api/management-api-index" target="_blank" rel="noopener noreferrer" class="">API reference</a>,
+so the two cannot drift.</p>
+<div class="language-hcl codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-hcl codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">data "phasetwo_organization" "team" {</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  name = "acme"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">}</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">data "phasetwo_payment_method" "default" {</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  organization_id = data.phasetwo_organization.team.id</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  default         = true</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">}</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">resource "phasetwo_cluster" "main" {</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  name              = "acme-prod"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  region            = "US_EAST_1"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  tier              = "premium"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  organization_id   = data.phasetwo_organization.team.id</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  payment_method_id = data.phasetwo_payment_method.default.id</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">}</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">resource "phasetwo_realm" "production" {</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  cluster_id = phasetwo_cluster.main.id</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  name       = "production"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">}</span><br></div></code></pre></div></div>
+<p>Organizations and payment methods are <strong>referenced, not managed</strong> — both involve flows that only
+make sense in a browser, so you create them in the console and look them up.</p>
+<p>The reason to use the provider rather than the API directly is that the interesting parts of
+cluster management are exactly the parts that are annoying to write by hand, and the provider has
+already written them. Provisioning is asynchronous, so something has to poll for <code>ACTIVE</code>.
+Environment variable and extension changes restart Keycloak, and the API rejects a second restart
+while one is in flight, so they have to be serialized and waited on. Deletes are deferred. Custom
+domains need DNS records you create between two API calls.</p>
+<p>Every one of those is a loop, a retry or an ordering constraint in a shell script. In the provider
+they are the provider's problem. The honest trade: an apply that touches many environment variables
+takes as long as that many Keycloak restarts. It is not free; it is just correct.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-part-we-are-actually-pleased-with">The part we are actually pleased with<a href="https://phasetwo.io/blog/phasetwo-management-api/#the-part-we-are-actually-pleased-with" class="hash-link" aria-label="Direct link to The part we are actually pleased with" title="Direct link to The part we are actually pleased with" translate="no">​</a></h2>
+<p>Terraform's classic dead end is configuring a provider from a resource created in the same apply.
+Standing up a Keycloak cluster and then configuring the realm inside it is exactly that shape, and
+it is why "use the Keycloak provider afterwards" used to mean a second root module and a manual
+credential handoff.</p>
+<p>It is now one apply:</p>
+<div class="language-hcl codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-hcl codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">resource "phasetwo_realm_credential" "terraform" {</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  realm_id = phasetwo_realm.production.id</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  name     = "terraform"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">}</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">ephemeral "phasetwo_realm_credential_secret" "terraform" {</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  realm_id  = phasetwo_realm.production.id</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  client_id = phasetwo_realm_credential.terraform.client_id</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">}</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">provider "keycloak" {</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  url           = phasetwo_realm_credential.terraform.server_url</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  realm         = phasetwo_realm_credential.terraform.realm</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  client_id     = phasetwo_realm_credential.terraform.client_id</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  client_secret = ephemeral.phasetwo_realm_credential_secret.terraform.client_secret</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  initial_login = false</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">}</span><br></div></code></pre></div></div>
+<p><code>terraform apply</code> creates the cluster, creates the realm, mints a credential on that realm, and
+uses it to configure clients, identity providers and flows inside — in one pass. <code>terraform destroy</code> orders correctly too, because Terraform infers the dependency through the provider block.</p>
+<p>Two things in there are doing more work than they look like they are.</p>
+<p><strong><code>ephemeral</code> keeps a <code>realm-admin</code> secret out of your state file.</strong> Terraform writes every resource
+attribute to <code>terraform.tfstate</code>, which is very often an unencrypted file in an object store.
+<a href="https://developer.hashicorp.com/terraform/language/resources/ephemeral" target="_blank" rel="noopener noreferrer" class="">Ephemeral resources</a> are
+never written to state or plan files, so the secret exists only for the duration of the run. That is
+why <code>phasetwo_realm_credential</code> has <strong>no</strong> <code>client_secret</code> attribute at all — exposing one would
+quietly undo the whole arrangement. Needs Terraform 1.10 or later.</p>
+<p><strong><code>initial_login = false</code> is not optional.</strong> The Keycloak provider authenticates when Terraform
+<em>configures</em> it, which happens during <code>plan</code> — against a cluster that does not exist yet. Without
+it you get <code>failed to perform initial login to Keycloak: ... 401 Unauthorized</code> before anything has
+been created. The trade is that a wrong credential is no longer caught at plan time; it surfaces
+during apply.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="it-is-your-credential-not-ours">It is your credential, not ours<a href="https://phasetwo.io/blog/phasetwo-management-api/#it-is-your-credential-not-ours" class="hash-link" aria-label="Direct link to It is your credential, not ours" title="Direct link to It is your credential, not ours" translate="no">​</a></h3>
+<p>A realm credential is a service-account client on your realm, <code>api-terraform-9f3c1a2b</code>, with the
+<code>realm-management</code> roles you asked for — <code>realm-admin</code> by default, narrower if you say so:</p>
+<div class="language-bash codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-bash codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">curl -s -X POST "https://api.phasetwo.io/v2/deployments/$DEPLOYMENT_ID/credentials" \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">  -d '{"name": "audit", "roles": ["view-users", "view-realm", "view-events"]}'</span><br></div></code></pre></div></div>
+<p>It is deliberately <strong>not</strong> the client Phase Two administers your realm with. Handing you ours would
+put our credential in your state file, where a leak would compromise our access and we could not
+rotate without breaking ourselves. Different holders, different lifetimes, different revocation
+needs.</p>
+<p>We keep no copy of the secret. Listing, revocation and read-back all work by asking your realm —
+which is also why fetching it on every apply is safe: reading does not rotate it. Create one per
+pipeline, per environment or per engineer, and a leak costs you one revocation rather than a
+rotation everywhere.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="three-things-that-will-bite-you">Three things that will bite you<a href="https://phasetwo.io/blog/phasetwo-management-api/#three-things-that-will-bite-you" class="hash-link" aria-label="Direct link to Three things that will bite you" title="Direct link to Three things that will bite you" translate="no">​</a></h2>
+<p>We would rather tell you now than have you find out on a Friday.</p>
+<p><strong>Provisioning is asynchronous.</strong> <code>POST /clusters</code> returns before the cluster exists. Poll <code>status</code>
+until <code>ACTIVE</code>; don't sleep-and-hope.</p>
+<p><strong>Some changes restart Keycloak.</strong> Adding an environment variable or reconciling extensions
+restarts the cluster's Keycloak. The API refuses a second one while the first is in flight — a
+<code>409</code>, deliberately, rather than queuing it silently.</p>
+<p><strong>Deleting a cluster is deferred, and the name stays reserved.</strong> Unless it never completed billing
+setup, delete moves the cluster to <code>PENDING_DELETION</code>, bills to the end of the period, and holds its
+name. A create/destroy/recreate loop on one name will fail on the second create. Use distinct names
+in ephemeral environments.</p>
+<p>And one more, specific to the API: supply <code>payment_method_id</code> on cluster create and the subscription
+is charged directly. <strong>Omit it and you get a Stripe Checkout link back instead</strong> — which needs a
+browser and cannot be completed from a script. The response has three documented shapes; branch on
+which one you got.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-spec-is-the-product">The spec is the product<a href="https://phasetwo.io/blog/phasetwo-management-api/#the-spec-is-the-product" class="hash-link" aria-label="Direct link to The spec is the product" title="Direct link to The spec is the product" translate="no">​</a></h2>
+<p>The whole surface is one OpenAPI 3 document, and it is what generates both the reference pages and
+the Terraform client:</p>
+<ul>
+<li class=""><a href="https://phasetwo.io/openapi-management.yaml" target="_blank" rel="noopener noreferrer" class=""><code>/openapi-management.yaml</code></a></li>
+<li class=""><a href="https://phasetwo.io/openapi-management.json" target="_blank" rel="noopener noreferrer" class=""><code>/openapi-management.json</code></a></li>
+</ul>
+<p>Operation IDs are <code>{resource}.{operation}</code> — <code>cluster.list</code>, <code>cluster.domain.detail</code>,
+<code>org.apiSecret.create</code> — mirroring the URL hierarchy, so an ID tells you where an endpoint sits
+without a lookup. Generated clients derive method names from them, which is also why they are
+stable.</p>
+<p>Point a generator at it and you have a client in whatever language you like.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="start-here">Start here<a href="https://phasetwo.io/blog/phasetwo-management-api/#start-here" class="hash-link" aria-label="Direct link to Start here" title="Direct link to Start here" translate="no">​</a></h2>
+<ul>
+<li class=""><a href="https://phasetwo.io/docs/management-api/api-keys" target="_blank" rel="noopener noreferrer" class=""><strong>API keys</strong></a> — create a secret, get a token,
+make a call</li>
+<li class=""><a href="https://phasetwo.io/docs/management-api/recipes" target="_blank" rel="noopener noreferrer" class=""><strong>Automation recipes</strong></a> — provision a cluster,
+onboard a tenant, attach a domain, rotate credentials</li>
+<li class=""><a href="https://phasetwo.io/docs/management-api/terraform" target="_blank" rel="noopener noreferrer" class=""><strong>Terraform provider</strong></a> <em>(experimental)</em> — setup, resources,
+and the surprises above in full</li>
+<li class=""><a href="https://phasetwo.io/api/management-api-index" target="_blank" rel="noopener noreferrer" class=""><strong>API reference</strong></a> — all 82 endpoints with try-it</li>
+</ul>
+<p>Available now to every Phase Two account. If you build something with it we would like to hear
+about it.</p>]]></content>
+        <author>
+            <name>GR Patil</name>
+            <uri>https://github.com/xgp</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="api" term="api"/>
+        <category label="terraform" term="terraform"/>
+        <category label="automation" term="automation"/>
+        <category label="dedicated_clusters" term="dedicated_clusters"/>
+        <category label="config_as_code" term="config_as_code"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Keycloak 26.7.4: 6 CVEs, Two Unauthenticated DoS]]></title>
         <id>https://phasetwo.io/blog/keycloak-2674-released/</id>
@@ -1810,27 +1961,5 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
         <category label="caching" term="caching"/>
         <category label="performance" term="performance"/>
         <category label="extensions" term="extensions"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Cluster Observability and Logs]]></title>
-        <id>https://phasetwo.io/blog/cluster-observability-and-logs/</id>
-        <link href="https://phasetwo.io/blog/cluster-observability-and-logs/"/>
-        <updated>2026-02-04T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Phase Two now includes built-in observability for dedicated clusters, starting with log downloads via the self-service dashboard.]]></summary>
-        <content type="html"><![CDATA[<p>We’re excited to announce built-in observability for dedicated clusters, starting with <strong>log downloads</strong> in the Phase Two dashboard.</p>
-<p>Access to logs is essential for monitoring health, diagnosing incidents, and understanding performance. With this initial release, you can filter logs by time range and download them as a zip file for offline analysis. This helps teams quickly pinpoint issues and keep their services running smoothly.</p>
-<p>Next up: <strong>live log streaming</strong> and <strong>exports to external systems</strong>, giving you more flexibility for centralized log management and analysis.</p>
-<p>Learn more in the <a href="https://phasetwo.io/docs/self-service/observability/" target="_blank" rel="noopener noreferrer" class="">Observability and Logs documentation</a>.</p>
-<p>Ready to try it? Log in to the <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a> and view logs for your cluster. This feature is included with all <strong>dedicated cluster plans</strong>. Questions? Reach us at <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a>.</p>]]></content>
-        <author>
-            <name>Jeff Patzer</name>
-            <uri>https://github.com/pnzrr</uri>
-        </author>
-        <category label="phase_two" term="phase_two"/>
-        <category label="hosting" term="hosting"/>
-        <category label="open_source" term="open_source"/>
-        <category label="keycloak" term="keycloak"/>
-        <category label="observability" term="observability"/>
-        <category label="logs" term="logs"/>
     </entry>
 </feed>
