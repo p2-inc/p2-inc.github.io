@@ -2,11 +2,73 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://phasetwo.io/blog/</id>
     <title>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</title>
-    <updated>2026-09-18T00:00:00.000Z</updated>
+    <updated>2026-09-21T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://phasetwo.io/blog/"/>
     <subtitle>Managed Keycloak Hosting and Enterprise Keycloak Support Blog</subtitle>
     <icon>https://phasetwo.io/img/favicon.svg</icon>
+    <entry>
+        <title type="html"><![CDATA[Experimental: ship your Keycloak logs and events to your own OTLP endpoint]]></title>
+        <id>https://phasetwo.io/blog/telemetry-export-experimental/</id>
+        <link href="https://phasetwo.io/blog/telemetry-export-experimental/"/>
+        <updated>2026-09-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Telemetry Export streams your Enterprise cluster's Keycloak logs and authentication events to your own observability system over OTLP. Experimental, and available now on request.]]></summary>
+        <content type="html"><![CDATA[<p>We're shipping an experimental <strong>Telemetry Export</strong> for Enterprise Keycloak clusters. Point it at your own OTLP endpoint and your cluster's Keycloak logs and authentication events start arriving in whatever you already run — OpenSearch, Datadog, Grafana, SigNoz, Elastic, or your own OpenTelemetry Collector.</p>
+<p>No agent to install, no log shipper to configure, and nothing to run on your side except the collector you already have.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="why-when-the-dashboard-already-shows-you-this">Why, when the dashboard already shows you this<a href="https://phasetwo.io/blog/telemetry-export-experimental/#why-when-the-dashboard-already-shows-you-this" class="hash-link" aria-label="Direct link to Why, when the dashboard already shows you this" title="Direct link to Why, when the dashboard already shows you this" translate="no">​</a></h2>
+<p><a class="" href="https://phasetwo.io/blog/observability-launch/">Observability</a> gave every dedicated cluster metrics and logs in the Phase Two dashboard with zero setup, and for most teams that is the whole answer. But a pattern kept coming back in support conversations, and it was always the same shape:</p>
+<blockquote>
+<p>"Our SOC correlates authentication failures with everything else. Keycloak is the one system where we have to go and look somewhere separate."</p>
+</blockquote>
+<p>That is a fair complaint, and it isn't one a better dashboard fixes. If your incident response starts in Splunk, or your retention policy is written around your own S3 bucket, or your on-call alerting lives in a rule engine that has never heard of us, then the right place for Keycloak data is <em>your</em> system, not ours.</p>
+<p>So this feature is deliberately not another view. It is a pipe.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-it-looks-like">What it looks like<a href="https://phasetwo.io/blog/telemetry-export-experimental/#what-it-looks-like" class="hash-link" aria-label="Direct link to What it looks like" title="Direct link to What it looks like" translate="no">​</a></h2>
+<div class="theme-admonition theme-admonition-info admonition_Y66Y alert alert--info"><div class="admonitionHeading_Feou"><span class="admonitionIcon_RBEH"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>Available on Enterprise</div><div class="admonitionContent_oUgd"><p>Telemetry Export is part of the <strong>Enterprise</strong> tier. On Starter and Premium the <strong>Logs → Export</strong> page shows an upgrade note instead. <a class="" href="https://phasetwo.io/pricing/">Compare plans</a> or change your plan from <strong>Clusters &gt; Cluster &gt; Config &gt; Subscription</strong>.</p></div></div>
+<figure><img src="https://phasetwo.io/blog/2026-09-21-log-export-setup.png" alt="The Logs Export setup screen in the Phase Two Keycloak dashboard."><figcaption>Open <strong>Logs → Export</strong> on your cluster, enter an HTTPS OTLP endpoint and a bearer token, and save.</figcaption></figure>
+<p>That's the feature. Configuration is data in the control plane, so there is no ticket to file, no Terraform to apply, and nothing on your cluster restarts when you change it. A change takes a couple of minutes to reach the exporter — not instant, and we'd rather say so than round it down.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-data-model-is-the-interesting-part">The data model is the interesting part<a href="https://phasetwo.io/blog/telemetry-export-experimental/#the-data-model-is-the-interesting-part" class="hash-link" aria-label="Direct link to The data model is the interesting part" title="Direct link to The data model is the interesting part" translate="no">​</a></h2>
+<p>OTLP gives you a wire format. It does not tell you what the records should look like, and that's where the design work went.</p>
+<p><strong>Everything is the OTLP logs signal.</strong> Authentication events are structured log records, not traces. Keycloak doesn't emit traces, and pretending an event is a span helps nobody.</p>
+<p><strong>Events are rebuilt, not forwarded.</strong> Keycloak emits events into the log stream as a carrier line with a map of fields attached. Forwarding that verbatim would hand you a string to regex. Instead each event is reconstructed into flat attributes:</p>
+<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">phasetwo.signal      = "event"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.event.type  = "LOGIN_ERROR"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.event.error = "invalid_user_credentials"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.realm.name  = "customers"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.user.id     = "…"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.client.id   = "web-app"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">client.address       = "…"</span><br></div></code></pre></div></div>
+<p>So <code>phasetwo.signal:"event" AND keycloak.event.type:"LOGIN_ERROR"</code> is a first-class query in your backend rather than a pattern match against message text.</p>
+<p><strong>Severity is derived for events.</strong> Keycloak logs a failed login at <code>INFO</code>, because from the logger's point of view nothing went wrong. That makes <code>severity &gt;= WARN</code> — the single most useful filter anyone writes against this data — match nothing. We set <code>WARN</code> when an event carries an error, and we emit the numeric <code>SeverityNumber</code> alongside the text, because most backends filter on the number and quietly ignore rules built on the text alone.</p>
+<p><strong>Event timestamps are the event's time</strong>, not the time its log line was written.</p>
+<p><strong>Our infrastructure is not in your data.</strong> Pod names, node names, internal addresses, and account identifiers are excluded by an allowlist rather than a blocklist — so a field some future Keycloak version adds is excluded by default rather than leaked by default. You should not have to understand our deployment topology to query your own logs.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-happens-when-your-endpoint-goes-down">What happens when your endpoint goes down<a href="https://phasetwo.io/blog/telemetry-export-experimental/#what-happens-when-your-endpoint-goes-down" class="hash-link" aria-label="Direct link to What happens when your endpoint goes down" title="Direct link to What happens when your endpoint goes down" translate="no">​</a></h2>
+<p>It will, eventually, and the honest answer matters more than the optimistic one.</p>
+<p>Records queue on disk in your cluster's region and are retried indefinitely. Nothing is lost while your collector is away, and nothing is lost by anyone else either — each destination has its own queue and its own retry state, so one broken endpoint cannot affect another customer or the dashboard views you already rely on.</p>
+<p>If an endpoint stays down long enough for that queue to fill, the oldest records are discarded. For a typical cluster that is days rather than hours. We alert on both the stall and the drop and will get in touch — but we deliberately don't claim to know what happened <em>after</em> delivery. If your collector accepts a record and your pipeline drops it downstream, that looks like success from here.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-experimental-means-here">What "experimental" means here<a href="https://phasetwo.io/blog/telemetry-export-experimental/#what-experimental-means-here" class="hash-link" aria-label="Direct link to What &quot;experimental&quot; means here" title="Direct link to What &quot;experimental&quot; means here" translate="no">​</a></h2>
+<p>Concretely:</p>
+<ul>
+<li class=""><strong>Enterprise only.</strong> Not available on Starter or Premium.</li>
+<li class=""><strong>The attribute names and record shape may change</strong> in a backwards-incompatible way. If you build dashboards on <code>keycloak.event.type</code> today, expect to revisit them.</li>
+<li class=""><strong>Logs and events are all or nothing.</strong> You cannot take events without logs yet.</li>
+<li class=""><strong>Logs only.</strong> No metrics, no traces.</li>
+<li class=""><strong>One destination per cluster.</strong> Fan out with a collector on your side.</li>
+<li class=""><strong>No filtering, sampling, or redaction options.</strong> Records go as Keycloak produces them — which means <strong>exported events contain end-user IP addresses and user IDs in the clear</strong>. Make sure the destination is a place those belong under your own obligations.</li>
+</ul>
+<p>The pipeline itself is running in all our production regions and delivering. The experimental label is about the contract, not the plumbing.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="try-it">Try it<a href="https://phasetwo.io/blog/telemetry-export-experimental/#try-it" class="hash-link" aria-label="Direct link to Try it" title="Direct link to Try it" translate="no">​</a></h2>
+<p>Telemetry Export is not enabled on every account yet, even on Enterprise. If you want it turned on for an Enterprise cluster, email <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a> and tell us what you're sending it to — the backend you name genuinely shapes what we build next, particularly around per-signal selection and attribute mapping.</p>
+<p>On Starter or Premium and want to try it? Tell us that too. We would rather hear the use case than have you assume the answer is no.</p>
+<p>The full reference, including every attribute, the delivery semantics, and the endpoint requirements, is in <a class="" href="https://phasetwo.io/docs/self-service/telemetry-export/">Telemetry Export</a>.</p>
+<p>And if your collector lives behind a firewall, <a class="" href="https://phasetwo.io/docs/self-service/egress-ip-addresses/">our egress IP addresses</a> are published and stable.</p>]]></content>
+        <author>
+            <name>GR Patil</name>
+            <uri>https://github.com/xgp</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="hosting" term="hosting"/>
+        <category label="self-service" term="self-service"/>
+        <category label="observability" term="observability"/>
+        <category label="opentelemetry" term="opentelemetry"/>
+        <category label="otlp" term="otlp"/>
+        <category label="logs" term="logs"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="dedicated-clusters" term="dedicated-clusters"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Keycloak Clusters as Code: The Phase Two Management API, API Credentials and Terraform Provider]]></title>
         <id>https://phasetwo.io/blog/phasetwo-management-api/</id>
@@ -157,68 +219,6 @@ about it.</p>]]></content>
         <category label="automation" term="automation"/>
         <category label="dedicated_clusters" term="dedicated_clusters"/>
         <category label="config_as_code" term="config_as_code"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Experimental: ship your Keycloak logs and events to your own OTLP endpoint]]></title>
-        <id>https://phasetwo.io/blog/telemetry-export-experimental/</id>
-        <link href="https://phasetwo.io/blog/telemetry-export-experimental/"/>
-        <updated>2026-09-18T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Telemetry Export streams your Enterprise cluster's Keycloak logs and authentication events to your own observability system over OTLP. Experimental, and available now on request.]]></summary>
-        <content type="html"><![CDATA[<p>We're shipping an experimental <strong>Telemetry Export</strong> for Enterprise Keycloak clusters. Point it at your own OTLP endpoint and your cluster's Keycloak logs and authentication events start arriving in whatever you already run — OpenSearch, Datadog, Grafana, SigNoz, Elastic, or your own OpenTelemetry Collector.</p>
-<p>No agent to install, no log shipper to configure, and nothing to run on your side except the collector you already have.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="why-when-the-dashboard-already-shows-you-this">Why, when the dashboard already shows you this<a href="https://phasetwo.io/blog/telemetry-export-experimental/#why-when-the-dashboard-already-shows-you-this" class="hash-link" aria-label="Direct link to Why, when the dashboard already shows you this" title="Direct link to Why, when the dashboard already shows you this" translate="no">​</a></h2>
-<p><a class="" href="https://phasetwo.io/blog/observability-launch/">Observability</a> gave every dedicated cluster metrics and logs in the Phase Two dashboard with zero setup, and for most teams that is the whole answer. But a pattern kept coming back in support conversations, and it was always the same shape:</p>
-<blockquote>
-<p>"Our SOC correlates authentication failures with everything else. Keycloak is the one system where we have to go and look somewhere separate."</p>
-</blockquote>
-<p>That is a fair complaint, and it isn't one a better dashboard fixes. If your incident response starts in Splunk, or your retention policy is written around your own S3 bucket, or your on-call alerting lives in a rule engine that has never heard of us, then the right place for Keycloak data is <em>your</em> system, not ours.</p>
-<p>So this feature is deliberately not another view. It is a pipe.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-it-looks-like">What it looks like<a href="https://phasetwo.io/blog/telemetry-export-experimental/#what-it-looks-like" class="hash-link" aria-label="Direct link to What it looks like" title="Direct link to What it looks like" translate="no">​</a></h2>
-<div class="theme-admonition theme-admonition-info admonition_Y66Y alert alert--info"><div class="admonitionHeading_Feou"><span class="admonitionIcon_RBEH"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>Available on Enterprise</div><div class="admonitionContent_oUgd"><p>Telemetry Export is part of the <strong>Enterprise</strong> tier. On Starter and Premium the <strong>Logs → Export</strong> page shows an upgrade note instead. <a class="" href="https://phasetwo.io/pricing/">Compare plans</a> or change your plan from <strong>Clusters &gt; Cluster &gt; Config &gt; Subscription</strong>.</p></div></div>
-<figure><img src="https://phasetwo.io/blog/2026-09-18-log-export-setup.png" alt="The Logs Export setup screen in the Phase Two Keycloak dashboard."><figcaption>Open <strong>Logs → Export</strong> on your cluster, enter an HTTPS OTLP endpoint and a bearer token, and save.</figcaption></figure>
-<p>That's the feature. Configuration is data in the control plane, so there is no ticket to file, no Terraform to apply, and nothing on your cluster restarts when you change it. A change takes a couple of minutes to reach the exporter — not instant, and we'd rather say so than round it down.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-data-model-is-the-interesting-part">The data model is the interesting part<a href="https://phasetwo.io/blog/telemetry-export-experimental/#the-data-model-is-the-interesting-part" class="hash-link" aria-label="Direct link to The data model is the interesting part" title="Direct link to The data model is the interesting part" translate="no">​</a></h2>
-<p>OTLP gives you a wire format. It does not tell you what the records should look like, and that's where the design work went.</p>
-<p><strong>Everything is the OTLP logs signal.</strong> Authentication events are structured log records, not traces. Keycloak doesn't emit traces, and pretending an event is a span helps nobody.</p>
-<p><strong>Events are rebuilt, not forwarded.</strong> Keycloak emits events into the log stream as a carrier line with a map of fields attached. Forwarding that verbatim would hand you a string to regex. Instead each event is reconstructed into flat attributes:</p>
-<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">phasetwo.signal      = "event"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.event.type  = "LOGIN_ERROR"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.event.error = "invalid_user_credentials"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.realm.name  = "customers"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.user.id     = "…"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.client.id   = "web-app"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">client.address       = "…"</span><br></div></code></pre></div></div>
-<p>So <code>phasetwo.signal:"event" AND keycloak.event.type:"LOGIN_ERROR"</code> is a first-class query in your backend rather than a pattern match against message text.</p>
-<p><strong>Severity is derived for events.</strong> Keycloak logs a failed login at <code>INFO</code>, because from the logger's point of view nothing went wrong. That makes <code>severity &gt;= WARN</code> — the single most useful filter anyone writes against this data — match nothing. We set <code>WARN</code> when an event carries an error, and we emit the numeric <code>SeverityNumber</code> alongside the text, because most backends filter on the number and quietly ignore rules built on the text alone.</p>
-<p><strong>Event timestamps are the event's time</strong>, not the time its log line was written.</p>
-<p><strong>Our infrastructure is not in your data.</strong> Pod names, node names, internal addresses, and account identifiers are excluded by an allowlist rather than a blocklist — so a field some future Keycloak version adds is excluded by default rather than leaked by default. You should not have to understand our deployment topology to query your own logs.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-happens-when-your-endpoint-goes-down">What happens when your endpoint goes down<a href="https://phasetwo.io/blog/telemetry-export-experimental/#what-happens-when-your-endpoint-goes-down" class="hash-link" aria-label="Direct link to What happens when your endpoint goes down" title="Direct link to What happens when your endpoint goes down" translate="no">​</a></h2>
-<p>It will, eventually, and the honest answer matters more than the optimistic one.</p>
-<p>Records queue on disk in your cluster's region and are retried indefinitely. Nothing is lost while your collector is away, and nothing is lost by anyone else either — each destination has its own queue and its own retry state, so one broken endpoint cannot affect another customer or the dashboard views you already rely on.</p>
-<p>If an endpoint stays down long enough for that queue to fill, the oldest records are discarded. For a typical cluster that is days rather than hours. We alert on both the stall and the drop and will get in touch — but we deliberately don't claim to know what happened <em>after</em> delivery. If your collector accepts a record and your pipeline drops it downstream, that looks like success from here.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-experimental-means-here">What "experimental" means here<a href="https://phasetwo.io/blog/telemetry-export-experimental/#what-experimental-means-here" class="hash-link" aria-label="Direct link to What &quot;experimental&quot; means here" title="Direct link to What &quot;experimental&quot; means here" translate="no">​</a></h2>
-<p>Concretely:</p>
-<ul>
-<li class=""><strong>Enterprise only.</strong> Not available on Starter or Premium.</li>
-<li class=""><strong>The attribute names and record shape may change</strong> in a backwards-incompatible way. If you build dashboards on <code>keycloak.event.type</code> today, expect to revisit them.</li>
-<li class=""><strong>Logs and events are all or nothing.</strong> You cannot take events without logs yet.</li>
-<li class=""><strong>Logs only.</strong> No metrics, no traces.</li>
-<li class=""><strong>One destination per cluster.</strong> Fan out with a collector on your side.</li>
-<li class=""><strong>No filtering, sampling, or redaction options.</strong> Records go as Keycloak produces them — which means <strong>exported events contain end-user IP addresses and user IDs in the clear</strong>. Make sure the destination is a place those belong under your own obligations.</li>
-</ul>
-<p>The pipeline itself is running in all our production regions and delivering. The experimental label is about the contract, not the plumbing.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="try-it">Try it<a href="https://phasetwo.io/blog/telemetry-export-experimental/#try-it" class="hash-link" aria-label="Direct link to Try it" title="Direct link to Try it" translate="no">​</a></h2>
-<p>Telemetry Export is not enabled on every account yet, even on Enterprise. If you want it turned on for an Enterprise cluster, email <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a> and tell us what you're sending it to — the backend you name genuinely shapes what we build next, particularly around per-signal selection and attribute mapping.</p>
-<p>On Starter or Premium and want to try it? Tell us that too. We would rather hear the use case than have you assume the answer is no.</p>
-<p>The full reference, including every attribute, the delivery semantics, and the endpoint requirements, is in <a class="" href="https://phasetwo.io/docs/self-service/telemetry-export/">Telemetry Export</a>.</p>
-<p>And if your collector lives behind a firewall, <a class="" href="https://phasetwo.io/docs/self-service/egress-ip-addresses/">our egress IP addresses</a> are published and stable.</p>]]></content>
-        <author>
-            <name>GR Patil</name>
-            <uri>https://github.com/xgp</uri>
-        </author>
-        <category label="phase_two" term="phase_two"/>
-        <category label="hosting" term="hosting"/>
-        <category label="self-service" term="self-service"/>
-        <category label="observability" term="observability"/>
-        <category label="opentelemetry" term="opentelemetry"/>
-        <category label="otlp" term="otlp"/>
-        <category label="logs" term="logs"/>
-        <category label="keycloak" term="keycloak"/>
-        <category label="dedicated-clusters" term="dedicated-clusters"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Keycloak 26.7.4: 6 CVEs, Two Unauthenticated DoS]]></title>
