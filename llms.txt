@@ -480,6 +480,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Managed Keycloak Hosting](https://phasetwo.io/hosting/): Managed Keycloak hosting on dedicated clusters, operated by the authors of the most widely used Keycloak extensions.
 - [Configure](https://phasetwo.io/hosting/configure/): Control and configure your Keycloak deployment with practical security controls, theming, and extension-ready infrastructure.
 - [Managed Keycloak Hosting on Dedicated Clusters](https://phasetwo.io/hosting/dedicated-clusters/): Managed Keycloak hosting on dedicated clusters — isolated compute, network and storage for production Keycloak, operated by the authors of the most widely used Keycloak extensions.
+- [EU Data Residency for Managed Keycloak](https://phasetwo.io/hosting/eu-data-residency/): Managed Keycloak hosted in Frankfurt with backups in Ireland, contracted through our UK company under a GDPR Article 28 agreement. Where every class of your data lives, and who can reach it.
 - [Managed vs Self-Hosted](https://phasetwo.io/hosting/self-host-vs-managed/): Compare self-hosting Keycloak vs managed hosting, and understand the costs and benefits.
 - [Support](https://phasetwo.io/hosting/support/): Tools that make managing your Keycloak instance easy and repeatable.
 
@@ -505,6 +506,8 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Managed Keycloak Hosting and Enterprise Keycloak Support](https://phasetwo.io/access/): Request access to Phase Two B
 - [About Phase Two](https://phasetwo.io/company/about/): Phase Two builds and hosts Keycloak. We maintain the open-source extensions that add organizations, SCIM, webhooks and magic links to Keycloak, and we run it in production for companies that would rather not.
 - [Careers at Phase Two](https://phasetwo.io/company/careers/): Open positions
+- [Data Processing](https://phasetwo.io/company/data-processing/): How Phase Two processes personal data on your behalf — the Article 28 terms, where data is stored, which transfers happen and on what basis, and how to get the signature copy of the DPA.
+- [Government Requests for Customer Data](https://phasetwo.io/company/government-requests/): How Phase Two handles a request from any government for customer data, who it reaches, what we challenge, when we notify you, and how many requests we have received.
 - [Phase Two Privacy Policy](https://phasetwo.io/company/privacy/): Privacy Policy Last updated: July 05, 2022
 - [Phase Two SaaS Service Agreement](https://phasetwo.io/company/service-agreement/): Service Agreement Last updated: June 6, 2024
 - [Phase Two Cluster Service Level Agreement (SLA)](https://phasetwo.io/company/sla/): Please read this Service Level Agreement carefully before subscribing to a Phase Two cluster.
