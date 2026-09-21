@@ -159,6 +159,68 @@ about it.</p>]]></content>
         <category label="config_as_code" term="config_as_code"/>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Experimental: ship your Keycloak logs and events to your own OTLP endpoint]]></title>
+        <id>https://phasetwo.io/blog/telemetry-export-experimental/</id>
+        <link href="https://phasetwo.io/blog/telemetry-export-experimental/"/>
+        <updated>2026-09-18T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Telemetry Export streams your Enterprise cluster's Keycloak logs and authentication events to your own observability system over OTLP. Experimental, and available now on request.]]></summary>
+        <content type="html"><![CDATA[<p>We're shipping an experimental <strong>Telemetry Export</strong> for Enterprise Keycloak clusters. Point it at your own OTLP endpoint and your cluster's Keycloak logs and authentication events start arriving in whatever you already run — OpenSearch, Datadog, Grafana, SigNoz, Elastic, or your own OpenTelemetry Collector.</p>
+<p>No agent to install, no log shipper to configure, and nothing to run on your side except the collector you already have.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="why-when-the-dashboard-already-shows-you-this">Why, when the dashboard already shows you this<a href="https://phasetwo.io/blog/telemetry-export-experimental/#why-when-the-dashboard-already-shows-you-this" class="hash-link" aria-label="Direct link to Why, when the dashboard already shows you this" title="Direct link to Why, when the dashboard already shows you this" translate="no">​</a></h2>
+<p><a class="" href="https://phasetwo.io/blog/observability-launch/">Observability</a> gave every dedicated cluster metrics and logs in the Phase Two dashboard with zero setup, and for most teams that is the whole answer. But a pattern kept coming back in support conversations, and it was always the same shape:</p>
+<blockquote>
+<p>"Our SOC correlates authentication failures with everything else. Keycloak is the one system where we have to go and look somewhere separate."</p>
+</blockquote>
+<p>That is a fair complaint, and it isn't one a better dashboard fixes. If your incident response starts in Splunk, or your retention policy is written around your own S3 bucket, or your on-call alerting lives in a rule engine that has never heard of us, then the right place for Keycloak data is <em>your</em> system, not ours.</p>
+<p>So this feature is deliberately not another view. It is a pipe.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-it-looks-like">What it looks like<a href="https://phasetwo.io/blog/telemetry-export-experimental/#what-it-looks-like" class="hash-link" aria-label="Direct link to What it looks like" title="Direct link to What it looks like" translate="no">​</a></h2>
+<div class="theme-admonition theme-admonition-info admonition_Y66Y alert alert--info"><div class="admonitionHeading_Feou"><span class="admonitionIcon_RBEH"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>Available on Enterprise</div><div class="admonitionContent_oUgd"><p>Telemetry Export is part of the <strong>Enterprise</strong> tier. On Starter and Premium the <strong>Logs → Export</strong> page shows an upgrade note instead. <a class="" href="https://phasetwo.io/pricing/">Compare plans</a> or change your plan from <strong>Clusters &gt; Cluster &gt; Config &gt; Subscription</strong>.</p></div></div>
+<figure><img src="https://phasetwo.io/blog/2026-09-18-log-export-setup.png" alt="The Logs Export setup screen in the Phase Two Keycloak dashboard."><figcaption>Open <strong>Logs → Export</strong> on your cluster, enter an HTTPS OTLP endpoint and a bearer token, and save.</figcaption></figure>
+<p>That's the feature. Configuration is data in the control plane, so there is no ticket to file, no Terraform to apply, and nothing on your cluster restarts when you change it. A change takes a couple of minutes to reach the exporter — not instant, and we'd rather say so than round it down.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="the-data-model-is-the-interesting-part">The data model is the interesting part<a href="https://phasetwo.io/blog/telemetry-export-experimental/#the-data-model-is-the-interesting-part" class="hash-link" aria-label="Direct link to The data model is the interesting part" title="Direct link to The data model is the interesting part" translate="no">​</a></h2>
+<p>OTLP gives you a wire format. It does not tell you what the records should look like, and that's where the design work went.</p>
+<p><strong>Everything is the OTLP logs signal.</strong> Authentication events are structured log records, not traces. Keycloak doesn't emit traces, and pretending an event is a span helps nobody.</p>
+<p><strong>Events are rebuilt, not forwarded.</strong> Keycloak emits events into the log stream as a carrier line with a map of fields attached. Forwarding that verbatim would hand you a string to regex. Instead each event is reconstructed into flat attributes:</p>
+<div class="language-text codeBlockContainer_Z3mN theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_pizs"><pre tabindex="0" class="prism-code language-text codeBlock_iQew thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_ce1h"><div class="token-line" style="color:#bfc7d5"><span class="token plain">phasetwo.signal      = "event"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.event.type  = "LOGIN_ERROR"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.event.error = "invalid_user_credentials"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.realm.name  = "customers"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.user.id     = "…"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">keycloak.client.id   = "web-app"</span><br></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">client.address       = "…"</span><br></div></code></pre></div></div>
+<p>So <code>phasetwo.signal:"event" AND keycloak.event.type:"LOGIN_ERROR"</code> is a first-class query in your backend rather than a pattern match against message text.</p>
+<p><strong>Severity is derived for events.</strong> Keycloak logs a failed login at <code>INFO</code>, because from the logger's point of view nothing went wrong. That makes <code>severity &gt;= WARN</code> — the single most useful filter anyone writes against this data — match nothing. We set <code>WARN</code> when an event carries an error, and we emit the numeric <code>SeverityNumber</code> alongside the text, because most backends filter on the number and quietly ignore rules built on the text alone.</p>
+<p><strong>Event timestamps are the event's time</strong>, not the time its log line was written.</p>
+<p><strong>Our infrastructure is not in your data.</strong> Pod names, node names, internal addresses, and account identifiers are excluded by an allowlist rather than a blocklist — so a field some future Keycloak version adds is excluded by default rather than leaked by default. You should not have to understand our deployment topology to query your own logs.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-happens-when-your-endpoint-goes-down">What happens when your endpoint goes down<a href="https://phasetwo.io/blog/telemetry-export-experimental/#what-happens-when-your-endpoint-goes-down" class="hash-link" aria-label="Direct link to What happens when your endpoint goes down" title="Direct link to What happens when your endpoint goes down" translate="no">​</a></h2>
+<p>It will, eventually, and the honest answer matters more than the optimistic one.</p>
+<p>Records queue on disk in your cluster's region and are retried indefinitely. Nothing is lost while your collector is away, and nothing is lost by anyone else either — each destination has its own queue and its own retry state, so one broken endpoint cannot affect another customer or the dashboard views you already rely on.</p>
+<p>If an endpoint stays down long enough for that queue to fill, the oldest records are discarded. For a typical cluster that is days rather than hours. We alert on both the stall and the drop and will get in touch — but we deliberately don't claim to know what happened <em>after</em> delivery. If your collector accepts a record and your pipeline drops it downstream, that looks like success from here.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-experimental-means-here">What "experimental" means here<a href="https://phasetwo.io/blog/telemetry-export-experimental/#what-experimental-means-here" class="hash-link" aria-label="Direct link to What &quot;experimental&quot; means here" title="Direct link to What &quot;experimental&quot; means here" translate="no">​</a></h2>
+<p>Concretely:</p>
+<ul>
+<li class=""><strong>Enterprise only.</strong> Not available on Starter or Premium.</li>
+<li class=""><strong>The attribute names and record shape may change</strong> in a backwards-incompatible way. If you build dashboards on <code>keycloak.event.type</code> today, expect to revisit them.</li>
+<li class=""><strong>Logs and events are all or nothing.</strong> You cannot take events without logs yet.</li>
+<li class=""><strong>Logs only.</strong> No metrics, no traces.</li>
+<li class=""><strong>One destination per cluster.</strong> Fan out with a collector on your side.</li>
+<li class=""><strong>No filtering, sampling, or redaction options.</strong> Records go as Keycloak produces them — which means <strong>exported events contain end-user IP addresses and user IDs in the clear</strong>. Make sure the destination is a place those belong under your own obligations.</li>
+</ul>
+<p>The pipeline itself is running in all our production regions and delivering. The experimental label is about the contract, not the plumbing.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="try-it">Try it<a href="https://phasetwo.io/blog/telemetry-export-experimental/#try-it" class="hash-link" aria-label="Direct link to Try it" title="Direct link to Try it" translate="no">​</a></h2>
+<p>Telemetry Export is not enabled on every account yet, even on Enterprise. If you want it turned on for an Enterprise cluster, email <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a> and tell us what you're sending it to — the backend you name genuinely shapes what we build next, particularly around per-signal selection and attribute mapping.</p>
+<p>On Starter or Premium and want to try it? Tell us that too. We would rather hear the use case than have you assume the answer is no.</p>
+<p>The full reference, including every attribute, the delivery semantics, and the endpoint requirements, is in <a class="" href="https://phasetwo.io/docs/self-service/telemetry-export/">Telemetry Export</a>.</p>
+<p>And if your collector lives behind a firewall, <a class="" href="https://phasetwo.io/docs/self-service/egress-ip-addresses/">our egress IP addresses</a> are published and stable.</p>]]></content>
+        <author>
+            <name>GR Patil</name>
+            <uri>https://github.com/xgp</uri>
+        </author>
+        <category label="phase_two" term="phase_two"/>
+        <category label="hosting" term="hosting"/>
+        <category label="self-service" term="self-service"/>
+        <category label="observability" term="observability"/>
+        <category label="opentelemetry" term="opentelemetry"/>
+        <category label="otlp" term="otlp"/>
+        <category label="logs" term="logs"/>
+        <category label="keycloak" term="keycloak"/>
+        <category label="dedicated-clusters" term="dedicated-clusters"/>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Keycloak 26.7.4: 6 CVEs, Two Unauthenticated DoS]]></title>
         <id>https://phasetwo.io/blog/keycloak-2674-released/</id>
         <link href="https://phasetwo.io/blog/keycloak-2674-released/"/>
@@ -1882,84 +1944,5 @@ Observability is included with all Phase Two <strong>dedicated cluster</strong> 
         <category label="security" term="security"/>
         <category label="hosting" term="hosting"/>
         <category label="iso-27001" term="iso-27001"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Replacing Keycloak's Infinispan Caches with Redis/Valkey (Keycloak DevDay 2026)]]></title>
-        <id>https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/</id>
-        <link href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/"/>
-        <updated>2026-03-24T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[A practical overview of our work to replace Keycloak distributed Infinispan caches with Redis/Valkey, including architecture, implementation patterns, and benchmark outcomes.]]></summary>
-        <content type="html"><![CDATA[<p>At Keycloak DevDay 2026, we shared our work on replacing Keycloak's distributed <a href="https://infinispan.org/" target="_blank" rel="noopener noreferrer" class="">Infinispan</a> caches with <a href="https://redis.io/" target="_blank" rel="noopener noreferrer" class="">Redis</a>/<a href="https://valkey.io/" target="_blank" rel="noopener noreferrer" class="">Valkey</a>.</p>
-<p>For the full technical deep dive, we will release slides when the talk is published on Youtube.</p>
-<p>This post focuses on the core technical content from the presentation and summarizes what we built, what we learned, and what comes next.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="watch-the-talk">Watch the talk<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#watch-the-talk" class="hash-link" aria-label="Direct link to Watch the talk" title="Direct link to Watch the talk" translate="no">​</a></h2>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/rHeOQejcCQI?si=9QvaQ1JvUBTb7E-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="why-we-took-this-on">Why We Took This On<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#why-we-took-this-on" class="hash-link" aria-label="Direct link to Why We Took This On" title="Direct link to Why We Took This On" translate="no">​</a></h2>
-<p>The recurring operator pain points were clear: restart complexity, JGroups/Infinispan operational friction, and upgrade risk in high-availability environments.</p>
-<p>Our goals for the proof-of-concept were practical:</p>
-<ol>
-<li class="">Functional parity with Keycloak's distributed cache behavior.</li>
-<li class="">At least 50% of embedded Infinispan performance.</li>
-<li class="">Fast startup (sub-5s per pod) with reliable behavior.</li>
-<li class="">Seamless upgrades and horizontal scaling without rebalance pain.</li>
-<li class="">Extension-based implementation on current Keycloak, without forking.</li>
-</ol>
-<p>We also set explicit <strong>non-goals</strong>, including replacing local Infinispan caches, integrating/migrating persistent sessions, supporting every Redis topology, and solving multi-region concerns in v1.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="what-we-implemented-high-level">What We Implemented (High Level)<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#what-we-implemented-high-level" class="hash-link" aria-label="Direct link to What We Implemented (High Level)" title="Direct link to What We Implemented (High Level)" translate="no">​</a></h2>
-<p>We implemented a new <a href="https://www.keycloak.org/docs-api/latest/javadocs/org/keycloak/storage/DatastoreProvider.html" target="_blank" rel="noopener noreferrer" class=""><code>DatastoreProvider</code></a>-based approach to replace distributed caches while leaving the rest of Keycloak behavior intact.</p>
-<p>At a high level:</p>
-<ol>
-<li class="">Stored entities as Redis hashes (session and related objects).</li>
-<li class="">Added secondary indexes with Redis sets for fast lookup paths (for example, user-to-sessions, client-to-sessions).</li>
-<li class="">Built a changelog-based transaction implementation of <a href="https://www.keycloak.org/docs-api/latest/javadocs/org/keycloak/models/KeycloakTransaction.html" target="_blank" rel="noopener noreferrer" class=""><code>KeycloakTransaction</code></a> to batch and minimize writes at the appropriate stage of the Keycloak request lifecycle.</li>
-<li class="">Used Redis <code>MULTI/EXEC</code> for batched commit behavior.</li>
-<li class="">Implemented Lua-based CAS behavior for single-round-trip atomic updates.</li>
-<li class="">Replaced the use of the replicated work cache, used for local cache invalidation, with a Redis PUBSUB-backed <code>ClusterProvider</code>.</li>
-<li class="">Exposed Redis client and command metrics in Keycloak's Prometheus endpoint (<code>vendor_jedis_*</code>).</li>
-</ol>
-<p>For detailed APIs, object mapping rules, and transaction semantics, the slide deck has the full implementation flow and diagrams.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="notable-engineering-details">Notable Engineering Details<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#notable-engineering-details" class="hash-link" aria-label="Direct link to Notable Engineering Details" title="Direct link to Notable Engineering Details" translate="no">​</a></h2>
-<p>A few areas mattered most in practice:</p>
-<ol>
-<li class=""><strong>Atomicity model:</strong> Lua CAS operations reduced contention and retry complexity versus <code>WATCH</code>-based optimistic workflows.</li>
-<li class=""><strong>Expiration correctness:</strong> TTL handling required careful validation to avoid stale references (for example, refresh token edge cases).</li>
-<li class=""><strong>Behavior parity:</strong> Reproducing nuanced Infinispan behavior (especially around offline session flows and invalidation semantics) required close reading of existing Keycloak internals.</li>
-<li class=""><strong>Index discipline:</strong> Clean separation between hash storage and set-based secondary indexes kept lookups efficient and made invalidation predictable.</li>
-</ol>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="benchmarks-and-outcomes">Benchmarks and Outcomes<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#benchmarks-and-outcomes" class="hash-link" aria-label="Direct link to Benchmarks and Outcomes" title="Direct link to Benchmarks and Outcomes" translate="no">​</a></h2>
-<p>In our benchmark setup, the Redis implementation met and exceeded the original performance target. The result was parity or better across the tested flow, while also meeting the startup-speed and extension/no-fork constraints. We used the Keycloak provided <a href="https://github.com/keycloak/keycloak-benchmark" target="_blank" rel="noopener noreferrer" class="">keycloak-benchmark</a> project to execute performance tests against a 3 node cluster using Redis caching, and compared the results to a standard Keycloak setup on the same number of nodes, using embedded Infinispan.</p>
-<p>This approach hit the proof-of-concept goals, with room for additional optimization and broader validation.</p>
-<div><table class="table w-full border-collapse bg-white/10 text-sm"><thead class="bg-white/10"><tr><th class="px-4 py-3 text-left font-semibold text-white"><p>Benchmark</p></th><th class="px-4 py-3 text-right font-semibold text-white"><p>Infinispan (99th pct)</p></th><th class="px-4 py-3 text-right font-semibold text-white"><p>Redis (99th pct)</p></th><th class="px-4 py-3 text-right font-semibold text-white">Delta</th></tr></thead><tbody class="divide-y divide-white/15"><tr><td class="px-4 py-3 text-white">All Requests</td><td class="px-4 py-3 text-right text-gray-200">67</td><td class="px-4 py-3 text-right text-gray-200">47</td><td class="px-4 py-3 text-right"><span class="font-semibold text-green-400">29.9%</span></td></tr><tr><td class="px-4 py-3 text-white">Browser to Log In Endpoint</td><td class="px-4 py-3 text-right text-gray-200">71</td><td class="px-4 py-3 text-right text-gray-200">86</td><td class="px-4 py-3 text-right"><span class="font-semibold text-red-400">-21.1%</span></td></tr><tr><td class="px-4 py-3 text-white"><p>Browser posts correct credentials</p></td><td class="px-4 py-3 text-right text-gray-200">83</td><td class="px-4 py-3 text-right text-gray-200">57</td><td class="px-4 py-3 text-right"><span class="font-semibold text-green-400">31.3%</span></td></tr><tr><td class="px-4 py-3 text-white">Exchange Code</td><td class="px-4 py-3 text-right text-gray-200">22</td><td class="px-4 py-3 text-right text-gray-200">10</td><td class="px-4 py-3 text-right"><span class="font-semibold text-green-400">54.5%</span></td></tr><tr><td class="px-4 py-3 text-white">RefreshToken</td><td class="px-4 py-3 text-right text-gray-200">36</td><td class="px-4 py-3 text-right text-gray-200">12</td><td class="px-4 py-3 text-right"><span class="font-semibold text-green-400">66.7%</span></td></tr><tr><td class="px-4 py-3 text-white">Browser logout</td><td class="px-4 py-3 text-right text-gray-200">43</td><td class="px-4 py-3 text-right text-gray-200">9</td><td class="px-4 py-3 text-right"><span class="font-semibold text-green-400">79.1%</span></td></tr></tbody></table></div>
-<p><em>Note: lower 99th percentile values are better. The "Browser to Log In Endpoint" row is the one regression shown in the original chart.</em></p>
-<h3 class="anchor anchorTargetStickyNavbar_Sc0N" id="benchmark-screenshots">Benchmark screenshots<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#benchmark-screenshots" class="hash-link" aria-label="Direct link to Benchmark screenshots" title="Direct link to Benchmark screenshots" translate="no">​</a></h3>
-<p>Redis benchmark test results:</p>
-<p><img decoding="async" loading="lazy" alt="Redis benchmark test results" src="https://phasetwo.io/assets/images/redis-test-results-cd826d293dfa9febc7ea3e989facc73b.png" width="2692" height="592" class="img_R7yg"></p>
-<p>Infinispan benchmark test results:</p>
-<p><img decoding="async" loading="lazy" alt="Infinispan benchmark test results" src="https://phasetwo.io/assets/images/infinispan-test-results-5af855541eda5217206c39ce9c04864d.png" width="2710" height="590" class="img_R7yg"></p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="timeline-and-context">Timeline and Context<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#timeline-and-context" class="hash-link" aria-label="Direct link to Timeline and Context" title="Direct link to Timeline and Context" translate="no">​</a></h2>
-<p>This work started in <strong>September 2025</strong>.</p>
-<p>A successful implementation would not have been possible without years of prior work in Keycloak internals, extension development, and production operations. Existing knowledge around map-store patterns, DatastoreProvider internals, transaction behavior, and real-world customer requirements was the foundation that made this tractable.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Sc0N" id="whats-next">What's Next<a href="https://phasetwo.io/blog/keycloak-devday-2026-redis-valkey-caches/#whats-next" class="hash-link" aria-label="Direct link to What's Next" title="Direct link to What's Next" translate="no">​</a></h2>
-<p>Near-term next steps include broader performance validation across workloads, clearer packaging/licensing for source and images, and additional multi-region validation/documentation.</p>
-<p>We also plan to release a full image soon at <a href="https://quay.io/repository/phasetwo/keycloak-redis" target="_blank" rel="noopener noreferrer" class="">quay.io/repository/phasetwo/keycloak-redis</a>, so stay tuned for more.</p>
-<p>If you want all the implementation specifics, design tradeoffs, and diagrams, please stay tuned for the release of the slides and videos of our Keycloak DevDay presentation.</p>
-<hr>
-<p>Want to go deeper?</p>
-<ol>
-<li class="">Reach out to our team: <a href="mailto:support@phasetwo.io" target="_blank" rel="noopener noreferrer" class="">support@phasetwo.io</a></li>
-<li class="">Try our hosting and extensions: <a href="https://dash.phasetwo.io/" target="_blank" rel="noopener noreferrer" class="">Phase Two Dash</a></li>
-<li class="">Contact us for additional implementation details and architecture guidance: <a href="https://phasetwo.io/contact" target="_blank" rel="noopener noreferrer" class="">https://phasetwo.io/contact</a></li>
-</ol>]]></content>
-        <author>
-            <name>Jeff Patzer</name>
-            <uri>https://github.com/pnzrr</uri>
-        </author>
-        <category label="phase_two" term="phase_two"/>
-        <category label="keycloak" term="keycloak"/>
-        <category label="redis" term="redis"/>
-        <category label="valkey" term="valkey"/>
-        <category label="caching" term="caching"/>
-        <category label="performance" term="performance"/>
-        <category label="extensions" term="extensions"/>
     </entry>
 </feed>
