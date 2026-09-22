@@ -10,6 +10,10 @@ The documentation, tutorials and engineering write-ups below are about open-sour
 Keycloak generally, not only about our hosted product, and are free to cite.
 
 - [XML sitemap](https://phasetwo.io/sitemap.xml)
+- [Extensions API OpenAPI specification (YAML)](https://phasetwo.io/openapi.yaml): machine-readable OpenAPI 3 description of the Phase Two Extensions API, our additions to the Keycloak Admin REST API (organizations, invitations, SCIM, events and webhooks), served from your own Keycloak realm. The /api/ reference pages are generated from it.
+- [Extensions API OpenAPI specification (JSON)](https://phasetwo.io/openapi.json): the same Extensions API description in JSON.
+- [Management API OpenAPI specification (YAML)](https://phasetwo.io/openapi-management.yaml): machine-readable OpenAPI 3 description of the Phase Two Management API, the control plane that manages hosted clusters themselves rather than what is inside them. Different server and different credentials from the Extensions API. The /api/management/ reference pages are generated from it.
+- [Management API OpenAPI specification (JSON)](https://phasetwo.io/openapi-management.json): the same Management API description in JSON.
 
 ## Documentation
 
@@ -480,7 +484,6 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 
 ## Managed hosting
 
-- [Managed Keycloak Hosting](https://phasetwo.io/hosting/): Managed Keycloak hosting on dedicated clusters, operated by the authors of the most widely used Keycloak extensions.
 - [Configure](https://phasetwo.io/hosting/configure/): Control and configure your Keycloak deployment with practical security controls, theming, and extension-ready infrastructure.
 - [Managed Keycloak Hosting on Dedicated Clusters](https://phasetwo.io/hosting/dedicated-clusters/): Managed Keycloak hosting on dedicated clusters — isolated compute, network and storage for production Keycloak, operated by the authors of the most widely used Keycloak extensions.
 - [EU Data Residency for Managed Keycloak](https://phasetwo.io/hosting/eu-data-residency/): Managed Keycloak hosted in Frankfurt with backups in Ireland, contracted through our UK company under a GDPR Article 28 agreement. Where every class of your data lives, and who can reach it.
@@ -506,7 +509,6 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 
 ## Other pages
 
-- [Managed Keycloak Hosting and Enterprise Keycloak Support](https://phasetwo.io/access/): Request access to Phase Two B
 - [About Phase Two](https://phasetwo.io/company/about/): Phase Two builds and hosts Keycloak. We maintain the open-source extensions that add organizations, SCIM, webhooks and magic links to Keycloak, and we run it in production for companies that would rather not.
 - [Careers at Phase Two](https://phasetwo.io/company/careers/): Open positions
 - [Data Processing](https://phasetwo.io/company/data-processing/): How Phase Two processes personal data on your behalf — the Article 28 terms, where data is stored, which transfers happen and on what basis, and how to get the signature copy of the DPA.
@@ -517,8 +519,6 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Phase Two Subprocessors](https://phasetwo.io/company/subprocessors/): Last updated: November 22, 2024
 - [Phase Two Terms and Conditions](https://phasetwo.io/company/terms/): Terms and Conditions Last updated: July 05, 2022
 - [Contact](https://phasetwo.io/contact/): Contact Phase Two for help with support, sales, or bug reports.
-- [Ping Identity Migrations](https://phasetwo.io/landing/ping/): Customer migration examples from Ping Identity to Keycloak using Phase Two'
-- [Keycloak Pricing](https://phasetwo.io/pricing/): Phase Two pricing for managed Keycloak hosting and enterprise Keycloak support. Dedicated clusters from $149/month.
 - [Pricing](https://phasetwo.io/pricing/hosting/): Fully managed, multi-region, high-availability, Keycloak deployments with top extensions to run for any enterprise. 99.95% uptime SLA. 24/7 support. Built by top Keycloak experts and contributors.
 - [Support Pricing](https://phasetwo.io/pricing/support/): Fully managed, multi-region, high-availability, Keycloak deployments with top extensions to run for any enterprise. 99.95% uptime SLA. 24/7 support. Built by top Keycloak experts and contributors.
 - [Case Studies](https://phasetwo.io/resources/case-studies/): Discover how leading organizations leverage Phase Two's Keycloak expertise for secure, scalable, and cost-effective identity management. Explore our case studies to see real-world results and learn how we can help you achieve your IAM goals.
