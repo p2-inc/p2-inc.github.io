@@ -130,6 +130,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 
 - [Keycloak Tutorials](https://phasetwo.io/tutorials/): Practical, tested Keycloak tutorials — every one runs on plain open-source Keycloak, with the admin console and CLI steps side by side.
 - [Build a Custom Keycloak Authentication Flow](https://phasetwo.io/tutorials/authentication/custom-flows/): Build a Keycloak custom authentication flow with conditional execution — the requirement model, a tested kcadm sequence, and the five ways it silently breaks.
+- [Passkeys and WebAuthn in Keycloak](https://phasetwo.io/tutorials/authentication/passkeys-webauthn/): Configure Keycloak passkeys and WebAuthn — the one switch that enables passwordless login on the stock flow, the second-factor setup, and the failure modes.
 - [Set Up TOTP Multi-Factor Authentication in Keycloak](https://phasetwo.io/tutorials/authentication/totp-mfa/): Turn on Keycloak MFA with TOTP for every user, including existing ones — the OTP policy, the two flow changes that actually enforce it, and what silently breaks.
 - [Authentication](https://phasetwo.io/tutorials/category/authentication/)
 - [Getting started](https://phasetwo.io/tutorials/category/getting-started/)
