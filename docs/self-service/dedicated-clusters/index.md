@@ -1,0 +1,41 @@
+# Dedicated Clusters
+
+Dedicated clusters are available with paid plans. These Clusters use isolated compute, network, and storage resources. Dedicated clusters come in three tiers — **Starter**, **Premium**, and **Enterprise** — which differ in capacity and limits. See [Create a Cluster](./create-a-cluster.md) for how to choose a tier.
+
+### Realm limits by tier
+
+The number of Realms you can create depends on the cluster tier:
+
+| Tier       | Realms per cluster |
+| ---------- | ------------------ |
+| Starter    | Up to 5            |
+| Premium    | Up to 20           |
+| Enterprise | Up to 100          |
+
+If you need more, please contact your account representative or email [support@phasetwo.io](mailto:support@phasetwo.io).
+
+For more information view the [Hosting](/hosting) and [Pricing](/pricing) pages.
+
+## Creating Realms in your Cluster
+
+Once your Cluster has been provisioned, you can create Realms in it. Open the create Realm modal from the Cluster, and access the admin console for each one using the _Open Console_ link next to it. Learn more about [creating realms](./realms.md).
+
+The number of Realms you can create depends on your cluster tier (see the table above).
+
+## Billing
+
+Access to invoices and ability to change payment information can be accessed in the action menu next to the Cluster. This will take you to [Stripe](https://stripe.com), our payment partner, to access your billing history and update your payment information. This is restricted to users with the appropriate organization roles.
+
+## Deleting a Cluster
+
+Clusters that have reached the provisioing or active state cannot be immediately deleted. If you wish to delete your Cluster and end your subscription, you can schedule the deletion. Your cluster will be available until the end of your montly billing period. At that point, there will begin a 7-day grace period where the cluster will be available, and a 14-day grace period where the data will be preserved. Following that, the cluster will be de-provisioned and all data will be purged from our systems for security and compliance reasons.
+
+## Refunds
+
+There are no refunds available for subscriptions paid on a monthly basis.
+
+If you have paid annually, and you have more than one month left in your subscription period, you will be refunded a pro-rated amount following the end of the 14-day grace period. This refund will come through your payment method registered with Stripe.
+
+## SLA
+
+Please refer to our [Service Level Agreement](/company/sla) for more information.

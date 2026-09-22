@@ -1,0 +1,17 @@
+# SSO? Wave Your Magic Wand to Easily Setup SSO with Phase Two's IDP Wizards
+
+:::info
+UPDATE: The [Wizards](https://github.com/p2-inc/idp-wizard) are now open source and available to the community as a whole to make [SSO](https://phasetwo.io/docs/sso/) setup easier than ever.
+:::
+
+Working with one of our customers, we discovered that even the most technically literate developer or ops professional could look at the configuration for an [SSO](https://phasetwo.io/docs/sso/) connection like it was a foreign language. While our configuration interface attempts to cover all possible options, and document clearly what each option means, it can still be entirely unclear what is required during a setup.
+
+<!--truncate-->
+
+Furthermore, the identity provider that is being integrated can present a similarly extensive interface that may not use the same terms and language. However, after investigation into the most common identity providers, we found that most of the configuration options can simply be set by convention if the vendor is known.
+
+Based on that observation, we've built what we call a "wizard" UI on top of our identity provider configuration to make it easy to integration the top commercial identity provider vendors. Take a look at a quick video of a setup using our most recent prototype.
+
+Watch the video: [YouTube video player](https://www.youtube.com/watch?v=9HJWdJqnE0I)
+
+If you're interested in early access to our "wizards", please [contact us](mailto:sales@phasetwo.io) today.
