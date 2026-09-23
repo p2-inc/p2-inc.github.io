@@ -139,6 +139,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Authentication](https://phasetwo.io/tutorials/category/authentication/)
 - [Getting started](https://phasetwo.io/tutorials/category/getting-started/)
 - [Mobile apps](https://phasetwo.io/tutorials/category/mobile-apps/)
+- [SCIM provisioning](https://phasetwo.io/tutorials/category/scim-provisioning/)
 - [Securing applications](https://phasetwo.io/tutorials/category/securing-applications/)
 - [Sessions and tokens](https://phasetwo.io/tutorials/category/sessions-and-tokens/)
 - [Workflows](https://phasetwo.io/tutorials/category/workflows/)
@@ -150,6 +151,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Benefits and Drawbacks of JWTs](https://phasetwo.io/tutorials/jwts/jwt-benefits-drawbacks/): Where JSON Web Tokens are the right architectural choice and where they are not — stateless validation, revocation limits, token size, and the alternatives worth considering.
 - [JWT Security Best Practices](https://phasetwo.io/tutorials/jwts/jwt-security-best-practices/): How to implement JSON Web Tokens securely — signing algorithms, token storage, transmission, validation, expiry and revocation, and the attack vectors each one closes.
 - [Write the App Association Files That Let Mobile Apps Autofill Your Login](https://phasetwo.io/tutorials/mobile-apps/app-association-files/): Build apple-app-site-association and assetlinks.json correctly so iOS and Android will share saved passwords — and later passkeys — between your app and your Keycloak login page.
+- [Keycloak SCIM API: Enable It and Connect a Client](https://phasetwo.io/tutorials/scim/getting-started/): Enable Keycloak's native SCIM 2.0 API, wire a service-account client with the right audience, and provision and deprovision a user. Tested on 26.7.4.
 - [Spring Boot Keycloak Authentication: Tested Example](https://phasetwo.io/tutorials/securing-applications/spring-boot/): A tested Spring Boot Keycloak authentication example — resource server config, realm role mapping, audience validation, Docker, and every 401 explained.
 - [Validating Keycloak Tokens in Any Backend](https://phasetwo.io/tutorials/securing-applications/validating-tokens/): How to verify a Keycloak access token in your backend — the full check order, JWKS caching, key rotation, and when introspection is the only option that works.
 - [Keycloak Session and Token Timeouts, Explained](https://phasetwo.io/tutorials/sessions/timeouts/): Every Keycloak session timeout and token lifespan — the default, the REST field name, and how the twelve settings override each other. Measured on 26.7.3.
