@@ -157,6 +157,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Keycloak Session and Token Timeouts, Explained](https://phasetwo.io/tutorials/sessions/timeouts/): Every Keycloak session timeout and token lifespan — the default, the REST field name, and how the twelve settings override each other. Measured on 26.7.3.
 - [Keycloak Workflows: What They Are and Your First One](https://phasetwo.io/tutorials/workflows/getting-started/): Keycloak Workflows automate realm admin tasks from YAML. Build your first one, trigger it, and learn the four ways a step fails while reporting success.
 - [Automate Keycloak Offboarding and Deprovisioning](https://phasetwo.io/tutorials/workflows/user-offboarding/): Build a Keycloak offboarding workflow that revokes roles, disables the account and deletes it after retention — and close the access window it leaves open.
+- [Automate User Onboarding with a Keycloak Workflow](https://phasetwo.io/tutorials/workflows/user-onboarding/): Provision, welcome, chase and expire a new Keycloak user from YAML — and cancel the clock when they actually sign in. Tested command-by-command on 26.7.4.
 
 ## Monthly updates
 
