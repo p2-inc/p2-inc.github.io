@@ -1,6 +1,6 @@
 # Securing Angular Apps with Keycloak
 
-In this article we'll be using [Keycloak](https://www.keycloak.org/) to quickly secure a Angular application with user management and single sign on (SSO) using the open source IAMs Keycloak for Authentication and Authorization. We will demonstrate the integration by securing a page for logged-in users. This quickly provides a jump-off point to more complex integrations.
+In this article we'll be using [Keycloak](https://www.keycloak.org/) to quickly secure an Angular application with user management and single sign on (SSO) using the open source IAMs Keycloak for Authentication and Authorization. We will demonstrate the integration by securing a page for logged-in users. This quickly provides a jump-off point to more complex integrations.
 
 <!--truncate-->
 
@@ -30,7 +30,7 @@ If you want to see a live example, visit the [Phase Two Angular example](https:/
 
   
 
-## Setting up a Angular Project
+## Setting up an Angular Project
 
 
 

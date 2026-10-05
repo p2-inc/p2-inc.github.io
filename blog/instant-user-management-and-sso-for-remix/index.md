@@ -1,12 +1,12 @@
-# Securing Remix Apps with Keycloak
+# Securing React Router v7 (formerly Remix) Apps with Keycloak
 
-In this article we'll be using [Keycloak](https://www.keycloak.org/) to quickly secure a Remix application with user management and single sign on (SSO) using the open source IAMs Keycloak for Authentication and Authorization. We will demonstrate the integration by securing a page for logged-in users. This quickly provides a jump-off point to more complex integrations.
+In this article we'll be using [Keycloak](https://www.keycloak.org/) to quickly secure a [React Router v7](https://reactrouter.com/) application, the successor of Remix, with user management and single sign on (SSO) using the open source IAMs Keycloak for Authentication and Authorization. We will demonstrate the integration by securing a page for logged-in users. This quickly provides a jump-off point to more complex integrations.
 
 <!--truncate-->
 
 :::info
 
-If you just want to skip to the code, visit the Phase Two [Remix example](https://github.com/p2-inc/examples/tree/main/frameworks/remix). We also have a plain [React example](https://phasetwo.io/blog/instant-user-managemenet-and-sso-for-reactjs).
+If you just want to skip to the code, visit the Phase Two [React Router example](https://github.com/p2-inc/examples/tree/main/frameworks/remix). We also have a plain [React example](https://phasetwo.io/blog/instant-user-managemenet-and-sso-for-reactjs).
 
 :::
 
@@ -28,7 +28,7 @@ If you just want to skip to the code, visit the Phase Two [Remix example](https:
 
   
 
-## Setting up a Remix Project
+## Setting up a React Router Project
 
 
 
