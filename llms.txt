@@ -138,6 +138,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Passkeys and WebAuthn in Keycloak](https://phasetwo.io/tutorials/authentication/passkeys-webauthn/): Configure Keycloak passkeys and WebAuthn — the one switch that enables passwordless login on the stock flow, the second-factor setup, and the failure modes.
 - [Set Up TOTP Multi-Factor Authentication in Keycloak](https://phasetwo.io/tutorials/authentication/totp-mfa/): Turn on Keycloak MFA with TOTP for every user, including existing ones — the OTP policy, the two flow changes that actually enforce it, and what silently breaks.
 - [Keycloak Multi-Tenancy: Realms, Groups, or Organizations?](https://phasetwo.io/tutorials/authorization/multi-tenancy/): Choose between realm-per-tenant, group-per-tenant and Keycloak Organizations for multi-tenant B2B SaaS, with measured costs, the failure modes of each, and how native organizations differ from the Phase Two organizations extension.
+- [Keycloak Roles, Composite Roles, and Groups](https://phasetwo.io/tutorials/authorization/roles-and-groups/): When to use a Keycloak realm role, client role, composite role or group — with the token each one produces, measured on 26.8.0, and the six ways it goes wrong.
 - [Authentication](https://phasetwo.io/tutorials/category/authentication/)
 - [Authorization and multi-tenancy](https://phasetwo.io/tutorials/category/authorization-and-multi-tenancy/)
 - [Getting started](https://phasetwo.io/tutorials/category/getting-started/)
