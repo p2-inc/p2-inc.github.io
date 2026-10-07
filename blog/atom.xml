@@ -1048,7 +1048,10 @@ unenforced part. There is a
 want it in a ticket. If you are running on Phase Two rather than self-hosting, the
 server-level items are already done and the
 <a class="" href="https://phasetwo.io/docs/getting-started/launch-checklist/">platform launch checklist</a> is the application-side
-list you want instead.</p>
+list you want instead.
+If you are self-hosting our images on your own cluster instead, the
+<a class="" href="https://phasetwo.io/docs/hosting/">deployment documentation</a> covers the Helm chart and the bundled on-prem
+model, and every item below still applies to you.</p>
 <h2 class="anchor anchorTargetStickyNavbar_jjlm" id="what-actually-blocks-startup">What actually blocks startup<a href="https://phasetwo.io/blog/keycloak-production-checklist/#what-actually-blocks-startup" class="hash-link" aria-label="Direct link to What actually blocks startup" title="Direct link to What actually blocks startup" translate="no">​</a></h2>
 <p>Two hard gates and two warnings, in the order you hit them. Run <code>start</code> with nothing configured
 and you get the first warning and the first gate together:</p>
