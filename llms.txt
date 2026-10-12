@@ -147,6 +147,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [SCIM provisioning](https://phasetwo.io/tutorials/category/scim-provisioning/)
 - [Securing applications](https://phasetwo.io/tutorials/category/securing-applications/)
 - [Sessions and tokens](https://phasetwo.io/tutorials/category/sessions-and-tokens/)
+- [Users, profiles, and lifecycle](https://phasetwo.io/tutorials/category/users-profiles-and-lifecycle/)
 - [Workflows](https://phasetwo.io/tutorials/category/workflows/)
 - [Your First Keycloak Realm, Client, and User](https://phasetwo.io/tutorials/getting-started/first-realm-client-user/): Create a Keycloak realm, register a client, and add a user — in the admin console and with kcadm.sh — plus what each of the three actually means.
 - [Run Keycloak Locally in 5 Minutes](https://phasetwo.io/tutorials/getting-started/run-keycloak-locally/): Start a working Keycloak server on your machine with Docker, Podman, or the zip distribution — plus the dev-mode trap that bites people later.
@@ -161,6 +162,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Spring Boot Keycloak Authentication: Tested Example](https://phasetwo.io/tutorials/securing-applications/spring-boot/): A tested Spring Boot Keycloak authentication example — resource server config, realm role mapping, audience validation, Docker, and every 401 explained.
 - [Validating Keycloak Tokens in Any Backend](https://phasetwo.io/tutorials/securing-applications/validating-tokens/): How to verify a Keycloak access token in your backend — the full check order, JWKS caching, key rotation, and when introspection is the only option that works.
 - [Keycloak Session and Token Timeouts, Explained](https://phasetwo.io/tutorials/sessions/timeouts/): Every Keycloak session timeout and token lifespan — the default, the REST field name, and how the twelve settings override each other. Measured on 26.7.3.
+- [Keycloak Managed vs Unmanaged Attributes](https://phasetwo.io/tutorials/users/user-profile/): Why Keycloak drops your custom user attributes, what each unmanaged attribute policy really does, and how to migrate attributes into the declarative user profile.
 - [Keycloak Workflows: What They Are and Your First One](https://phasetwo.io/tutorials/workflows/getting-started/): Keycloak Workflows automate realm admin tasks from YAML. Build your first one, trigger it, and learn the four ways a step fails while reporting success.
 - [Automate Keycloak Offboarding and Deprovisioning](https://phasetwo.io/tutorials/workflows/user-offboarding/): Build a Keycloak offboarding workflow that revokes roles, disables the account and deletes it after retention — and close the access window it leaves open.
 - [Automate User Onboarding with a Keycloak Workflow](https://phasetwo.io/tutorials/workflows/user-onboarding/): Provision, welcome, chase and expire a new Keycloak user from YAML — and cancel the clock when they actually sign in. Tested command-by-command on 26.7.4.
