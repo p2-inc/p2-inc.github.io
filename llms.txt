@@ -141,6 +141,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Keycloak Roles, Composite Roles, and Groups](https://phasetwo.io/tutorials/authorization/roles-and-groups/): When to use a Keycloak realm role, client role, composite role or group — with the token each one produces, measured on 26.8.0, and the six ways it goes wrong.
 - [Authentication](https://phasetwo.io/tutorials/category/authentication/)
 - [Authorization and multi-tenancy](https://phasetwo.io/tutorials/category/authorization-and-multi-tenancy/)
+- [Clients, scopes, and mappers](https://phasetwo.io/tutorials/category/clients-scopes-and-mappers-1/)
 - [Clients, scopes, and mappers](https://phasetwo.io/tutorials/category/clients-scopes-and-mappers/)
 - [Emerging standards](https://phasetwo.io/tutorials/category/emerging-standards/)
 - [Extending Keycloak](https://phasetwo.io/tutorials/category/extending-keycloak/)
@@ -153,6 +154,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Users, profiles, and lifecycle](https://phasetwo.io/tutorials/category/users-profiles-and-lifecycle/)
 - [Workflows](https://phasetwo.io/tutorials/category/workflows/)
 - [Keycloak Client Types: Public, Confidential, Bearer-Only](https://phasetwo.io/tutorials/clients/oidc-client-types/): How to create an OIDC client in Keycloak and pick the right type — public, confidential, or the deprecated bearer-only — with tested commands and the exact errors each one throws.
+- [Keycloak Protocol Mappers: A Complete Field Guide](https://phasetwo.io/tutorials/clients/protocol-mappers/): Every built-in Keycloak protocol mapper, what it emits, its priority, and where to put it — with measured token sizes and the five ways a mapper fails silently.
 - [Secure an MCP Server with Keycloak](https://phasetwo.io/tutorials/emerging/mcp-server-auth/): Configure Keycloak as the authorization server for an MCP server — audience binding, scopes, PKCE, client registration — with every failure mode tested on Keycloak 26.8.0.
 - [Your First Keycloak SPI: Build, Package, Deploy](https://phasetwo.io/tutorials/extending/first-spi/): Build a Keycloak provider from an empty directory to a running server. The pom that compiles, the service file everyone forgets, and how to prove the jar loaded.
 - [Use kcadm.sh: the Keycloak Admin CLI](https://phasetwo.io/tutorials/getting-started/admin-cli/): Drive the Keycloak admin API from the command line with kcadm.sh: authenticate, CRUD, find the id you need, and write scripts that survive a second run.
