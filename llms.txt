@@ -68,6 +68,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Keycloak as an Identity Provider Broker (IdP)](https://phasetwo.io/docs/keycloak/idp/): What Is an IdP Broker?
 - [Keycloak Overview](https://phasetwo.io/docs/keycloak/overview/): Keycloak is a capable open-source identity and access management (IAM) solution backed by Red Hat. It is governed by the Apache License 2.0 allowing for individuals and organizations to use and customize it. It is designed and built for enterprise-grade Single Sign-On (SSO).
 - [Management API](https://phasetwo.io/docs/management-api/): Automate your Phase Two clusters — create clusters and realms, attach custom domains, manage extensions and IP rules — with an API secret and the client credentials grant.
+- [AI agents (Keycloak Skills and MCP server)](https://phasetwo.io/docs/management-api/ai-agents/): Let an AI agent like Claude configure Keycloak on your Phase Two cluster with the open-source Keycloak Skills plugin and the Phase Two MCP server. Install in two commands; every call is authorized as you.
 - [API keys](https://phasetwo.io/docs/management-api/api-keys/): Create an API secret for your Phase Two organization, exchange it for an access token with the client credentials grant, and make your first Management API call.
 - [Automation recipes](https://phasetwo.io/docs/management-api/recipes/): Worked Management API examples — provision a cluster, onboard a tenant realm, attach a custom domain, lock down admin access by IP, and rotate credentials.
 - [Terraform provider](https://phasetwo.io/docs/management-api/terraform/): Manage Phase Two clusters, realms, custom domains, IP rules, environment variables and extensions declaratively with the p2-inc/phasetwo Terraform provider. Experimental — test environments only.
@@ -155,6 +156,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Authorization and multi-tenancy](https://phasetwo.io/tutorials/category/authorization-and-multi-tenancy/)
 - [Clients, scopes, and mappers](https://phasetwo.io/tutorials/category/clients-scopes-and-mappers-1/)
 - [Clients, scopes, and mappers](https://phasetwo.io/tutorials/category/clients-scopes-and-mappers/)
+- [Customization](https://phasetwo.io/tutorials/category/customization/)
 - [Emerging standards](https://phasetwo.io/tutorials/category/emerging-standards/)
 - [Extending Keycloak](https://phasetwo.io/tutorials/category/extending-keycloak/)
 - [Getting started](https://phasetwo.io/tutorials/category/getting-started/)
@@ -167,6 +169,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Workflows](https://phasetwo.io/tutorials/category/workflows/)
 - [Keycloak Client Types: Public, Confidential, Bearer-Only](https://phasetwo.io/tutorials/clients/oidc-client-types/): How to create an OIDC client in Keycloak and pick the right type — public, confidential, or the deprecated bearer-only — with tested commands and the exact errors each one throws.
 - [Keycloak Protocol Mappers: A Complete Field Guide](https://phasetwo.io/tutorials/clients/protocol-mappers/): Every built-in Keycloak protocol mapper, what it emits, its priority, and where to put it — with measured token sizes and the five ways a mapper fails silently.
+- [Build a Custom Keycloak Login Theme](https://phasetwo.io/tutorials/customization/login-theme/): Build a Keycloak login theme from two files, brand it without forking a template, and package it as a JAR — with the upgrade cost of each approach measured.
 - [Secure an MCP Server with Keycloak](https://phasetwo.io/tutorials/emerging/mcp-server-auth/): Configure Keycloak as the authorization server for an MCP server — audience binding, scopes, PKCE, client registration — with every failure mode tested on Keycloak 26.8.0.
 - [Your First Keycloak SPI: Build, Package, Deploy](https://phasetwo.io/tutorials/extending/first-spi/): Build a Keycloak provider from an empty directory to a running server. The pom that compiles, the service file everyone forgets, and how to prove the jar loaded.
 - [Use kcadm.sh: the Keycloak Admin CLI](https://phasetwo.io/tutorials/getting-started/admin-cli/): Drive the Keycloak admin API from the command line with kcadm.sh: authenticate, CRUD, find the id you need, and write scripts that survive a second run.
