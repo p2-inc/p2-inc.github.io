@@ -391,6 +391,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Blog](https://phasetwo.io/blog/): Learn more about how we make Keycloak Hosting and Authentication easy.
 - [Keycloak Custom Domains Can Now Serve App Association Files](https://phasetwo.io/blog/app-association-custom-domains/): Phase Two custom domains can now serve apple-app-site-association and assetlinks.json, so mobile apps can autofill saved passwords and share passkeys with a Keycloak login page.
 - [Auth.it featured on Keycloak Friday Chat](https://phasetwo.io/blog/authit-on-kfc/): Phase Two's new hosting platform, Auth.it, was featured on Mr. Keycloak's livestream
+- [What Azure AD B2C's end of sale actually means](https://phasetwo.io/blog/azure-ad-b2c-end-of-sale/): Azure AD B2C is end of sale, not end of life — supported to at least May 2030. What the March 2026 P2 date really was, and the three destinations worth considering.
 - [Cluster Observability and Logs](https://phasetwo.io/blog/cluster-observability-and-logs/): Phase Two now includes built-in observability for dedicated clusters, starting with log downloads via the self-service dashboard.
 - [Cockroach Labs features Phase Two's Managed Keycloak Hosting](https://phasetwo.io/blog/cockroach-labs-features-phasetwo-managed-keycloak-hosting/): Cockroach Labs highlights Phase Two's managed Keycloak hosting platform in their latest blog post.
 - [Introducing Phase Two Connect to Reduce the Complexity of Configuring SSO Connections](https://phasetwo.io/blog/connect/): Phase Two Connect greatly reduces the complexity and difficulty of configuring SSO connections allowing any team member to handle.
@@ -492,8 +493,9 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 
 ## Keycloak alternatives
 
-- [Keycloak Alternatives — Phase Two](https://phasetwo.io/keycloak-alternatives/): Compare Keycloak to the leading commercial IAM platforms — Auth0, Okta, WorkOS, Ping Identity, FrontEgg, and OneLogin. See why managed open-source Keycloak is a flexible, cost-predictable alternative.
+- [Keycloak Alternatives — Phase Two](https://phasetwo.io/keycloak-alternatives/): Compare Keycloak to the leading commercial IAM platforms — Auth0, Okta, WorkOS, Ping Identity, FrontEgg, OneLogin, and Azure AD B2C. See why managed open-source Keycloak is a flexible, cost-predictable alternative.
 - [Keycloak vs. Auth0 — Phase Two](https://phasetwo.io/keycloak-alternatives/auth0/): A 2026 comparison of Keycloak vs. Auth0 — cost, deployment, maintenance, and features — and why managed Keycloak is a strong open-source alternative to Auth0.
+- [Keycloak vs. Azure AD B2C — Phase Two](https://phasetwo.io/keycloak-alternatives/azure-ad-b2c/): Azure AD B2C is end of sale, not end of life: supported to at least May 2030, with a frozen roadmap. Compare staying, Entra External ID, and Keycloak — and what a B2C migration actually costs.
 - [Keycloak vs. FrontEgg — Phase Two](https://phasetwo.io/keycloak-alternatives/frontegg/): A 2026 comparison of Keycloak vs. FrontEgg — cost, deployment, maintenance, and B2B features — and why managed Keycloak is a strong open-source alternative to FrontEgg.
 - [Keycloak vs. Okta — Phase Two](https://phasetwo.io/keycloak-alternatives/okta/): A 2026 comparison of Keycloak vs. Okta — cost, deployment, maintenance, and features — and why managed Keycloak is a strong open-source alternative to Okta.
 - [Keycloak vs. OneLogin — Phase Two](https://phasetwo.io/keycloak-alternatives/onelogin/): A 2026 comparison of Keycloak vs. OneLogin — cost, deployment, maintenance, and features — and why managed Keycloak is a strong open-source alternative for workforce SSO and access management.
