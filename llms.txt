@@ -154,7 +154,6 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Keycloak Roles, Composite Roles, and Groups](https://phasetwo.io/tutorials/authorization/roles-and-groups/): When to use a Keycloak realm role, client role, composite role or group — with the token each one produces, measured on 26.8.0, and the six ways it goes wrong.
 - [Authentication](https://phasetwo.io/tutorials/category/authentication/)
 - [Authorization and multi-tenancy](https://phasetwo.io/tutorials/category/authorization-and-multi-tenancy/)
-- [Clients, scopes, and mappers](https://phasetwo.io/tutorials/category/clients-scopes-and-mappers-1/)
 - [Clients, scopes, and mappers](https://phasetwo.io/tutorials/category/clients-scopes-and-mappers/)
 - [Customization](https://phasetwo.io/tutorials/category/customization/)
 - [Data protection and exit](https://phasetwo.io/tutorials/category/data-protection-and-exit/)
@@ -168,6 +167,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Sessions and tokens](https://phasetwo.io/tutorials/category/sessions-and-tokens/)
 - [Users, profiles, and lifecycle](https://phasetwo.io/tutorials/category/users-profiles-and-lifecycle/)
 - [Workflows](https://phasetwo.io/tutorials/category/workflows/)
+- [Keycloak Audience: Get the aud Claim Right](https://phasetwo.io/tutorials/clients/audience/): How Keycloak decides what goes in the aud claim, the two mechanisms that put it there, and the ways it silently comes out empty. Tested on Keycloak 26.8.1.
 - [Keycloak Client Types: Public, Confidential, Bearer-Only](https://phasetwo.io/tutorials/clients/oidc-client-types/): How to create an OIDC client in Keycloak and pick the right type — public, confidential, or the deprecated bearer-only — with tested commands and the exact errors each one throws.
 - [Keycloak Protocol Mappers: A Complete Field Guide](https://phasetwo.io/tutorials/clients/protocol-mappers/): Every built-in Keycloak protocol mapper, what it emits, its priority, and where to put it — with measured token sizes and the five ways a mapper fails silently.
 - [Keycloak Service Accounts and the Client Credentials Grant](https://phasetwo.io/tutorials/clients/service-accounts/): Set up a Keycloak service account for machine-to-machine calls — which roles to grant, why the token comes back with no roles in it, and how to drop the shared secret.
