@@ -1,5 +1,9 @@
 # Introducing Phase Two Connect to Reduce the Complexity of Configuring SSO Connections
 
+:::info
+This post was published in 2022, and some screenshots, hostnames, and product names have changed since. Phase Two Connect is no longer offered under that name. To run Phase Two's Keycloak distribution in your own or your customers' environments, see [Self-Hosting](/docs/hosting/).
+:::
+
 Following our [post about our wizard product](/blog/wizard), we received an overwhelming amount of interest in it. Many customers of our cloud offering asked for it as a portal for their organization administrators to set up their identity providers. On-prem customers said that one consistent onboarding hurdle was SSO complexity, and asked for it to be included in the bundled distribution.
 
 <!--truncate-->

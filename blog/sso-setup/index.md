@@ -1,5 +1,9 @@
 # Setting up SSO with Phase Two and Keycloak
 
+:::info
+This post was published in 2022, and some screenshots, hostnames, and product names have changed since. For current instructions, see [SSO](/docs/sso/) and the [IdP setup wizards](/docs/sso/wizards/).
+:::
+
 We've received a lot of support requests about the right way to set up [SSO](https://phasetwo.io/product/sso/) connections. We've published a 5 minute video showing you how to do it easily. Also, the script is included below in case you miss anything!
 
 Watch the video: [YouTube video player](https://www.youtube.com/watch?v=wAeT07JGhOI)
