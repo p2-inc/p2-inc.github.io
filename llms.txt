@@ -202,6 +202,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 
 - [Phase Two monthly updates](https://phasetwo.io/updates/): What shipped in Phase Two, what changed in official Keycloak including security fixes, and what we published — one summary a month, archived here.
 - [Phase Two: September 2026](https://phasetwo.io/updates/2026-09/): September 2026: the Phase Two Keycloak MCP server and Agent Skills, Telemetry Export, a Management API and Terraform provider, and 26 Keycloak CVEs fixed.
+- [Phase Two: October 2026](https://phasetwo.io/updates/2026-10/): Keycloak shipped 26.7.5, 26.8.0 and 26.8.1 in October and closed 40 CVEs between them. Plus 38 Phase Two releases across seven open source extensions.
 
 ## API reference
 
