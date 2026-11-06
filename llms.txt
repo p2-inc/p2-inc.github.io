@@ -592,6 +592,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Phase Two Privacy Policy](https://phasetwo.io/company/privacy/): Privacy Policy Last updated: July 05, 2022
 - [Phase Two SaaS Service Agreement](https://phasetwo.io/company/service-agreement/): Service Agreement Last updated: June 6, 2024
 - [Phase Two Cluster Service Level Agreement (SLA)](https://phasetwo.io/company/sla/): Please read this Service Level Agreement carefully before subscribing to a Phase Two cluster.
+- [SSO Tracer Privacy Policy](https://phasetwo.io/company/sso-tracer-privacy/): SSO Tracer by Phase Two decodes SAML and OIDC logins locally in DevTools. It collects no data and sends nothing off your device.
 - [Phase Two Subprocessors](https://phasetwo.io/company/subprocessors/): Last updated: November 22, 2024
 - [Phase Two Terms and Conditions](https://phasetwo.io/company/terms/): Terms and Conditions Last updated: July 05, 2022
 - [Contact](https://phasetwo.io/contact/): Contact Phase Two for help with support, sales, or bug reports.
