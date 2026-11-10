@@ -517,8 +517,9 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 
 ## Keycloak alternatives
 
-- [Keycloak Alternatives — Phase Two](https://phasetwo.io/keycloak-alternatives/): Compare Keycloak to the leading IAM platforms — Auth0, Okta, WorkOS, Ping Identity, FrontEgg, OneLogin, Azure AD B2C, and Zitadel. See why managed open-source Keycloak is a flexible, cost-predictable alternative.
+- [Keycloak Alternatives — Phase Two](https://phasetwo.io/keycloak-alternatives/): Compare Keycloak to the leading IAM platforms — Auth0, Okta, WorkOS, Ping Identity, FrontEgg, OneLogin, Azure AD B2C, Zitadel and authentik. See why managed open-source Keycloak is a flexible, cost-predictable alternative.
 - [Keycloak vs. Auth0 — Phase Two](https://phasetwo.io/keycloak-alternatives/auth0/): A 2026 comparison of Keycloak vs. Auth0 — cost, deployment, maintenance, and features — and why managed Keycloak is a strong open-source alternative to Auth0.
+- [Keycloak vs. authentik — Phase Two](https://phasetwo.io/keycloak-alternatives/authentik/): authentik vs Keycloak, compared on what actually differs: an MIT core with a paid Enterprise directory against Apache 2.0 throughout, directory federation, and reach below OIDC.
 - [Keycloak vs. Azure AD B2C — Phase Two](https://phasetwo.io/keycloak-alternatives/azure-ad-b2c/): Azure AD B2C is end of sale, not end of life: supported to at least May 2030, with a frozen roadmap. Compare staying, Entra External ID, and Keycloak — and what a B2C migration actually costs.
 - [Keycloak vs. FrontEgg — Phase Two](https://phasetwo.io/keycloak-alternatives/frontegg/): A 2026 comparison of Keycloak vs. FrontEgg — cost, deployment, maintenance, and B2B features — and why managed Keycloak is a strong open-source alternative to FrontEgg.
 - [Keycloak vs. Okta — Phase Two](https://phasetwo.io/keycloak-alternatives/okta/): A 2026 comparison of Keycloak vs. Okta — cost, deployment, maintenance, and features — and why managed Keycloak is a strong open-source alternative to Okta.
