@@ -1,56 +1,75 @@
-# Native Applications - iOS, Android, and macOS
+# Native Apps - iOS, Android, React Native and Flutter
 
-Watch the video: [YouTube video player](https://www.youtube.com/watch?v=G3Mgh_h9cNU)
+Native applications are installed on a device, such as a phone, a tablet or a desktop computer. Like any other application, a native app gets a client in Keycloak and signs users in with OpenID Connect. The app is a _public_ client: it can't keep a secret, so it proves each login with PKCE instead. There are two good ways to build the login itself:
 
-Native applications are installed on a device, such as a phone or a desktop computer. Keycloak fully supports them: like any other application, a native app gets a Client in Keycloak and signs users in with OpenID Connect. There are two ways to build the login:
+- **Native login** with Phase Two's [native authentication for Keycloak](https://github.com/p2-inc/native-apps). The app signs users in with its own screens, and Keycloak still runs the authentication flow and decides what the user has to do. SDKs are available for iOS, Android, React Native and Flutter.
+- **Browser-based login** with a library such as [AppAuth](https://appauth.io/). The app opens Keycloak's login page in the system browser, and the browser hands the result back to the app. This works with any Keycloak and needs no extensions.
 
-- **Browser-based login** with a library such as [AppAuth](https://appauth.io/). The app opens Keycloak's login page in the system browser, and the browser hands the result back to the app. This works with any Keycloak, needs no extensions, and is the simplest place to start.
-- **Native login** with Phase Two's [native authentication for Keycloak](https://github.com/p2-inc/native-apps). The app signs users in with its own screens, and Keycloak still runs the authentication flow. Choose this when the login has to look and feel like part of the app.
+## How native login works
 
-| | Browser-based login (AppAuth) | Native login |
+Phase Two's Keycloak extensions add a challenge endpoint to each realm, modeled on the IETF draft [OAuth 2.0 for First-Party Applications](https://datatracker.ietf.org/doc/draft-ietf-oauth-first-party-apps/). When the app starts a login, Keycloak runs an authentication flow you configure, and instead of rendering a login page it returns each step as a JSON challenge: a username, a password, a passkey assertion, a one-time code, a push approval. The SDK shows a native screen for each challenge and sends the answer back until Keycloak returns an authorization code, which the SDK exchanges for tokens at Keycloak's standard token endpoint with PKCE.
+
+```mermaid
+sequenceDiagram
+    participant App as App + SDK
+    participant KC as Keycloak (native-auth extensions)
+    App->>KC: POST /native-auth/challenge (client_id, PKCE)
+    KC-->>App: 403 challenge: username
+    App->>KC: username
+    KC-->>App: 403 challenge: password or passkey
+    App->>KC: password
+    KC-->>App: 403 challenge: TOTP (if configured)
+    App->>KC: code
+    KC-->>App: 200 authorization_code
+    App->>KC: POST /protocol/openid-connect/token (code + PKCE verifier)
+    KC-->>App: access, refresh and ID tokens
+```
+
+Because Keycloak is still running the flow, the settings you already rely on keep applying: conditional second factors, brute-force protection, required actions, and levels of authentication for step-up. You change the login in Keycloak, not in the app. Steps the native flow can't serve, such as a required action without a native version, hand the login to the system browser for that one sign-in.
+
+The [launch post](/blog/native-login-keycloak-ios-android) explains why we built it.
+
+## Comparison
+
+| | Native login (Phase Two SDKs) | Browser-based login (AppAuth) |
 | --- | --- | --- |
-| Login screens | Keycloak's login pages, themed to match the app | The app's own screens: SwiftUI and Jetpack Compose defaults you can replace |
-| Server requirements | Any Keycloak | Phase Two's native authentication extensions, Keycloak 26.4 to 26.8 |
-| Platforms | iOS, Android, macOS and more | iOS 17+ and Android 9+ (API 28) |
-| Authentication flows | Every Keycloak flow and authenticator | Native versions of username, password, passkey, TOTP, email and SMS codes, recovery codes, push approval and common required actions; anything else falls back to the browser |
-| Registration, password reset, social login | In the browser | In the browser |
+| Login screens | The app's own screens: default SwiftUI, Jetpack Compose, React Native and Flutter screens you can replace one at a time | Keycloak's login pages in a browser sheet, themed to match the app |
+| First thing the user sees | Your login screen | On iOS, a system prompt that the app "wants to use" the Keycloak domain to sign in, then the web page |
+| Server requirements | Phase Two's native authentication extensions on Keycloak 26.4 to 26.8 | Any Keycloak |
+| Platforms | iOS 17+, Android 9+ (API 28), React Native 0.84+, Flutter 3.35+ | iOS, macOS, Android and more |
+| Sign-in methods | Native username, password, passkey, TOTP, email and SMS codes, recovery codes and push approval with number matching | Every Keycloak authenticator |
+| Required actions | Update password, verify email (by code), accept terms, register a passkey and enroll for push run in the app; others open the browser | All, in the browser |
+| Registration, password reset, social and enterprise IdP login | In the browser | In the browser |
+| Browser single sign-on | No: a native login doesn't create a browser session | Yes: the browser can reuse an existing Keycloak session |
+| Token storage | Keychain or Android Keystore, handled by the SDK | Up to the app |
+| DPoP token binding | Built in, with a hardware-backed key where the device has one | Not built into AppAuth |
+| Maturity | Below 1.0; APIs may change between releases | Mature and widely used |
+| License | SDKs Apache 2.0; Keycloak extensions [Elastic License 2.0](https://www.elastic.co/licensing/elastic-license) | Apache 2.0 |
 
-## Browser-based login with AppAuth
+## Which should I choose?
 
-With AppAuth, the login slides up in a system browser sheet (`ASWebAuthenticationSession` on iOS, Custom Tabs on Android), and the app receives an authorization code when the user is done. Because the login runs in the browser rather than an embedded webview, the app never sees the user's password, and the browser can reuse an existing Keycloak session. Every flow and second factor you configure in Keycloak works without any code in the app.
+- **Choose native login** when the login is part of your product's experience: you want your own screens, passkeys and push approvals that feel like part of the app, no browser sheet or iOS consent prompt, and step-up for sensitive actions. It's for _first-party_ apps, the apps you publish yourself, because the app sees what the user types.
+- **Choose browser-based login** when you can't add extensions to your Keycloak, when you rely on authenticators or identity providers that only run in the browser for most of your users, when several apps (or the app and your website) should share one browser session, or when the app belongs to a third party.
+- **Mixing is fine.** A native-login app still uses the browser for registration, password reset and social login, and the client settings for both approaches can live on the same Keycloak client.
 
-To get started, follow the AppAuth documentation for your platform: [iOS and macOS](https://github.com/openid/AppAuth-iOS) or [Android](https://github.com/openid/AppAuth-Android).
+## Why not the password grant or an embedded webview?
 
-### Setting up a Keycloak Client for browser-based login
+**The password grant** (Resource Owner Password Credentials) has the app post the username and password straight to the token endpoint. It only handles passwords, it bypasses the login flow you configure, so passkeys, push approvals, required actions and most second factors can't work, and it trains users to type their password wherever they're asked. The [OAuth 2.0 Security Best Current Practice (RFC 9700)](https://datatracker.ietf.org/doc/html/rfc9700) says it must not be used, and OAuth 2.1 removes it. Native login gives you the same "our own screens" experience while Keycloak still runs the full flow.
 
-1. Create an **OpenID Connect** client and leave **Client authentication** off: a native app is a public client, because it can't keep a secret.
-1. Under **Capability config**, keep **Standard flow** checked.
-1. Add the URI that the browser redirects back to under **Valid redirect URIs**. This is typically a custom URI scheme you define for your app, such as `myapp://callback`.
-1. In the client's **Advanced** tab, set **Proof Key for Code Exchange Code Challenge Method** to `S256`. AppAuth sends PKCE on every login.
+**An embedded webview** (`WKWebView`, Android `WebView`) that loads Keycloak's login page looks like browser-based login but isn't. The app controls the webview, so it can read everything the user types and every cookie; the user has no address bar to check; the session isn't shared with the system browser; and passkey support is limited there, while some identity providers, Google among them, block sign-in from webviews altogether. [OAuth 2.0 for Native Apps (RFC 8252)](https://datatracker.ietf.org/doc/html/rfc8252) requires the system browser instead. If you want the login inside the app, use native login; if you want the browser, use the system browser through AppAuth.
 
-You may also wish to apply a specific theme to this client to match the look and feel of your app. Native apps usually lack the header and footer of a web app. To do this, create a [custom theme](/docs/getting-started/customizing-ui/) in Keycloak and apply it to your Client. Keycloakify lets you create a "variant" that hides the header and footer.
+## Guides
 
-In the AppAuth iOS example, these are the values you would change:
+Native login:
 
-```
-static NSString *const kRedirectURI = @"io.phasetwo.appauth:/oauth2redirect/keycloak";  // The redirect URI, linked to the app's URL scheme.
-static NSString *const kClientID = @"AppAuth-iOS-Example"; // The Client ID you set in Keycloak for your native app.
-static NSString *const kIssuer = @"https://<your-keycloak-host>/auth/realms/<your-realm>"; // Full URL to your Keycloak realm.
-```
+- [Server setup](./server-setup.md): install the extensions, create the native flow and the client, and configure DPoP, passkeys and push.
+- [iOS](./ios.md): the Swift package with SwiftUI screens.
+- [Android](./android.md): the Kotlin libraries with Jetpack Compose screens.
+- [React Native](./react-native.md): the TurboModule with React screens and an Expo config plugin.
+- [Flutter](./flutter.md): the plugin with Flutter widgets.
 
-The URL scheme for this example is `io.phasetwo.appauth`.
+Browser-based login:
 
-## Native login
+- [Browser-based login with AppAuth](./browser-login.md): the Keycloak client setup for AppAuth on iOS, macOS and Android.
 
-Native login follows the IETF draft [OAuth 2.0 for First-Party Applications](https://datatracker.ietf.org/doc/draft-ietf-oauth-first-party-apps/). Phase Two's extensions add a challenge endpoint to each realm. When the app starts a login, Keycloak runs the client's authentication flow, and instead of rendering a login page it returns each step as a JSON challenge: a username, a password, a passkey assertion, a one-time code. The SDK shows a native screen for each challenge and sends the answer back until Keycloak returns an authorization code, which the SDK exchanges for tokens with PKCE. Brute-force protection, conditional second factors, required actions and step-up still come from your Keycloak configuration. The [launch post](/blog/native-login-keycloak-ios-android) explains why we built it and what it supports.
-
-The [native-apps repository](https://github.com/p2-inc/native-apps) has the extensions, the iOS and Android SDKs, demo apps for both platforms, and the developer documentation. The project is below 1.0, so the protocol and APIs may still change between releases.
-
-### Setting up Keycloak for native login
-
-1. **Install the extensions.** Each [release](https://github.com/p2-inc/native-apps/releases) has a `keycloak-native-auth-providers-<version>.zip`. Put all of its jars in Keycloak's `providers/` directory and rebuild or restart Keycloak; the jars depend on each other, so install them together. On Phase Two hosted Keycloak, [contact us](/contact) to have them enabled on your cluster.
-1. **Create a flow with native authenticators.** Copy your login flow and use the native executions, such as `native-username`, `native-password`, `native-passkey` and `native-totp`, in place of the browser ones. The repository's [demo realm](https://github.com/p2-inc/native-apps/tree/main/keycloak-native-auth/demo/realm-export) has complete examples, including step-up, one-time codes and push.
-1. **Create the client.** An **OpenID Connect** client with **Client authentication** off, **Standard flow** on, and **Proof Key for Code Exchange Code Challenge Method** set to `S256`. Add the attribute `native-auth.enabled` with the value `true`; clients without it are refused by the challenge endpoint. Bind the native flow to the client under **Advanced** → **Authentication flow overrides** (or make it the realm's browser flow), and add a redirect URI for the browser fallback.
-1. **Add the SDK to your app.** On iOS, add the Swift package from the repository by version tag. On Android, each release has a `keycloak-native-android-<version>-maven-repo.zip` with the libraries (`io.phasetwo.keycloak.nativeauth:keycloak-native-android`, `keycloak-native-ui` and `keycloak-native-push`). The [developer documentation](https://github.com/p2-inc/native-apps/tree/main/docs) covers configuration, the default screens, passkeys, push and troubleshooting for both platforms.
-
-Passkeys need your app associated with a domain that matches Keycloak's WebAuthn relying party ID (`apple-app-site-association` on iOS, `assetlinks.json` on Android). Push approvals need an APNs key or a Firebase project configured on the server; the repository's documentation lists the settings.
+On Phase Two hosted Keycloak, [contact us](/contact) to have the native authentication extensions enabled on your cluster.
