@@ -567,7 +567,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 
 - [Configure](https://phasetwo.io/hosting/configure/): Control and configure your Keycloak deployment with practical security controls, theming, and extension-ready infrastructure.
 - [Managed Keycloak Hosting on Dedicated Clusters](https://phasetwo.io/hosting/dedicated-clusters/): Managed Keycloak hosting on dedicated clusters — isolated compute, network and storage for production Keycloak, operated by the authors of the most widely used Keycloak extensions.
-- [EU Data Residency for Managed Keycloak](https://phasetwo.io/hosting/eu-data-residency/): Managed Keycloak hosted in Frankfurt with backups in Ireland, contracted through our UK company under a GDPR Article 28 agreement. Where every class of your data lives, and who can reach it.
+- [EU Data Residency for Managed Keycloak](https://phasetwo.io/hosting/eu-data-residency/): Managed Keycloak hosted in Frankfurt with backups in Ireland, contracted with Phase Two, Inc. under a GDPR Article 28 agreement. Where every class of your data lives, and who can reach it.
 - [Managed vs Self-Hosted](https://phasetwo.io/hosting/self-host-vs-managed/): Compare self-hosting Keycloak vs managed hosting, and understand the costs and benefits.
 - [Support](https://phasetwo.io/hosting/support/): Tools that make managing your Keycloak instance easy and repeatable.
 
