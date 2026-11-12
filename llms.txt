@@ -239,6 +239,7 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Check if a user is a member of an organization](https://phasetwo.io/api/check-organization-membership/): Check if a user is a member of an organization
 - [Check if a user has an organization role](https://phasetwo.io/api/check-user-organization-role/): Check if a user has an organization role
 - [Create a new audit log event](https://phasetwo.io/api/create-event/): Create a new audit log event
+- [Create the client for IdP-initiated login through this organization's identity provider](https://phasetwo.io/api/create-idp-initiated-client/): Creates a SAML client that accepts IdP-initiated logins brokered through an identity provider of this organization. Create the client before the identity provider it is paired with.
 - [Create a new identity provider for this organization](https://phasetwo.io/api/create-idp/): Create a new identity provider for this organization
 - [Create a magic link to log in a user](https://phasetwo.io/api/create-magic-link/): Create a magic link to log in a user
 - [Create a new role for this organization](https://phasetwo.io/api/create-organization-role/): Create a new role for this organization
