@@ -55,6 +55,8 @@ kcadm.sh get events -r demo -q type=LOGIN_ERROR -q max=10
 
 One `cookie_not_found` by itself is this error. An `invalid_code` immediately before it means the cookie *did* arrive and Keycloak refused it. That happens when the realm's AES key has been regenerated since the cookie was issued, when the client in the cookie has been deleted, or when the cookie belongs to a different client than the `client_id` in the URL. Deleting and recreating a realm's `aes-generated` key provider invalidates every outstanding `KC_RESTART` in every user's browser at once; so does restoring a realm from an export.
 
+
+
 ## The five ways the cookie goes missing
 
 **1. The login page was opened in one cookie jar and submitted from another.** A login URL that gets bookmarked, forwarded, pasted into a chat, or opened by a password manager in a fresh window carries a valid `session_code` and no cookies. Both the `GET` and the `POST` of that URL return the error. This is the most common cause and the least interesting one: the link was never reusable.

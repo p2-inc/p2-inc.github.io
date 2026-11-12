@@ -25,6 +25,8 @@ docker logs <container> 2>&1 | grep invalid_redirect_uri
 
 Put the `redirect_uri="..."` value next to your registered list and the mismatch is usually obvious in about five seconds. **This one step solves most cases**, and almost nobody knows the log line exists.
 
+
+
 ## The matching rules, tested
 
 Here is what Keycloak 26.7.3 actually does. Every row was run against a live server.

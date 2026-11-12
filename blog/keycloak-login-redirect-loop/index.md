@@ -30,6 +30,8 @@ Do these before changing any configuration. Together they name the cause in abou
 
 3. **Compare the host in the browser's address bar with the host in the login form's `action` attribute.** If they differ, you have cause 3, and nothing else needs investigating.
 
+
+
 ## What Keycloak actually sets
 
 Requesting the authorization endpoint over plain HTTP, with no proxy headers:

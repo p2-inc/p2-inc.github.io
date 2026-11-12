@@ -17,6 +17,8 @@ Everything here was run against **Keycloak 26.7.3** in `start-dev`, with real `c
 
 If the client is `admin-cli`, stop: that one can never work from a browser. See [the admin API section](#the-admin-rest-api-needs-its-own-client).
 
+
+
 ## Your preflight is not the problem
 
 This is the measurement that surprises people. A CORS preflight carries no body, so Keycloak has no `client_id` and cannot know which client's Web Origins to check. It therefore approves every preflight:

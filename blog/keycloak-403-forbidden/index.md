@@ -21,6 +21,8 @@ Keycloak's 403s carry four distinct bodies. Each one points at exactly one cause
 
 The last one is the reason CORS and 403 get confused so often. It is a 403, it is thrown by Keycloak, and the browser never shows you the body.
 
+
+
 ## 401 or 403?
 
 One `curl` settles it. Same endpoint, four callers:

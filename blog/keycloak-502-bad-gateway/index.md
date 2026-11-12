@@ -21,6 +21,8 @@ Run one failing request and read `error.log`. This table is the whole diagnosis:
 
 If the log says `upstream timed out`, you have a 504, not a 502, and it is a different problem. Keycloak answered too slowly; the proxy never failed to reach it.
 
+
+
 ## The port matrix
 
 Most `Connection refused` reports are this table. Which ports Keycloak opens depends on the start command and on whether you gave it key material — and nothing about the proxy config tells you which case you are in:

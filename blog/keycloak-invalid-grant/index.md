@@ -46,6 +46,8 @@ Every string below came out of a live server. `error` was `invalid_grant` and th
 The rest of this post is the eight causes those strings group into, in the order you are
 likely to hit them.
 
+
+
 ## 1. The code was already redeemed — and it just killed the session
 
 Redeem an authorization code twice and the second attempt fails, which is what you would
