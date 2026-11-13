@@ -292,14 +292,14 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Get webhook sends](https://phasetwo.io/api/get-webhook-sends/): Get webhook sends
 - [Get webhooks count](https://phasetwo.io/api/get-webhooks-count/): Get a count of webhooks.
 - [Get webhooks](https://phasetwo.io/api/get-webhooks/): Get a list of webhooks for this realm
-- [Grant a user organization roles](https://phasetwo.io/api/grant-a-user-organization-roles/): Grant a user organization roles
 - [Grant a user an organization role](https://phasetwo.io/api/grant-user-organization-role/): Grant the specified user to the specified organization role
+- [Grant a user organization roles](https://phasetwo.io/api/grant-user-roles-in-organization/): Grant a user organization roles
 - [Import identity provider from uploaded JSON file](https://phasetwo.io/api/import-idp-json/): Import identity provider from uploaded JSON file
 - [Import organizations](https://phasetwo.io/api/import-organizations/): Import organizations and their configurations into this realm
 - [Get invitations for authenticated user](https://phasetwo.io/api/invitations/): Get a list of all invitations for the user.
 - [Link an existing identity provider to this organization](https://phasetwo.io/api/link-idp/): Link an existing identity provider to this organization
-- [List organization roles for the given user and org](https://phasetwo.io/api/list-organization-roles-for-the-given-user-and-org/): List organization roles for the given user and org
-- [List organizations for the given user](https://phasetwo.io/api/list-organizations-for-the-given-user/): List organizations for the given user
+- [List organizations for the given user](https://phasetwo.io/api/list-user-organizations/): List organizations for the given user
+- [List organization roles for the given user and org](https://phasetwo.io/api/list-user-roles-in-organization/): List organization roles for the given user and org
 - [Management API](https://phasetwo.io/api/management-api-index/): The Phase Two control plane API — create and configure dedicated Keycloak clusters, realms, custom domains, extensions, IP rules and billing. 82 endpoints, OAuth2 client credentials.
 - [Billing](https://phasetwo.io/api/management/billing/): Subscriptions, payment methods, billing contacts, and Stripe billing portal sessions.
 - [Create a Stripe billing portal session link for a cluster.](https://phasetwo.io/api/management/cluster-billing-session-create/): Deprecated. Use `org.billingPortalSession.create` instead.
@@ -399,8 +399,8 @@ Keycloak generally, not only about our hosted product, and are free to cite.
 - [Remove an organization member](https://phasetwo.io/api/remove-organization-member/): Remove the specified user from the specified organization as a member
 - [Resend an Organization Invitation](https://phasetwo.io/api/resend-organization-invitation/): Resend the email for an existing Organization Invitation
 - [Resend a webhook by send ID](https://phasetwo.io/api/resend-webhook-by-id/): Resend a webhook by send ID
-- [Revoke organization roles from a user](https://phasetwo.io/api/revoke-organization-roles-from-a-user/): Revoke organization roles from a user
 - [Revoke an organization role from a user](https://phasetwo.io/api/revoke-user-organization-role/): Revoke the specified organization role from the specified user
+- [Revoke organization roles from a user](https://phasetwo.io/api/revoke-user-roles-in-organization/): Revoke organization roles from a user
 - [Switch active organization for authenticated user](https://phasetwo.io/api/switch-active-organization/): Switch the active organization context for the authenticated user
 - [Unlink an existing and linked identity provider from this organization](https://phasetwo.io/api/unlink-idp/): Unlink an existing and linked identity provider from this organization
 - [Update a mapper for the identity provider](https://phasetwo.io/api/update-idp-mapper/): Update a mapper for the identity provider
