@@ -1,6 +1,6 @@
 # Native Login for React Native
 
-`@phasetwo.io/keycloak-native-react-native` signs users in to Keycloak with your app's own React Native screens. It is a New Architecture TurboModule over Phase Two's [iOS](./ios.md) and [Android](./android.md) SDKs: the native side runs the login protocol, keeps credentials in the Keychain or Android Keystore, holds the DPoP key in the Secure Enclave or Keystore, and runs the passkey, saved-password, browser and push ceremonies. JavaScript gets the login as a typed challenge model and default React screens that you can replace one challenge type at a time. An Expo config plugin does the native setup.
+`@p2-inc/keycloak-native-react-native` signs users in to Keycloak with your app's own React Native screens. It is a New Architecture TurboModule over Phase Two's [iOS](./ios.md) and [Android](./android.md) SDKs: the native side runs the login protocol, keeps credentials in the Keychain or Android Keystore, holds the DPoP key in the Secure Enclave or Keystore, and runs the passkey, saved-password, browser and push ceremonies. JavaScript gets the login as a typed challenge model and default React screens that you can replace one challenge type at a time. An Expo config plugin does the native setup.
 
 The module is licensed under Apache 2.0. It is below 1.0, so its API may change between releases. Your Keycloak needs the native authentication extensions; see [Server setup](./server-setup.md).
 
@@ -18,7 +18,7 @@ The module shares one version line with the server extensions and the native SDK
 :::
 
 ```bash
-npm install @phasetwo.io/keycloak-native-react-native
+npm install @p2-inc/keycloak-native-react-native
 ```
 
 **iOS.** Run `pod install`. The pod brings in the iOS SDK as a Swift package. For passkeys and saved passwords, add the Associated Domains entitlement `webcredentials:<rp-id>` (see [Server setup](./server-setup.md#passkeys)). If your app hits linker errors with pods that include Swift packages, build with `USE_FRAMEWORKS=dynamic`.
@@ -59,7 +59,7 @@ The config plugin does both platforms' setup during `npx expo prebuild`:
   "expo": {
     "plugins": [
       [
-        "@phasetwo.io/keycloak-native-react-native",
+        "@p2-inc/keycloak-native-react-native",
         {
           "redirectUri": "myapp://auth/callback",
           "associatedDomains": ["<your-keycloak-host>"]
@@ -79,7 +79,7 @@ It registers the activity, declares the callback activity for `redirectUri`, rai
 Create one instance per issuer and client, and keep it for the life of the app. The issuer is your realm's URL, including `/realms/<realm>`:
 
 ```ts
-import { KeycloakNative } from "@phasetwo.io/keycloak-native-react-native";
+import { KeycloakNative } from "@p2-inc/keycloak-native-react-native";
 
 export const kc = KeycloakNative.configure({
   issuer: "https://<your-keycloak-host>/realms/<your-realm>",
@@ -98,7 +98,7 @@ import { useEffect, useState } from "react";
 import {
   NativeLoginScreen,
   type NativeLoginFlow,
-} from "@phasetwo.io/keycloak-native-react-native";
+} from "@p2-inc/keycloak-native-react-native";
 
 function Login({ onSignedIn }: { onSignedIn(): void }) {
   const [flow, setFlow] = useState<NativeLoginFlow>();
